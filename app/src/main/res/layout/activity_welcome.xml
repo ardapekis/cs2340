@@ -28,6 +28,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="25dp"
             android:background="@drawable/button_shape"
+            android:onClick="loginClick"
         />
 
         <Button
@@ -41,6 +42,7 @@
             android:layout_alignParentEnd="true"
             android:layout_margin="25dp"
             android:background="@drawable/button_shape"
+            android:onClick="registerClick"
             />
 
     </RelativeLayout>
