@@ -1,5 +1,6 @@
 package com.ardapekis.cs2340_27;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -54,6 +55,18 @@ public class LoginActivity extends AppCompatActivity {
                 attemptLogin();
             }
         });
+
+        Button mCancelButton = (Button) findViewById(R.id.cancel_button);
+        mCancelButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancel();
+            }
+        });
+    }
+
+    private void cancel() {
+        finish();
     }
 
     /**
