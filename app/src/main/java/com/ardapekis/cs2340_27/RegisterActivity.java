@@ -47,6 +47,18 @@ public class RegisterActivity extends AppCompatActivity {
                 attemptRegister();
             }
         });
+
+        Button mCancelButton = (Button) findViewById(R.id.cancel_button);
+        mCancelButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancel();
+            }
+        });
+    }
+
+    private void cancel() {
+        finish();
     }
 
     /**
