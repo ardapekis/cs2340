@@ -1,0 +1,6 @@
+.gradle/**
+.idea/**
+app/app.iml
+build/**
+cs2340.iml
+local.properties
