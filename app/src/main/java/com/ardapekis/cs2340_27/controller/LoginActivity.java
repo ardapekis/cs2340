@@ -113,6 +113,8 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             // TODO: New welcome activity
+            Intent intent = new Intent(this, AppActivity.class);
+            startActivity(intent);
         }
     }
 
