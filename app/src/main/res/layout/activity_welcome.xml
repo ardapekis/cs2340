@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ardapekis.cs2340_27.WelcomeActivity">
+    tools:context="com.ardapekis.cs2340_27.controller.WelcomeActivity">
 
     <ImageView
         android:id="@+id/welcome_splash"

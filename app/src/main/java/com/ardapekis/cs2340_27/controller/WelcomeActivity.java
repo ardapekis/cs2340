@@ -1,9 +1,11 @@
-package com.ardapekis.cs2340_27;
+package com.ardapekis.cs2340_27.controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.ardapekis.cs2340_27.R;
 
 public class WelcomeActivity extends AppCompatActivity {
 
