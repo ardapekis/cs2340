@@ -112,7 +112,6 @@ public class LoginActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // TODO: New welcome activity
             Intent intent = new Intent(this, AppActivity.class);
             startActivity(intent);
         }

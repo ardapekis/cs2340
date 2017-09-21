@@ -1,5 +1,6 @@
 package com.ardapekis.cs2340_27.controller;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -104,7 +105,8 @@ public class RegisterActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // TODO: New welcome activity
+            Intent intent = new Intent(this, AppActivity.class);
+            startActivity(intent);
         }
     }
 
