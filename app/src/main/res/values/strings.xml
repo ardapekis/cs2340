@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CS2340_27</string>
+    <string name="app_name">Rats In the Box</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
