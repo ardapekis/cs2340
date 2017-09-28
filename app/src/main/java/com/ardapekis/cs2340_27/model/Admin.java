@@ -7,10 +7,10 @@ package com.ardapekis.cs2340_27.model;
 public class Admin extends User {
 
     public Admin() {
-        super("user", "pass", true);
+        super("user", "pass");
     }
 
-    public Admin(String username, String password, boolean admin) {
-        super(username, password, admin);
+    public Admin(String username, String password) {
+        super(username, password);
     }
 }

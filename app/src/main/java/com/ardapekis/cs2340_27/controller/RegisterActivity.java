@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ardapekis.cs2340_27.R;
+import com.ardapekis.cs2340_27.model.User;
+import com.ardapekis.cs2340_27.model.UserManager;
 
 /**
  * A login screen that offers login via email/password.
@@ -78,6 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
         // Store values at the time of the login attempt.
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
+        //boolean spinnervalue
 
         boolean cancel = false;
         View focusView = null;
@@ -105,14 +108,17 @@ public class RegisterActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
+            UserManager userManager = UserManager.getInstance();
+            // if (spinnervalue) create user/admin
+            userManager.addUser(new User(username, password));
             Intent intent = new Intent(this, AppActivity.class);
             startActivity(intent);
         }
     }
 
     private boolean isUsernameValid(String username) {
-        //TODO: Replace this with your own logic
-        return true;
+        UserManager userManager = UserManager.getInstance()
+        return username.length() > 0 && userManager.containsUser(username);
     }
 
     private boolean isPasswordValid(String password) {

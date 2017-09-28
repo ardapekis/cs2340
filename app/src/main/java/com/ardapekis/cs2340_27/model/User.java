@@ -7,16 +7,14 @@ package com.ardapekis.cs2340_27.model;
 public class User {
     private String username;
     private String password;
-    private boolean admin;
 
     public User() {
-        this("user", "pass", false);
+        this("user", "pass");
     }
 
-    public User(String username, String password, boolean admin) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.admin = admin;
     }
 
     public String getUsername() {
@@ -27,7 +25,24 @@ public class User {
         return password;
     }
 
-    public boolean isAdmin() {
-        return admin;
+    public boolean checkUsername(String username) {
+        return this.username.equalsIgnoreCase(username);
+    }
+
+    public boolean checkPassword(String password) {
+        return this.password.equals(password);
+    }
+
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof User)) {
+            return false;
+        }
+
+        User u = (User) o;
+        return u.checkUsername(username);
     }
 }

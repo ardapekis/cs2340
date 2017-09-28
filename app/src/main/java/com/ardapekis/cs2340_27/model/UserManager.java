@@ -28,4 +28,18 @@ public class UserManager {
         _users.add(user);
         return true;
     }
+
+    public boolean containsUser(User user) {
+        for (User u : _users) {
+            if (u.equals(user)) return true;
+        }
+        return false;
+    }
+
+    public boolean containsUser(String user) {
+        for (User u: _users) {
+            if (u.checkUsername(user)) return true;
+        }
+        return false;
+    }
 }
