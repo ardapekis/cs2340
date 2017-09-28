@@ -117,7 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean isUsernameValid(String username) {
-        UserManager userManager = UserManager.getInstance()
+        UserManager userManager = UserManager.getInstance();
         return username.length() > 0 && userManager.containsUser(username);
     }
 
