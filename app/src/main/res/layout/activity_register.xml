@@ -33,12 +33,21 @@
         android:imeOptions="actionUnspecified"
         android:maxLines="1"/>
 
+    <Spinner
+        android:id="@+id/user_type_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/password"
+        android:layout_marginTop="16dp">
+    </Spinner>
+
     <Button
         android:id="@+id/cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/password"
+        android:layout_below="@id/user_type_spinner"
         android:layout_marginStart="60dp"
         android:layout_marginTop="16dp"
         android:text="Cancel"
@@ -48,7 +57,7 @@
         android:id="@+id/register_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/password"
+        android:layout_below="@id/user_type_spinner"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="60dp"
         android:layout_marginTop="16dp"

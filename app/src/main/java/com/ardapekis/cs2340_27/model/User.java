@@ -1,5 +1,8 @@
 package com.ardapekis.cs2340_27.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by jason on 9/28/2017.
  */
@@ -44,5 +47,12 @@ public class User {
 
         User u = (User) o;
         return u.checkUsername(username);
+    }
+
+    public static List<String> getUserTypes() {
+        List<String> userTypes = new ArrayList<>();
+        userTypes.add("User");
+        userTypes.add("Admin");
+        return userTypes;
     }
 }

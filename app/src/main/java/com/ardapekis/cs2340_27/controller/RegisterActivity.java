@@ -9,13 +9,18 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ardapekis.cs2340_27.R;
+import com.ardapekis.cs2340_27.model.Admin;
 import com.ardapekis.cs2340_27.model.User;
 import com.ardapekis.cs2340_27.model.UserManager;
+
+import java.util.List;
 
 /**
  * A login screen that offers login via email/password.
@@ -25,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     // UI references.
     private EditText mUsernameView;
     private EditText mPasswordView;
+    private Spinner mUserType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,11 @@ public class RegisterActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        mUserType = (Spinner) findViewById(R.id.user_type_spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, User.getUserTypes());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mUserType.setAdapter(adapter);
 
         Button mRegisterButton = (Button) findViewById(R.id.register_button);
         mRegisterButton.setOnClickListener(new OnClickListener() {
@@ -80,14 +91,14 @@ public class RegisterActivity extends AppCompatActivity {
         // Store values at the time of the login attempt.
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
-        //boolean spinnervalue
+        boolean spinnerValue = ((String) mUserType.getSelectedItem()).equals("User");
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_incorrect_password));
+        if (!isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
         }
@@ -98,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
             focusView = mUsernameView;
             cancel = true;
         } else if (!isUsernameValid(username)) {
-            mUsernameView.setError(getString(R.string.error_invalid_username));
+            mUsernameView.setError(getString(R.string.error_username_taken));
             focusView = mUsernameView;
             cancel = true;
         }
@@ -109,21 +120,29 @@ public class RegisterActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             UserManager userManager = UserManager.getInstance();
-            // if (spinnervalue) create user/admin
-            userManager.addUser(new User(username, password));
+            if (spinnerValue) {
+                User user = new User(username, password);
+                userManager.addUser(user);
+                userManager.setLoggedInUser(user);
+            } else {
+                User admin = new Admin(username, password);
+                userManager.addUser(admin);
+                userManager.setLoggedInUser(admin);
+            }
+
             Intent intent = new Intent(this, AppActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
     }
 
     private boolean isUsernameValid(String username) {
         UserManager userManager = UserManager.getInstance();
-        return username.length() > 0 && userManager.containsUser(username);
+        return username.length() > 0 && !userManager.containsUser(username);
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return true;
+        return password.length() > 0;
     }
 }
 

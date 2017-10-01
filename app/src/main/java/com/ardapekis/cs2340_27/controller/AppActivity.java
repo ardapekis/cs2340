@@ -10,10 +10,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.ardapekis.cs2340_27.R;
+import com.ardapekis.cs2340_27.model.Admin;
+import com.ardapekis.cs2340_27.model.User;
+import com.ardapekis.cs2340_27.model.UserManager;
 
 public class AppActivity extends AppCompatActivity {
+
+    private TextView message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +27,14 @@ public class AppActivity extends AppCompatActivity {
         setContentView(R.layout.activity_app);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        UserManager userManager = UserManager.getInstance();
+        message = (TextView) findViewById(R.id.sample_text);
+        if (userManager.getLoggedInUser() instanceof Admin) {
+            message.setText("Admin");
+        } else {
+            message.setText("User");
+        }
     }
 
     @Override
@@ -43,8 +57,10 @@ public class AppActivity extends AppCompatActivity {
     }
 
     private void logout() {
+        UserManager userManager = UserManager.getInstance();
+        userManager.setLoggedInUser(null);
         Intent intent = new Intent(this, WelcomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 }

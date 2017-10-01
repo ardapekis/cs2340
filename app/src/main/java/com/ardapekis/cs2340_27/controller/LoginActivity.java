@@ -14,18 +14,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ardapekis.cs2340_27.R;
+import com.ardapekis.cs2340_27.model.UserManager;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity {
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String dummyUsername = "user";
-    private static final String dummyPassword = "pass";
 
     // UI references.
     private EditText mUsernameView;
@@ -90,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(username, password)) {
             mPasswordView.setError(getString(R.string.error_incorrect_password));
             focusView = mPasswordView;
             cancel = true;
@@ -101,10 +95,6 @@ public class LoginActivity extends AppCompatActivity {
             mUsernameView.setError(getString(R.string.error_field_required));
             focusView = mUsernameView;
             cancel = true;
-        } else if (!isUsernameValid(username)) {
-            mUsernameView.setError(getString(R.string.error_invalid_username));
-            focusView = mUsernameView;
-            cancel = true;
         }
 
         if (cancel) {
@@ -113,18 +103,14 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             Intent intent = new Intent(this, AppActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
     }
 
-    private boolean isUsernameValid(String username) {
-        //TODO: Replace this with your own logic
-        return username.equals(dummyUsername);
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.equals(dummyPassword);
+    private boolean isPasswordValid(String username, String password) {
+        UserManager userManager = UserManager.getInstance();
+        return userManager.checkUserCredentials(username, password);
     }
 }
 
