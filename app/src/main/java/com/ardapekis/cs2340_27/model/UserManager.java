@@ -13,23 +13,27 @@ public class UserManager {
     private static final UserManager _instance = new UserManager();
     public static UserManager getInstance() { return _instance; }
     
-    private Map<String, String> _users;
-    private List<User> _userList;
+    private Map<String, String> _usersPasswords;
+    private Map<String, User> _users;
     private User loggedInUser;
     
     private UserManager() {
+        _usersPasswords = new HashMap<>();
         _users = new HashMap<>();
-        _userList = new ArrayList<>();
         loggedInUser = null;
     }
 
     public boolean addUser(User user) {
-        for (User u : _userList) {
-            if (u.equals(user)) return false;
+        if (_users.containsValue(user)) {
+            return false;
         }
-        _userList.add(user);
-        _users.put(user.getUsername(), user.getPassword());
+        _users.put(user.getUsername().toLowerCase(), user);
+        _usersPasswords.put(user.getUsername().toLowerCase(), user.getPassword());
         return true;
+    }
+
+    public User getUser(String username) {
+        return _users.get(username.toLowerCase());
     }
 
     public void setLoggedInUser(User user) {
@@ -41,23 +45,17 @@ public class UserManager {
     }
 
     public boolean containsUser(User user) {
-        for (User u : _userList) {
-            if (u.equals(user)) return true;
-        }
-        return false;
+        return _users.containsValue(user);
     }
 
-    public boolean containsUser(String user) {
-        for (User u: _userList) {
-            if (u.checkUsername(user)) return true;
-        }
-        return false;
+    public boolean containsUser(String username) {
+        return _users.containsKey(username.toLowerCase());
     }
 
     public boolean checkUserCredentials(String username, String password) {
         if (!containsUser(username)) {
             return false;
         }
-        return password.equals(_users.get(username));
+        return password.equals(_usersPasswords.get(username.toLowerCase()));
     }
 }
