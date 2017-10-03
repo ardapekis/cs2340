@@ -20,14 +20,12 @@ import com.ardapekis.cs2340_27.model.Admin;
 import com.ardapekis.cs2340_27.model.User;
 import com.ardapekis.cs2340_27.model.UserManager;
 
-import java.util.List;
-
 /**
- * A login screen that offers login via email/password.
+ * A registration screen that offers registration via username and password
  */
 public class RegisterActivity extends AppCompatActivity {
 
-    // UI references.
+    /** UI references */
     private EditText mUsernameView;
     private EditText mPasswordView;
     private Spinner mUserType;
@@ -40,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         mUsernameView = (EditText) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
 
+        // sets up password edit action listener
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -51,11 +50,14 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        // Spinner setup
+        UserManager userManager = UserManager.getInstance();
         mUserType = (Spinner) findViewById(R.id.user_type_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, User.getUserTypes());
+        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, userManager.getUserTypes());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mUserType.setAdapter(adapter);
 
+        // setup register button listener
         Button mRegisterButton = (Button) findViewById(R.id.register_button);
         mRegisterButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -64,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        // setup cancel button listener
         Button mCancelButton = (Button) findViewById(R.id.cancel_button);
         mCancelButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -73,14 +76,15 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /** when cancel is pressed, closes activity */
     private void cancel() {
         finish();
     }
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
+     * Attempts to register the account specified by the registration form.
+     * If there are form errors (invalid username, missing fields, etc.), the
+     * errors are presented and no actual registration attempt is made.
      */
     private void attemptRegister() {
 
@@ -119,6 +123,7 @@ public class RegisterActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
+            // depending on spinner value, registers a new User or Admin
             UserManager userManager = UserManager.getInstance();
             if (spinnerValue) {
                 User user = new User(username, password);
@@ -130,17 +135,29 @@ public class RegisterActivity extends AppCompatActivity {
                 userManager.setLoggedInUser(admin);
             }
 
+            // Starts AppActivity and clears the activity stack
             Intent intent = new Intent(this, AppActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
     }
 
+    /**
+     * Checks if a username is valid - must not be empty and must not already
+     * be registered
+     * @param username      The username to check
+     * @return              True if username is valid, false if not
+     */
     private boolean isUsernameValid(String username) {
         UserManager userManager = UserManager.getInstance();
         return username.length() > 0 && !userManager.containsUser(username);
     }
 
+    /**
+     * Checks if a password is valid, if it is not empty
+     * @param password      The password to check
+     * @return              True if valid, false if not
+     */
     private boolean isPasswordValid(String password) {
         return password.length() > 0;
     }

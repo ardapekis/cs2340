@@ -18,11 +18,11 @@ import com.ardapekis.cs2340_27.model.User;
 import com.ardapekis.cs2340_27.model.UserManager;
 
 /**
- * A login screen that offers login via email/password.
+ * A login screen that offers login via username/password.
  */
 public class LoginActivity extends AppCompatActivity {
 
-    // UI references.
+    /** UI references */
     private EditText mUsernameView;
     private EditText mPasswordView;
 
@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         mUsernameView = (EditText) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
 
+        // sets up password edit action listener
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -45,14 +46,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button mSignInButton = (Button) findViewById(R.id.sign_in_button);
-        mSignInButton.setOnClickListener(new OnClickListener() {
+        // setup login button listener
+        Button mLogInButton = (Button) findViewById(R.id.login_button);
+        mLogInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
             }
         });
 
+        // setup cancel button listener
         Button mCancelButton = (Button) findViewById(R.id.cancel_button);
         mCancelButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -62,13 +65,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /** when cancel is pressed, closes activity */
     private void cancel() {
         finish();
     }
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
+     * Attempts to login the account specified by the login form.
+     * If there are form errors (invalid username, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
@@ -103,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
+            // Sets the currently logged in user and clears the activity stack
             UserManager userManager = UserManager.getInstance();
             userManager.setLoggedInUser(userManager.getUser(username));
             Intent intent = new Intent(this, AppActivity.class);
@@ -111,6 +116,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks that the username and password are a valid combination
+     * @param username      The username to check
+     * @param password      The password to check
+     * @return              True if valid, false if not
+     */
     private boolean isPasswordValid(String username, String password) {
         UserManager userManager = UserManager.getInstance();
         return userManager.checkUserCredentials(username, password);

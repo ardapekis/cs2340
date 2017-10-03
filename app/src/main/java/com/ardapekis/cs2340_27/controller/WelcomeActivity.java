@@ -7,6 +7,10 @@ import android.view.View;
 
 import com.ardapekis.cs2340_27.R;
 
+/**
+ * The welcome screen first showed when app is launched, provides options to
+ * login an existing user or register a new user
+ */
 public class WelcomeActivity extends AppCompatActivity {
 
     @Override
@@ -15,11 +19,19 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
     }
 
+    /**
+     * Handles when the login button is pressed
+     * @param view      The view calling this method
+     */
     public void loginClick(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Handles when the register button is pressed
+     * @param view      The view calling this method
+     */
     public void registerClick(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
