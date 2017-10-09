@@ -1,8 +1,42 @@
 package com.ardapekis.cs2340_27.model;
 
+import java.util.Date;
+
 /**
- * Created by jason on 10/5/2017.
+ * Information holder for rat reports
  */
 
 public class RatReportItem {
+    private int key;
+    private Date createdDate;
+    private Date closedDate;
+    private Date dueDate;
+    private Date resolutionDate;
+    private Location location;
+
+    public int getKey() {
+        return key;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public Date getClosedDate() {
+        return closedDate;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public Date getResolutionDate() {
+        return resolutionDate;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+
 }
