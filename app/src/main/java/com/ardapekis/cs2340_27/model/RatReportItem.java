@@ -9,9 +9,6 @@ import java.util.Date;
 public class RatReportItem {
     private int key;
     private Date createdDate;
-    private Date closedDate;
-    private Date dueDate;
-    private Date resolutionDate;
     private Location location;
 
     public int getKey() {
@@ -22,21 +19,13 @@ public class RatReportItem {
         return createdDate;
     }
 
-    public Date getClosedDate() {
-        return closedDate;
-    }
-
-    public Date getDueDate() {
-        return dueDate;
-    }
-
-    public Date getResolutionDate() {
-        return resolutionDate;
-    }
-
     public Location getLocation() {
         return location;
     }
 
-
+    public RatReportItem(int key, Date createdDate, Location location) {
+        this.key = key;
+        this.createdDate = createdDate;
+        this.location = location;
+    }
 }

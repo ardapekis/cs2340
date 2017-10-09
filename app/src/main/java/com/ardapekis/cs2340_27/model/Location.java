@@ -5,6 +5,17 @@ package com.ardapekis.cs2340_27.model;
  */
 
 public class Location {
+    private LocationType locationType;
+    private Address address;
+    private Coordinates coordinates;
+
+    public Location(LocationType locationType, Address address,
+                    Coordinates coordinates) {
+        this.locationType = locationType;
+        this.address = address;
+        this.coordinates = coordinates;
+    }
+
     public enum LocationType {
         THREE_PLUS_MIXED_USE ("3+ Family Mixed Use Building"),
         COMMERCIAL ("Commercial Building"),
@@ -37,31 +48,12 @@ public class Location {
         }
     }
 
-    public enum AddressType {
-        INTERSECTION,
-        LATLONG,
-        ADDRESS,
-        BLOCKFACE,
-        PLACENAME
-    }
-
-    class Address {
-        private AddressType addressType;
+    private class Address {
         private int zipcode;
         private int number;
         private String streetName;
-        private String crossStreet1;
-        private String crossStreet2;
-        private String intersectionStreet1;
-        private String intersectionStreet2;
         private String city;
-        private String landmark;
-        private String community;
         private String borough;
-
-        public AddressType getAddressType() {
-            return addressType;
-        }
 
         public int getZipcode() {
             return zipcode;
@@ -75,75 +67,25 @@ public class Location {
             return streetName;
         }
 
-        public String getCrossStreet1() {
-            return crossStreet1;
-        }
-
-        public String getCrossStreet2() {
-            return crossStreet2;
-        }
-
-        public String getIntersectionStreet1() {
-            return intersectionStreet1;
-        }
-
-        public String getIntersectionStreet2() {
-            return intersectionStreet2;
-        }
-
         public String getCity() {
             return city;
-        }
-
-        public String getLandmark() {
-            return landmark;
-        }
-
-        public String getCommunity() {
-            return community;
         }
 
         public String getBorough() {
             return borough;
         }
 
-        public Address(AddressType addressType, int zipcode, int number, String streetName, String crossStreet1,
-                       String crossStreet2, String intersectionStreet1, String intersectionStreet2,
-                       String city, String landmark, String community, String borough) {
-            this.addressType = addressType;
+        public Address(int zipcode, int number, String streetName,
+                       String city, String borough) {
             this.zipcode = zipcode;
             this.number = number;
             this.streetName = streetName;
-            this.crossStreet1 = crossStreet1;
-            this.crossStreet2 = crossStreet2;
-            this.intersectionStreet1 = intersectionStreet1;
-            this.intersectionStreet2 = intersectionStreet2;
             this.city = city;
-            this.landmark = landmark;
-            this.community = community;
             this.borough = borough;
         }
     }
 
-    class StateCoordinates {
-        private int x;
-        private int y;
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public StateCoordinates(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
-    class Coordinates {
+    private class Coordinates {
         private double latitude;
         private double longitude;
 
