@@ -8,10 +8,4 @@
     tools:context="com.ardapekis.cs2340_27.controller.AppActivity"
     tools:showIn="@layout/activity_app">
 
-    <TextView
-        android:id="@+id/sample_text"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text=""
-        android:textSize="50sp"/>
 </LinearLayout>

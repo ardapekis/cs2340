@@ -23,6 +23,10 @@ public class RatReportItem {
         return location;
     }
 
+    public String getAddressString() {
+        return location.getNumberAddress();
+    }
+
     public RatReportItem(int key, Date createdDate, Location location) {
         this.key = key;
         this.createdDate = createdDate;
