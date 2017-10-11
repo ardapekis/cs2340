@@ -1,7 +1,9 @@
 package com.ardapekis.cs2340_27.controller;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.ardapekis.cs2340_27.R;
@@ -39,6 +42,8 @@ import java.util.Locale;
  */
 public class AppActivity extends AppCompatActivity {
 
+    RatReportManager manager = RatReportManager.INSTANCE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +51,9 @@ public class AppActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        RatReportManager manager = RatReportManager.INSTANCE;
         if (!manager.getLoaded()) {
-            readSDFile();
+            FileReader reader = new FileReader();
+            reader.execute();
         }
         View recyclerView = findViewById(R.id.recycler_list);
         assert recyclerView != null;
@@ -56,56 +61,128 @@ public class AppActivity extends AppCompatActivity {
         setupRecyclerView((RecyclerView) recyclerView);
     }
 
-    private void readSDFile() {
-        RatReportManager manager = RatReportManager.INSTANCE;
+    private class FileReader extends AsyncTask<Void, Integer, Boolean> {
 
-        try {
-            InputStream is = getResources().openRawResource(R.raw.rat_sightings);
-            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+        private Boolean resp;
+        ProgressDialog progressDialog;
 
-            String line;
-            br.readLine(); //get rid of header line
-            DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.US);
-            Date createdDate = null;
-            Location location;
-            while ((line = br.readLine()) != null) {
-                //Log.d("AppActivity", line);
-                String[] tokens = line.split(",");
-                int key = Integer.parseInt(tokens[0]);
-                try {
-                    createdDate = format.parse(tokens[1]);
-                } catch (ParseException e) {
-                    Log.d("AppActivity", "parseException");
-                }
-                if (tokens.length <= 50) {
-                    if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
-                        location = new Location(tokens[7], 0, tokens[9], tokens[16], tokens[23], 0, 0);
-                    } else {
-                        location = new Location(tokens[7], Integer.valueOf(tokens[8]), tokens[9], tokens[16], tokens[23], 0, 0);
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            int numLoaded = 0;
+            try {
+                InputStream is = getResources().openRawResource(R.raw.rat_sightings);
+                BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+
+                String line;
+                br.readLine(); //get rid of header line
+                DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.US);
+                Date createdDate = null;
+                Location location;
+                while ((line = br.readLine()) != null) {
+                    //Log.d("AppActivity", line);
+                    String[] tokens = line.split(",");
+                    int key = Integer.parseInt(tokens[0]);
+                    try {
+                        createdDate = format.parse(tokens[1]);
+                    } catch (ParseException e) {
+                        Log.d("AppActivity", "parseException");
                     }
-                } else {
-                    if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
-                        location = new Location(tokens[7], 0, tokens[9], tokens[16], tokens[23], Double.valueOf(tokens[49]), Double.valueOf(tokens[50]));
+                    if (tokens.length <= 50) {
+                        if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
+                            location = new Location(tokens[7], 0, tokens[9], tokens[16], tokens[23], 0, 0);
+                        } else {
+                            location = new Location(tokens[7], Integer.valueOf(tokens[8]), tokens[9], tokens[16], tokens[23], 0, 0);
+                        }
                     } else {
-                        location = new Location(tokens[7], Integer.valueOf(tokens[8]), tokens[9], tokens[16], tokens[23], Double.valueOf(tokens[49]), Double.valueOf(tokens[50]));
+                        if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
+                            location = new Location(tokens[7], 0, tokens[9], tokens[16], tokens[23], Double.valueOf(tokens[49]), Double.valueOf(tokens[50]));
+                        } else {
+                            location = new Location(tokens[7], Integer.valueOf(tokens[8]), tokens[9], tokens[16], tokens[23], Double.valueOf(tokens[49]), Double.valueOf(tokens[50]));
+                        }
                     }
-                }
                     manager.addItem(new RatReportItem(key, createdDate, location));
+                    publishProgress(++numLoaded); // Calls onProgressUpdate()
+                }
+                br.close();
+                resp = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = false;
             }
-            manager.setLoaded();
-            br.close();
-        } catch (IOException e) {
-            Log.e("AppActivity", "error reading assets", e);
+            return resp;
         }
 
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            // execution of result of Long time consuming operation
+            progressDialog.dismiss();
+            manager.setLoaded(result);
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(AppActivity.this);
+            progressDialog.setMessage("Loaded:");
+            progressDialog.show();
+        }
+
+
+        @Override
+        protected void onProgressUpdate(Integer... loaded) {
+            progressDialog.setMessage("Loaded: " + loaded[0]);
+        }
     }
+
+//    private void readSDFile() {
+//        try {
+//            InputStream is = getResources().openRawResource(R.raw.rat_sightings);
+//            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+//
+//            String line;
+//            br.readLine(); //get rid of header line
+//            DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.US);
+//            Date createdDate = null;
+//            Location location;
+//            while ((line = br.readLine()) != null) {
+//                //Log.d("AppActivity", line);
+//                String[] tokens = line.split(",");
+//                int key = Integer.parseInt(tokens[0]);
+//                try {
+//                    createdDate = format.parse(tokens[1]);
+//                } catch (ParseException e) {
+//                    Log.d("AppActivity", "parseException");
+//                }
+//                if (tokens.length <= 50) {
+//                    if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
+//                        location = new Location(tokens[7], 0, tokens[9], tokens[16], tokens[23], 0, 0);
+//                    } else {
+//                        location = new Location(tokens[7], Integer.valueOf(tokens[8]), tokens[9], tokens[16], tokens[23], 0, 0);
+//                    }
+//                } else {
+//                    if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
+//                        location = new Location(tokens[7], 0, tokens[9], tokens[16], tokens[23], Double.valueOf(tokens[49]), Double.valueOf(tokens[50]));
+//                    } else {
+//                        location = new Location(tokens[7], Integer.valueOf(tokens[8]), tokens[9], tokens[16], tokens[23], Double.valueOf(tokens[49]), Double.valueOf(tokens[50]));
+//                    }
+//                }
+//                    manager.addItem(new RatReportItem(key, createdDate, location));
+//            }
+//            manager.setLoaded(true);
+//            br.close();
+//        } catch (IOException e) {
+//            Log.e("AppActivity", "error reading assets", e);
+//        }
+//
+//    }
 
     /**
      * Set up an adapter and hook it to the provided view
      * @param recyclerView  the view that needs this adapter
      */
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new RatReportItemRecyclerViewAdapter(RatReportManager.INSTANCE.getItems()));
+        recyclerView.setAdapter(new RatReportItemRecyclerViewAdapter(manager.getItems()));
     }
 
     public class RatReportItemRecyclerViewAdapter

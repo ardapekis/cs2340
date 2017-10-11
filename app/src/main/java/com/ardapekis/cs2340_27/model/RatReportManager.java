@@ -20,8 +20,8 @@ public class RatReportManager {
         loaded = false;
     }
 
-    public void setLoaded() {
-        loaded = true;
+    public void setLoaded(Boolean b) {
+        loaded = b;
     }
 
     public boolean getLoaded() {
