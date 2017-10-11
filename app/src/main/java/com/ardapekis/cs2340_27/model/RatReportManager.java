@@ -26,7 +26,7 @@ public class RatReportManager {
         return reports;
     }
 
-    public RatReportItem findItemById(int key) {
+    public RatReportItem findItemByKey(int key) {
         for (RatReportItem d : reports) {
             if (d.getKey() == key) return d;
         }

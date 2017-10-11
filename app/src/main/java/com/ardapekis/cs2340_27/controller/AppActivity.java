@@ -46,6 +46,7 @@ public class AppActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        readSDFile();
         View recyclerView = findViewById(R.id.recycler_list);
         assert recyclerView != null;
         //Step 2.  Hook up the adapter to the view
@@ -53,7 +54,7 @@ public class AppActivity extends AppCompatActivity {
     }
 
     private void readSDFile() {
-        RatReportManager model = RatReportManager.INSTANCE;
+        RatReportManager manager = RatReportManager.INSTANCE;
 
         try {
             InputStream is = getResources().openRawResource(R.raw.rat_sightings);
@@ -62,21 +63,35 @@ public class AppActivity extends AppCompatActivity {
             String line;
             br.readLine(); //get rid of header line
             while ((line = br.readLine()) != null) {
-                Log.d(AppActivity.TAG, line);
+                //Log.d("AppActivity", line);
                 String[] tokens = line.split(",");
                 int key = Integer.parseInt(tokens[0]);
                 DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
+                Date createdDate = null;
                 try {
-                    Date createdDate = format.parse(tokens[1]);
+                    createdDate = format.parse(tokens[1]);
                 } catch (ParseException e) {
-                    Log.d(AppActivity.TAG, "parseException");
+                    Log.d("AppActivity", "parseException");
                 }
-                Location location = new Location(tokens[7], Integer.valueOf(tokens[8]), Integer.valueOf(tokens[9]), )
-                model.addItem(new RatReportItem());
+                Location location;
+                if (tokens.length <= 50) {
+                    if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
+                        location = new Location(tokens[7], 0, tokens[9], tokens[16], tokens[23], 0, 0);
+                    } else {
+                        location = new Location(tokens[7], Integer.valueOf(tokens[8]), tokens[9], tokens[16], tokens[23], 0, 0);
+                    }
+                } else {
+                    if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
+                        location = new Location(tokens[7], 0, tokens[9], tokens[16], tokens[23], Double.valueOf(tokens[49]), Double.valueOf(tokens[50]));
+                    } else {
+                        location = new Location(tokens[7], Integer.valueOf(tokens[8]), tokens[9], tokens[16], tokens[23], Double.valueOf(tokens[49]), Double.valueOf(tokens[50]));
+                    }
+                }
+                    manager.addItem(new RatReportItem(key, createdDate, location));
             }
             br.close();
         } catch (IOException e) {
-            Log.e(AppActivity.TAG, "error reading assets", e);
+            Log.e("AppActivity", "error reading assets", e);
         }
 
     }
@@ -111,17 +126,17 @@ public class AppActivity extends AppCompatActivity {
             holder.mDateView.setText(mValues.get(position).getCreatedDate().toString());
             holder.mAddressView.setText(mValues.get(position).getAddressString());
 
-//            holder.mView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Context context = v.getContext();
-//                    Intent intent = new Intent(context, RatReportItemDetailActivity.class);
-//                    Log.d("MYAPP", "Switch to detailed view for item: " + holder.mItem.getId());
-//                    intent.putExtra(RatReportItemDetailFragment.ARG_ITEM_ID, holder.mItem.getId());
-//
-//                    context.startActivity(intent);
-//                }
-//            });
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, RatReportDetailActivity.class);
+                    Log.d("MYAPP", "Switch to detailed view for item: " + holder.mItem.getKey());
+                    intent.putExtra(RatReportDetailActivity.ARG_ITEM_ID, holder.mItem.getKey());
+
+                    context.startActivity(intent);
+                }
+            });
         }
         @Override
         public int getItemCount() {

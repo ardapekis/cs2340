@@ -24,7 +24,7 @@ public class RatReportItem {
     }
 
     public String getAddressString() {
-        return location.getNumberAddress();
+        return location.getAddressString();
     }
 
     public RatReportItem(int key, Date createdDate, Location location) {

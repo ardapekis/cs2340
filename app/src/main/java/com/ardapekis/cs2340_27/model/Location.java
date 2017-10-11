@@ -17,8 +17,8 @@ public class Location {
         return address;
     }
 
-    public String getNumberAddress() {
-        return address.getNumberAddress();
+    public String getAddressString() {
+        return address.getAddress();
     }
 
     public Coordinates getCoordinates() {
@@ -32,11 +32,11 @@ public class Location {
         this.coordinates = coordinates;
     }
 
-    public Location(String locationTypeString, int zipcode, int number, String streetName,
+    public Location(String locationTypeString, int zipcode, String address,
                     String city, String borough, double latitude, double longitude) {
         this.locationType = LocationType.parseString(locationTypeString);
-        this.Address = new Address(zipcode, number, streetName, city, borough);
-        this.Coordinates = new Coordinates(latitude, longitude);
+        this.address = new Address(zipcode, address, city, borough);
+        this.coordinates = new Coordinates(latitude, longitude);
     }
 
     public enum LocationType {
@@ -108,6 +108,8 @@ public class Location {
                     return SRO;
                 case "Summer Camp":
                     return SUMMER_CAMP;
+                default:
+                    return null;
             }
         }
 
@@ -116,10 +118,9 @@ public class Location {
         }
     }
 
-    private class Address {
+    public class Address {
         private int zipcode;
-        private int number;
-        private String streetName;
+        private String address;
         private String city;
         private String borough;
 
@@ -127,16 +128,8 @@ public class Location {
             return zipcode;
         }
 
-        public int getNumber() {
-            return number;
-        }
-
-        public String getStreetName() {
-            return streetName;
-        }
-
-        public String getNumberAddress() {
-            return number + " " + streetName;
+        public String getAddress() {
+            return address;
         }
 
         public String getCity() {
@@ -147,17 +140,16 @@ public class Location {
             return borough;
         }
 
-        public Address(int zipcode, int number, String streetName,
+        public Address(int zipcode, String address,
                        String city, String borough) {
             this.zipcode = zipcode;
-            this.number = number;
-            this.streetName = streetName;
+            this.address = address;
             this.city = city;
             this.borough = borough;
         }
     }
 
-    private class Coordinates {
+    public class Coordinates {
         private double latitude;
         private double longitude;
 

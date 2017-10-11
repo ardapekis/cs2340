@@ -21,10 +21,11 @@
             android:name=".controller.LoginActivity"
             android:theme="@style/AppThemeNoActionBar" />
         <activity android:name=".controller.RegisterActivity" />
+        <activity android:name=".controller.RatReportDetailActivity" />
         <activity
             android:name=".controller.AppActivity"
             android:label="@string/title_activity_app"
-            android:theme="@style/AppThemeNoActionBar"></activity>
+            android:theme="@style/AppThemeNoActionBar" />
     </application>
 
 </manifest>
