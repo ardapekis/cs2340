@@ -11,11 +11,21 @@ import java.util.List;
 
 public class RatReportManager {
     public static final RatReportManager INSTANCE = new RatReportManager();
+    private boolean loaded;
 
     private List<RatReportItem> reports;
 
     private RatReportManager() {
-        reports = new ArrayList<>();
+        reports = new ArrayList<>(110000);
+        loaded = false;
+    }
+
+    public void setLoaded() {
+        loaded = true;
+    }
+
+    public boolean getLoaded() {
+        return loaded;
     }
 
     public void addItem(RatReportItem item) {

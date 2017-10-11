@@ -46,7 +46,10 @@ public class AppActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        readSDFile();
+        RatReportManager manager = RatReportManager.INSTANCE;
+        if (!manager.getLoaded()) {
+            readSDFile();
+        }
         View recyclerView = findViewById(R.id.recycler_list);
         assert recyclerView != null;
         //Step 2.  Hook up the adapter to the view
@@ -62,18 +65,18 @@ public class AppActivity extends AppCompatActivity {
 
             String line;
             br.readLine(); //get rid of header line
+            DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.US);
+            Date createdDate = null;
+            Location location;
             while ((line = br.readLine()) != null) {
                 //Log.d("AppActivity", line);
                 String[] tokens = line.split(",");
                 int key = Integer.parseInt(tokens[0]);
-                DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.ENGLISH);
-                Date createdDate = null;
                 try {
                     createdDate = format.parse(tokens[1]);
                 } catch (ParseException e) {
                     Log.d("AppActivity", "parseException");
                 }
-                Location location;
                 if (tokens.length <= 50) {
                     if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
                         location = new Location(tokens[7], 0, tokens[9], tokens[16], tokens[23], 0, 0);
@@ -89,6 +92,7 @@ public class AppActivity extends AppCompatActivity {
                 }
                     manager.addItem(new RatReportItem(key, createdDate, location));
             }
+            manager.setLoaded();
             br.close();
         } catch (IOException e) {
             Log.e("AppActivity", "error reading assets", e);
