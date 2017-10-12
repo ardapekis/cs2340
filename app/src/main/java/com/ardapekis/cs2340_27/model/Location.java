@@ -1,7 +1,7 @@
 package com.ardapekis.cs2340_27.model;
 
 /**
- * Created by jason on 10/5/2017.
+ * Model class for location
  */
 
 public class Location {
@@ -9,6 +9,7 @@ public class Location {
     private Address address;
     private Coordinates coordinates;
 
+    /** Getters and a method for getting the displayed address */
     public LocationType getLocationType() {
         return locationType;
     }
@@ -25,6 +26,12 @@ public class Location {
         return coordinates;
     }
 
+    /** Normal constructor
+     *
+     * @param locationType      The locationType of the location
+     * @param address           The address of the location
+     * @param coordinates       The coordinates of the location
+     */
     public Location(LocationType locationType, Address address,
                     Coordinates coordinates) {
         this.locationType = locationType;
@@ -32,6 +39,17 @@ public class Location {
         this.coordinates = coordinates;
     }
 
+    /**
+     * Constructor that takes in individual elements
+     *
+     * @param locationTypeString        LocationType as a string
+     * @param zipcode                   Zipcode for location
+     * @param address                   Address string
+     * @param city                      City string
+     * @param borough                   Borough string
+     * @param latitude                  Latitude as a double
+     * @param longitude                 Longitude as a double
+     */
     public Location(String locationTypeString, int zipcode, String address,
                     String city, String borough, double latitude, double longitude) {
         this.locationType = LocationType.parseString(locationTypeString);
@@ -39,6 +57,9 @@ public class Location {
         this.coordinates = new Coordinates(latitude, longitude);
     }
 
+    /**
+     * Enum for locationType, kind of unnecessary
+     */
     public enum LocationType {
         THREE_PLUS_MIXED_USE ("3+ Family Mixed Use Building"),
         COMMERCIAL ("Commercial Building"),
@@ -66,6 +87,11 @@ public class Location {
             this.display = display;
         }
 
+        /**
+         * Matches up enums with their string attributes
+         * @param s     The string to match
+         * @return      The LocationType that matches w/ the string
+         */
         public static LocationType parseString(String s) {
             switch (s) {
                 case "3+ Family Mixed Use Building":
@@ -118,6 +144,9 @@ public class Location {
         }
     }
 
+    /**
+     * Address holder class
+     */
     public class Address {
         private int zipcode;
         private String address;
@@ -149,6 +178,9 @@ public class Location {
         }
     }
 
+    /**
+     * Coordinates holder class
+     */
     public class Coordinates {
         private double latitude;
         private double longitude;

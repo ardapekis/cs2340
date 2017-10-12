@@ -17,10 +17,11 @@ import com.ardapekis.cs2340_27.model.RatReportItem;
 import com.ardapekis.cs2340_27.model.RatReportManager;
 
 /**
- * Created by jason on 10/5/2017.
+ * Shown when user clicks on a rat report
  */
 
 public class RatReportDetailActivity extends AppCompatActivity {
+    /** key for the intent */
     public static final String ARG_ITEM_ID = "key";
 
     private RatReportItem mItem;
@@ -32,15 +33,15 @@ public class RatReportDetailActivity extends AppCompatActivity {
         mItem = RatReportManager.INSTANCE.findItemByKey(getIntent().getIntExtra(ARG_ITEM_ID, 0));
         if (mItem != null) {
             Log.d("MYAPP", "Getting ready to set id");
-            ((TextView) findViewById(R.id.key)).setText("" + mItem.getKey());
+            ((TextView) findViewById(R.id.key)).setText("Key: " + mItem.getKey());
             Log.d("MYAPP", "Getting ready to set name");
-            ((TextView) findViewById(R.id.date)).setText(mItem.getCreatedDate().toString());
-            ((TextView) findViewById(R.id.location_type)).setText(mItem.getLocation().getLocationType().toString());
-            ((TextView) findViewById(R.id.address)).setText(mItem.getAddressString());
-            ((TextView) findViewById(R.id.zipcode)).setText("" + mItem.getLocation().getAddress().getZipcode());
-            ((TextView) findViewById(R.id.city)).setText(mItem.getLocation().getAddress().getCity());
-            ((TextView) findViewById(R.id.borough)).setText(mItem.getLocation().getAddress().getBorough());
-            ((TextView) findViewById(R.id.coordinates)).setText(mItem.getLocation().getCoordinates().getLatitude() + ", " + mItem.getLocation().getCoordinates().getLongitude());
+            ((TextView) findViewById(R.id.date)).setText("Created Date: " + mItem.getCreatedDate().toString());
+            ((TextView) findViewById(R.id.location_type)).setText("Location Type: " + mItem.getLocation().getLocationType().toString());
+            ((TextView) findViewById(R.id.address)).setText("Address: " + mItem.getAddressString());
+            ((TextView) findViewById(R.id.zipcode)).setText("Zipcode: " + mItem.getLocation().getAddress().getZipcode());
+            ((TextView) findViewById(R.id.city)).setText("City: " + mItem.getLocation().getAddress().getCity());
+            ((TextView) findViewById(R.id.borough)).setText("Borough: " + mItem.getLocation().getAddress().getBorough());
+            ((TextView) findViewById(R.id.coordinates)).setText("Coordinates:\n" + mItem.getLocation().getCoordinates().getLatitude() + ", " + mItem.getLocation().getCoordinates().getLongitude());
         }
     }
 

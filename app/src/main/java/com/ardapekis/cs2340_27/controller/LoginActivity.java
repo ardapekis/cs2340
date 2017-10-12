@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, AppActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
+            // hides the keyboard after login
             InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 

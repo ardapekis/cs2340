@@ -11,6 +11,7 @@ public class RatReportItem {
     private Date createdDate;
     private Location location;
 
+    /** Getters */
     public int getKey() {
         return key;
     }
@@ -27,6 +28,13 @@ public class RatReportItem {
         return location.getAddressString();
     }
 
+    /**
+     * Creates a new RatReportItem
+     *
+     * @param key           Unique int key
+     * @param createdDate   createdDate as a Date object
+     * @param location      Location as a Location object
+     */
     public RatReportItem(int key, Date createdDate, Location location) {
         this.key = key;
         this.createdDate = createdDate;
