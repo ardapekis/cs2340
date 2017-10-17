@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/sort_old"
+          android:title="Sort: Old" />
+    <item android:id="@+id/sort_new"
+          android:title="Sort: New" />
     <item android:id="@+id/logout"
           android:title="Logout" />
 </menu>

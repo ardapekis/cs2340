@@ -42,6 +42,9 @@ public class AppActivity extends AppCompatActivity {
 
     /** Singleton instance of RatReportManager */
     RatReportManager manager = RatReportManager.INSTANCE;
+    RecyclerView recyclerView;
+    RatReportItemRecyclerViewAdapter adapter;
+    private String sort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +53,14 @@ public class AppActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        adapter = new RatReportItemRecyclerViewAdapter(manager.getItemsQueue());
+        sort = "new";
         // only load if not already loaded
         if (!manager.getLoaded()) {
             FileReader reader = new FileReader();
             reader.execute();
         }
-        View recyclerView = findViewById(R.id.recycler_list);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_list);
         assert recyclerView != null;
         //Step 2.  Hook up the adapter to the view
         setupRecyclerView((RecyclerView) recyclerView);
@@ -104,7 +109,9 @@ public class AppActivity extends AppCompatActivity {
                             location = new Location(tokens[7], Integer.valueOf(tokens[8]), tokens[9], tokens[16], tokens[23], Double.valueOf(tokens[49]), Double.valueOf(tokens[50]));
                         }
                     }
-                    manager.addItem(new RatReportItem(key, createdDate, location));
+                    RatReportItem item = new RatReportItem(key, createdDate, location);
+                    manager.addItemToFront(item);
+                    manager.addItem(item);
                     publishProgress(++numLoaded); // Calls onProgressUpdate()
                 }
                 br.close();
@@ -122,6 +129,7 @@ public class AppActivity extends AppCompatActivity {
             // execution of result of Long time consuming operation
             progressDialog.dismiss();
             manager.setLoaded(result);
+            adapter.notifyDataSetChanged();
         }
 
 
@@ -144,7 +152,7 @@ public class AppActivity extends AppCompatActivity {
      * @param recyclerView  the view that needs this adapter
      */
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new RatReportItemRecyclerViewAdapter(manager.getItems()));
+        recyclerView.setAdapter(adapter);
     }
 
     public class RatReportItemRecyclerViewAdapter
@@ -176,7 +184,7 @@ public class AppActivity extends AppCompatActivity {
                     Intent intent = new Intent(context, RatReportDetailActivity.class);
                     Log.d("MYAPP", "Switch to detailed view for item: " + holder.mItem.getKey());
                     intent.putExtra(RatReportDetailActivity.ARG_ITEM_ID, holder.mItem.getKey());
-
+                    intent.putExtra(RatReportDetailActivity.ARG_SORT, sort);
                     context.startActivity(intent);
                 }
             });
@@ -229,6 +237,18 @@ public class AppActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.logout:
                 logout();
+                return true;
+            case R.id.sort_old:
+                sort = "old";
+                adapter = new RatReportItemRecyclerViewAdapter(manager.getItems());
+                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                return true;
+            case R.id.sort_new:
+                sort = "new";
+                adapter = new RatReportItemRecyclerViewAdapter(manager.getItemsQueue());
+                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

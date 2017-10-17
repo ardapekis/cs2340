@@ -23,14 +23,14 @@ import com.ardapekis.cs2340_27.model.RatReportManager;
 public class RatReportDetailActivity extends AppCompatActivity {
     /** key for the intent */
     public static final String ARG_ITEM_ID = "key";
-
+    public static final String ARG_SORT = "sort";
     private RatReportItem mItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        mItem = RatReportManager.INSTANCE.findItemByKey(getIntent().getIntExtra(ARG_ITEM_ID, 0));
+        mItem = RatReportManager.INSTANCE.findItemByKey(getIntent().getIntExtra(ARG_ITEM_ID, 0), getIntent().getStringExtra(ARG_SORT));
         if (mItem != null) {
             Log.d("MYAPP", "Getting ready to set id");
             ((TextView) findViewById(R.id.key)).setText("Key: " + mItem.getKey());
