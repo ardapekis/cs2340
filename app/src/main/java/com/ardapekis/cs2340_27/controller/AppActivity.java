@@ -2,10 +2,13 @@ package com.ardapekis.cs2340_27.controller;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +19,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ardapekis.cs2340_27.R;
 import com.ardapekis.cs2340_27.model.Location;
@@ -53,6 +58,14 @@ public class AppActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addRatReportItemDialog();
+            }
+        });
+
         adapter = new RatReportItemRecyclerViewAdapter(manager.getItemsQueue());
         sort = "new";
         // only load if not already loaded
@@ -64,6 +77,59 @@ public class AppActivity extends AppCompatActivity {
         assert recyclerView != null;
         //Step 2.  Hook up the adapter to the view
         setupRecyclerView((RecyclerView) recyclerView);
+    }
+
+    private void addRatReportItemDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add New Item");
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View viewInflated = inflater.inflate(R.layout.dialog_add_item, null);
+        final EditText locationType = (EditText) viewInflated.findViewById(R.id.location_type);
+        final EditText address = (EditText) viewInflated.findViewById(R.id.address);
+        final EditText city = (EditText) viewInflated.findViewById(R.id.city);
+        final EditText zipcode = (EditText) viewInflated.findViewById(R.id.zipcode);
+        final EditText borough = (EditText) viewInflated.findViewById(R.id.borough);
+        final EditText latitude = (EditText) viewInflated.findViewById(R.id.latitude);
+        final EditText longitude = (EditText) viewInflated.findViewById(R.id.longitude);
+        builder.setView(viewInflated);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                if (locationType.getText().toString().length() == 0 ||
+                    address.getText().toString().length() == 0 ||
+                    zipcode.getText().toString().length() == 0 ||
+                    city.getText().toString().length() == 0 ||
+                    borough.getText().toString().length() == 0 ||
+                    latitude.getText().toString().length() == 0 ||
+                    longitude.getText().toString().length() == 0) {
+                    dialog.cancel();
+                    //File file = new File(filesDir, PersistenceManager.DEFAULT_TEXT_FILE_NAME);
+                    //model.saveText(file);
+                } else {
+                    RatReportItem item;
+                    Date date = new Date();
+                    Location location = new Location(locationType.getText().toString(),
+                            Integer.valueOf(zipcode.getText().toString()), address.getText().toString(),
+                            city.getText().toString(), borough.getText().toString(),
+                            Double.valueOf(latitude.getText().toString()), Double.valueOf(longitude.getText().toString()));
+                    item = new RatReportItem(manager.getNewKey(), date, location);
+                    manager.addItem(item);
+                    manager.addItemToFront(item);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
     /**
@@ -88,6 +154,9 @@ public class AppActivity extends AppCompatActivity {
                 Date createdDate = null;
                 Location location;
                 while ((line = br.readLine()) != null) {
+                    if (isCancelled()) {
+                        return false;
+                    }
                     String[] tokens = line.split(",");
                     int key = Integer.parseInt(tokens[0]);
                     try {
@@ -119,6 +188,7 @@ public class AppActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
                 resp = false;
+                Log.d("hi", "hi");
             }
             return resp;
         }
@@ -137,6 +207,14 @@ public class AppActivity extends AppCompatActivity {
         protected void onPreExecute() {
             progressDialog = new ProgressDialog(AppActivity.this);
             progressDialog.setMessage("Loaded:");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialogInterface) {
+                    cancel(true);
+                    Log.d("Cancel", "tried to cancel");
+                }
+            });
             progressDialog.show();
         }
 
@@ -144,6 +222,11 @@ public class AppActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Integer... loaded) {
             progressDialog.setMessage("Loaded: " + loaded[0]);
+        }
+
+        @Override
+        protected void onCancelled() {
+            Toast.makeText(AppActivity.this, "Load Cancelled", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -13,6 +13,7 @@ import java.util.List;
 public class RatReportManager {
     /** singleton design pattern */
     public static final RatReportManager INSTANCE = new RatReportManager();
+    private int keySeed;
 
     /** Used to prevent excess loading */
     private boolean loaded;
@@ -27,6 +28,7 @@ public class RatReportManager {
         reports = new ArrayList<>(110000);
         reportsQueue = new LinkedList<>();
         loaded = false;
+        keySeed = 0;
     }
 
     /** Getters and setters */
@@ -44,10 +46,20 @@ public class RatReportManager {
      */
     public void addItem(RatReportItem item) {
         reports.add(item);
+        if (item.getKey() > keySeed) {
+            keySeed = item.getKey();
+        }
     }
 
     public void addItemToFront(RatReportItem item) {
         reportsQueue.add(0, item);
+        if (item.getKey() > keySeed) {
+            keySeed = item.getKey();
+        }
+    }
+
+    public int getNewKey() {
+        return ++keySeed;
     }
 
     /**

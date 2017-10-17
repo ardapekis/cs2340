@@ -36,7 +36,7 @@ public class RatReportDetailActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.key)).setText("Key: " + mItem.getKey());
             Log.d("MYAPP", "Getting ready to set name");
             ((TextView) findViewById(R.id.date)).setText("Created Date: " + mItem.getCreatedDate().toString());
-            ((TextView) findViewById(R.id.location_type)).setText("Location Type: " + mItem.getLocation().getLocationType().toString());
+            ((TextView) findViewById(R.id.location_type)).setText("Location Type: " + mItem.getLocation().getAddress().getLocationType());
             ((TextView) findViewById(R.id.address)).setText("Address: " + mItem.getAddressString());
             ((TextView) findViewById(R.id.zipcode)).setText("Zipcode: " + mItem.getLocation().getAddress().getZipcode());
             ((TextView) findViewById(R.id.city)).setText("City: " + mItem.getLocation().getAddress().getCity());
