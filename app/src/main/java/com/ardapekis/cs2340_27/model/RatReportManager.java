@@ -13,12 +13,17 @@ import java.util.List;
 public class RatReportManager {
     /** singleton design pattern */
     public static final RatReportManager INSTANCE = new RatReportManager();
+
+    /** used to generate new keys */
     private int keySeed;
 
     /** Used to prevent excess loading */
     private boolean loaded;
 
+    /** holds reports in an arraylist, sort by old */
     private List<RatReportItem> reports;
+
+    /** holds reports in a linkedlist/queue, sort by new */
     private List<RatReportItem> reportsQueue;
 
     /**
@@ -41,7 +46,7 @@ public class RatReportManager {
     }
 
     /**
-     * Add a new item to the list of rat reports
+     * Add a new item to the list of rat reports, also updates keySeed
      * @param item      New rat report to add
      */
     public void addItem(RatReportItem item) {
@@ -51,6 +56,12 @@ public class RatReportManager {
         }
     }
 
+    /**
+     * Add a new item to the front of the list, i.e. add to queue, also
+     * updates keySeed
+     *
+     * @param item      New rat report to add
+     */
     public void addItemToFront(RatReportItem item) {
         reportsQueue.add(0, item);
         if (item.getKey() > keySeed) {
@@ -58,23 +69,33 @@ public class RatReportManager {
         }
     }
 
+    /**
+     * Uses keySeed to generate a new unique key
+     *
+     * @return      new unique key
+     */
     public int getNewKey() {
         return ++keySeed;
     }
 
     /**
      * Gets the list of rat reports
-     * @return      The list of rat reporst
+     * @return      The list of rat reports, oldest first
      */
     public List<RatReportItem> getItems() {
         return reports;
     }
 
+    /**
+     * Gets the queue of rat reports
+     * @return      The queue of rat reports, sorted newest first
+     */
     public List<RatReportItem> getItemsQueue() { return reportsQueue; }
 
     /**
      * Returns an item based on its unique key
      * @param key       The rat report's unique key
+     * @param sort      The flag for whether to search the queue or the list
      * @return          The rat report corresponding to the key
      */
     public RatReportItem findItemByKey(int key, String sort) {

@@ -1,15 +1,8 @@
 package com.ardapekis.cs2340_27.controller;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.ardapekis.cs2340_27.R;
@@ -21,7 +14,7 @@ import com.ardapekis.cs2340_27.model.RatReportManager;
  */
 
 public class RatReportDetailActivity extends AppCompatActivity {
-    /** key for the intent */
+    /** keys for the intent */
     public static final String ARG_ITEM_ID = "key";
     public static final String ARG_SORT = "sort";
     private RatReportItem mItem;

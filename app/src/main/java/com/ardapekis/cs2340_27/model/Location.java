@@ -36,7 +36,7 @@ public class Location {
     /**
      * Constructor that takes in individual elements
      *
-     * @param locationTypeString        LocationType as a string
+     * @param locationType              LocationType string
      * @param zipcode                   Zipcode for location
      * @param address                   Address string
      * @param city                      City string

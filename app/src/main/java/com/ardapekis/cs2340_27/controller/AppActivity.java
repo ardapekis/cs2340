@@ -47,8 +47,12 @@ public class AppActivity extends AppCompatActivity {
 
     /** Singleton instance of RatReportManager */
     RatReportManager manager = RatReportManager.INSTANCE;
+
+    /** references to recyclerview elements for updating */
     RecyclerView recyclerView;
     RatReportItemRecyclerViewAdapter adapter;
+
+    /** flag for type of sort */
     private String sort;
 
     @Override
@@ -75,10 +79,13 @@ public class AppActivity extends AppCompatActivity {
         }
         recyclerView = (RecyclerView) findViewById(R.id.recycler_list);
         assert recyclerView != null;
-        //Step 2.  Hook up the adapter to the view
         setupRecyclerView((RecyclerView) recyclerView);
     }
 
+    /**
+     * Creates a dialog with text entry for a new report with ok and cancel
+     * buttons
+     */
     private void addRatReportItemDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add New Item");
@@ -188,7 +195,6 @@ public class AppActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
                 resp = false;
-                Log.d("hi", "hi");
             }
             return resp;
         }
