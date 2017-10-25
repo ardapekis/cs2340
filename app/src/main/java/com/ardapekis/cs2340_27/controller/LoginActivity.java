@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ardapekis.cs2340_27.R;
+import com.ardapekis.cs2340_27.model.Facade;
 import com.ardapekis.cs2340_27.model.User;
 import com.ardapekis.cs2340_27.model.UserManager;
 
@@ -110,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             // Sets the currently logged in user and clears the activity stack
-            UserManager userManager = UserManager.getInstance();
+            UserManager userManager = Facade.getInstance().getUserManager();
             userManager.setLoggedInUser(userManager.getUser(username));
             Intent intent = new Intent(this, AppActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -130,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
      * @return              True if valid, false if not
      */
     private boolean isPasswordValid(String username, String password) {
-        UserManager userManager = UserManager.getInstance();
+        UserManager userManager = Facade.getInstance().getUserManager();
         return userManager.checkUserCredentials(username, password);
     }
 }

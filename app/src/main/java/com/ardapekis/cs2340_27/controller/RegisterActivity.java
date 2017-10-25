@@ -19,8 +19,11 @@ import android.widget.TextView;
 
 import com.ardapekis.cs2340_27.R;
 import com.ardapekis.cs2340_27.model.Admin;
+import com.ardapekis.cs2340_27.model.Facade;
 import com.ardapekis.cs2340_27.model.User;
 import com.ardapekis.cs2340_27.model.UserManager;
+
+import java.io.File;
 
 /**
  * A registration screen that offers registration via username and password
@@ -53,9 +56,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         // Spinner setup
-        UserManager userManager = UserManager.getInstance();
         mUserType = (Spinner) findViewById(R.id.user_type_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, userManager.getUserTypes());
+        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Facade.getInstance().getUserManager().getUserTypes());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mUserType.setAdapter(adapter);
 
@@ -126,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             // depending on spinner value, registers a new User or Admin
-            UserManager userManager = UserManager.getInstance();
+            UserManager userManager = Facade.getInstance().getUserManager();
             if (spinnerValue) {
                 User user = new User(username, password);
                 userManager.addUser(user);
@@ -136,6 +138,8 @@ public class RegisterActivity extends AppCompatActivity {
                 userManager.addUser(admin);
                 userManager.setLoggedInUser(admin);
             }
+
+            Facade.getInstance().saveUsers(new File(this.getFilesDir(), Facade.USER_JSON_FILE_NAME));
 
             // Starts AppActivity and clears the activity stack
             Intent intent = new Intent(this, AppActivity.class);
@@ -156,7 +160,7 @@ public class RegisterActivity extends AppCompatActivity {
      * @return              True if username is valid, false if not
      */
     private boolean isUsernameValid(String username) {
-        UserManager userManager = UserManager.getInstance();
+        UserManager userManager = Facade.getInstance().getUserManager();
         return username.length() > 0 && !userManager.containsUser(username);
     }
 

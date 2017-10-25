@@ -1,7 +1,17 @@
 package com.ardapekis.cs2340_27.model;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.util.Log;
 
+import com.ardapekis.cs2340_27.controller.AppActivity;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,9 +21,6 @@ import java.util.List;
  */
 
 public class RatReportManager {
-    /** singleton design pattern */
-    public static final RatReportManager INSTANCE = new RatReportManager();
-
     /** used to generate new keys */
     private int keySeed;
 
@@ -29,11 +36,102 @@ public class RatReportManager {
     /**
      * Private constructor since singleton design
      */
-    private RatReportManager() {
+    public RatReportManager() {
         reports = new ArrayList<>(110000);
         reportsQueue = new LinkedList<>();
         loaded = false;
         keySeed = 0;
+    }
+
+    public void saveAsText(PrintWriter printWriter) {
+        printWriter.println(reports.size());
+        for(RatReportItem s : reports) {
+            s.saveAsText(printWriter);
+        }
+    }
+
+    void loadFromText(Context context, AppActivity.RatReportItemRecyclerViewAdapter adapter, BufferedReader reader) {
+//        Loader loader = new Loader(context, adapter, reader);
+//        loader.execute();
+        System.out.println("Loading Text File");
+        reports.clear();
+        reportsQueue.clear();
+        try {
+            String line = reader.readLine();
+            while (!line.equals("EOF")) {
+
+                RatReportItem s = RatReportItem.parseEntry(line);
+                reports.add(s);
+                reportsQueue.add(0, s);
+                line = reader.readLine();
+
+            }
+            reader.close();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private class Loader extends AsyncTask<Void, Integer, Void> {
+        private Context context;
+        private AppActivity.RatReportItemRecyclerViewAdapter adapter;
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        private BufferedReader reader;
+
+        public Loader(Context cxt, AppActivity.RatReportItemRecyclerViewAdapter adapter, BufferedReader reader) {
+            context = cxt;
+            this.adapter = adapter;
+            this.reader = reader;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setMessage("Loaded:");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialogInterface) {
+                    cancel(true);
+                    Log.d("Cancel", "tried to cancel");
+                }
+            });
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... unused) {
+            System.out.println("Loading Text File");
+            reports.clear();
+            reportsQueue.clear();
+            try {
+                String line = reader.readLine();
+                while (!line.equals("EOF")) {
+
+                    RatReportItem s = RatReportItem.parseEntry(line);
+                    reports.add(s);
+                    reportsQueue.add(0, s);
+                    line = reader.readLine();
+
+                    publishProgress(reports.size());
+                }
+                reader.close();
+            } catch(IOException e){
+                e.printStackTrace();
+            }
+            return (null);
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            progressDialog.dismiss();
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... loaded) {
+            progressDialog.setMessage("Loaded: " + loaded[0]);
+        }
     }
 
     /** Getters and setters */

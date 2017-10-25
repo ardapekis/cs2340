@@ -24,14 +24,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ardapekis.cs2340_27.R;
+import com.ardapekis.cs2340_27.model.Facade;
 import com.ardapekis.cs2340_27.model.Location;
 import com.ardapekis.cs2340_27.model.RatReportItem;
 import com.ardapekis.cs2340_27.model.RatReportManager;
 import com.ardapekis.cs2340_27.model.UserManager;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -45,12 +48,15 @@ import java.util.Locale;
  */
 public class AppActivity extends AppCompatActivity {
 
+    Facade facade;
     /** Singleton instance of RatReportManager */
-    RatReportManager manager = RatReportManager.INSTANCE;
+    RatReportManager manager;
 
     /** references to recyclerview elements for updating */
     RecyclerView recyclerView;
     RatReportItemRecyclerViewAdapter adapter;
+
+    File filesDir;
 
     /** flag for type of sort */
     private String sort;
@@ -62,6 +68,8 @@ public class AppActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        filesDir = this.getFilesDir();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,14 +77,20 @@ public class AppActivity extends AppCompatActivity {
                 addRatReportItemDialog();
             }
         });
-
+        facade = Facade.getInstance();
+        manager = facade.getReportManager();
         adapter = new RatReportItemRecyclerViewAdapter(manager.getItemsQueue());
         sort = "new";
         // only load if not already loaded
-        if (!manager.getLoaded()) {
+        File file = new File(filesDir, Facade.REPORT_JSON_FILE_NAME);
+        if (!file.exists()) {
             FileReader reader = new FileReader();
             reader.execute();
+        } else {
+            facade.loadReports(file, this, adapter);
         }
+
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
@@ -125,6 +139,7 @@ public class AppActivity extends AppCompatActivity {
                     item = new RatReportItem(manager.getNewKey(), date, location);
                     manager.addItem(item);
                     manager.addItemToFront(item);
+                    facade.saveNewReport(new File(filesDir, Facade.REPORT_JSON_FILE_NAME), item);
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -154,7 +169,7 @@ public class AppActivity extends AppCompatActivity {
             try {
                 InputStream is = getResources().openRawResource(R.raw.rat_sightings);
                 BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-
+                PrintWriter pw = new PrintWriter(new File(filesDir, Facade.REPORT_JSON_FILE_NAME));
                 String line;
                 br.readLine(); //get rid of header line
                 DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.US);
@@ -188,9 +203,12 @@ public class AppActivity extends AppCompatActivity {
                     RatReportItem item = new RatReportItem(key, createdDate, location);
                     manager.addItemToFront(item);
                     manager.addItem(item);
+                    item.saveAsText(pw);
                     publishProgress(++numLoaded); // Calls onProgressUpdate()
                 }
                 br.close();
+                pw.println("EOF");
+                pw.close();
                 resp = true;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -349,7 +367,7 @@ public class AppActivity extends AppCompatActivity {
      * the activity stack, and returning to the welcome screen
      */
     private void logout() {
-        UserManager userManager = UserManager.getInstance();
+        UserManager userManager = Facade.getInstance().getUserManager();
         userManager.setLoggedInUser(null);
         Intent intent = new Intent(this, WelcomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

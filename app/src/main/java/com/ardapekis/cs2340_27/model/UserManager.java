@@ -12,10 +12,6 @@ import java.util.Map;
 
 public class UserManager {
 
-    /** singleton design */
-    private static final UserManager _instance = new UserManager();
-    public static UserManager getInstance() { return _instance; }
-
     /** Hashmap containing the usernames as keys and passwords as values
      *  Used for checking usernames to passwords */
     private Map<String, String> _usersPasswords;
@@ -28,7 +24,7 @@ public class UserManager {
     private User loggedInUser;
 
     /** Private constructor for singleton */
-    private UserManager() {
+    public UserManager() {
         _usersPasswords = new HashMap<>();
         _users = new HashMap<>();
         loggedInUser = null;

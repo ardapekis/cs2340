@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.ardapekis.cs2340_27.R;
+import com.ardapekis.cs2340_27.model.Facade;
 import com.ardapekis.cs2340_27.model.RatReportItem;
 import com.ardapekis.cs2340_27.model.RatReportManager;
 
@@ -23,7 +24,7 @@ public class RatReportDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        mItem = RatReportManager.INSTANCE.findItemByKey(getIntent().getIntExtra(ARG_ITEM_ID, 0), getIntent().getStringExtra(ARG_SORT));
+        mItem = Facade.getInstance().getReportManager().findItemByKey(getIntent().getIntExtra(ARG_ITEM_ID, 0), getIntent().getStringExtra(ARG_SORT));
         if (mItem != null) {
             Log.d("MYAPP", "Getting ready to set id");
             ((TextView) findViewById(R.id.key)).setText("Key: " + mItem.getKey());
