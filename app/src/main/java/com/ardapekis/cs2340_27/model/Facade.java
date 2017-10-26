@@ -63,8 +63,10 @@ public class Facade {
     public void saveNewReport(File file, RatReportItem item) {
         try {
             PrintWriter pw = new PrintWriter(new FileWriter(file, true));
-            item.saveAsText(pw);
-            pw.println("EOF");
+            PrintWriter pw2 = new PrintWriter(new FileWriter(file, true));
+            pw.append(item.getSaveText());
+            pw2.println(Facade.getInstance().getReportManager().getItems().size());
+            pw2.close();
             pw.close();
         } catch (IOException e) {
             Log.e("fuck", "this");

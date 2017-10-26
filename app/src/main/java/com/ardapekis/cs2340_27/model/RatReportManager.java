@@ -57,13 +57,12 @@ public class RatReportManager {
         reports.clear();
         reportsQueue.clear();
         try {
-            String line = reader.readLine();
-            while (!line.equals("EOF")) {
-
+            String count = reader.readLine();
+            for (int i = 0; i < Integer.valueOf(count); i++) {
+                String line = reader.readLine();
                 RatReportItem s = RatReportItem.parseEntry(line);
                 reports.add(s);
                 reportsQueue.add(0, s);
-                line = reader.readLine();
 
             }
             reader.close();

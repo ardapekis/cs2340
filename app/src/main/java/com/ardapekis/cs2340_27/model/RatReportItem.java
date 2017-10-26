@@ -60,6 +60,18 @@ public class RatReportItem {
                 + "\t" + city + "\t" + borough + "\t" + latitude + "\t" + longitude);
     }
 
+    public String getSaveText() {
+        String locationType = location.getAddress().getLocationType();
+        String zipcode = Integer.toString(location.getAddress().getZipcode());
+        String address = location.getAddress().getAddress();
+        String city = location.getAddress().getCity();
+        String borough = location.getAddress().getBorough();
+        String latitude = Double.toString(location.getCoordinates().getLatitude());
+        String longitude = Double.toString(location.getCoordinates().getLongitude());
+        return (key + "\t" + createdDate.toString() + "\t" + locationType + "\t" + zipcode + "\t" + address
+                + "\t" + city + "\t" + borough + "\t" + latitude + "\t" + longitude);
+    }
+
     public static RatReportItem parseEntry(String line) {
         assert line != null;
         String[] tokens = line.split("\t");

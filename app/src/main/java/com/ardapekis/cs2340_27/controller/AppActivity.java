@@ -139,7 +139,7 @@ public class AppActivity extends AppCompatActivity {
                     item = new RatReportItem(manager.getNewKey(), date, location);
                     manager.addItem(item);
                     manager.addItemToFront(item);
-                    facade.saveNewReport(new File(filesDir, Facade.REPORT_JSON_FILE_NAME), item);
+                    facade.saveReports(new File(filesDir, Facade.REPORT_JSON_FILE_NAME));
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -170,6 +170,8 @@ public class AppActivity extends AppCompatActivity {
                 InputStream is = getResources().openRawResource(R.raw.rat_sightings);
                 BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
                 PrintWriter pw = new PrintWriter(new File(filesDir, Facade.REPORT_JSON_FILE_NAME));
+                PrintWriter pw2 = new PrintWriter(new File(filesDir, Facade.REPORT_JSON_FILE_NAME));
+                pw.println();
                 String line;
                 br.readLine(); //get rid of header line
                 DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.US);
@@ -207,8 +209,9 @@ public class AppActivity extends AppCompatActivity {
                     publishProgress(++numLoaded); // Calls onProgressUpdate()
                 }
                 br.close();
-                pw.println("EOF");
                 pw.close();
+                pw2.println(manager.getItems().size());
+                pw2.close();
                 resp = true;
             } catch (Exception e) {
                 e.printStackTrace();
