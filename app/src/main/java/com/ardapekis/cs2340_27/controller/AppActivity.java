@@ -19,7 +19,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,8 @@ import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -48,6 +52,7 @@ import java.util.Locale;
  */
 public class AppActivity extends AppCompatActivity {
 
+    Context context;
     Facade facade;
     /** Singleton instance of RatReportManager */
     RatReportManager manager;
@@ -68,6 +73,7 @@ public class AppActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        context = this;
         filesDir = this.getFilesDir();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -95,6 +101,86 @@ public class AppActivity extends AppCompatActivity {
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
     }
+
+    private void setDateDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter Date Range");
+        LayoutInflater inflater = this.getLayoutInflater();
+        View viewInflated = inflater.inflate(R.layout.dialog_date, null);
+        final Spinner month1 = (Spinner) viewInflated.findViewById(R.id.month1);
+        final Spinner day1 = (Spinner) viewInflated.findViewById(R.id.day1);
+        final Spinner year1 = (Spinner) viewInflated.findViewById(R.id.year1);
+        final Spinner month2 = (Spinner) viewInflated.findViewById(R.id.month2);
+        final Spinner day2 = (Spinner) viewInflated.findViewById(R.id.day2);
+        final Spinner year2 = (Spinner) viewInflated.findViewById(R.id.year2);
+        String[] monthsArray = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+        ArrayList<String> months = new ArrayList<>(Arrays.asList(monthsArray));
+        String[] daysArray = new String[31];
+        for (int i = 1; i < 32; i++) {
+            if (i < 10) {
+                daysArray[i - 1] = "0" + Integer.toString(i);
+            } else {
+                daysArray[i - 1] = Integer.toString(i);
+            }
+        }
+        ArrayList<String> days = new ArrayList<>(Arrays.asList(daysArray));
+        String[] yearsArray = new String[118];
+        for (int i = 117; i >= 0; i--) {
+            yearsArray[117 - i] = Integer.toString(i + 1900);
+        }
+        ArrayList<String> years = new ArrayList<>(Arrays.asList(yearsArray));
+        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, months);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        month1.setAdapter(adapter);
+        month2.setAdapter(adapter);
+        adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, days);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        day1.setAdapter(adapter);
+        day2.setAdapter(adapter);
+        adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, years);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        year1.setAdapter(adapter);
+        year2.setAdapter(adapter);
+
+        builder.setView(viewInflated);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                String m1 = (String) month1.getSelectedItem();
+                String d1 = (String) day1.getSelectedItem();
+                String y1 = (String) year1.getSelectedItem();
+                String m2 = (String) month2.getSelectedItem();
+                String d2 = (String) day2.getSelectedItem();
+                String y2 = (String) year2.getSelectedItem();
+                DateFormat format = new SimpleDateFormat("MMddyyyy", Locale.US);
+                String date1String = m1 + d1 + y1;
+                String date2String = m2 + d2 + y2;
+                Date date1 = new Date();
+                Date date2 = new Date();
+                try {
+                    date1 = format.parse(date1String);
+                    date2 = format.parse(date2String);
+                } catch (ParseException e) {
+                    Log.d("fuck", "fuuuuuck");
+                }
+                Intent intent = new Intent(context, MapsActivity.class);
+                facade.setDate1(date1);
+                facade.setDate2(date2);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
 
     /**
      * Creates a dialog with text entry for a new report with ok and cancel
@@ -359,6 +445,9 @@ public class AppActivity extends AppCompatActivity {
                 adapter = new RatReportItemRecyclerViewAdapter(manager.getItemsQueue());
                 recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                return true;
+            case R.id.maps:
+                setDateDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

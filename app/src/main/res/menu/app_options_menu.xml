@@ -4,6 +4,8 @@
           android:title="Sort: Old" />
     <item android:id="@+id/sort_new"
           android:title="Sort: New" />
+    <item android:id="@+id/maps"
+          android:title="Open Map" />
     <item android:id="@+id/logout"
           android:title="Logout" />
 </menu>

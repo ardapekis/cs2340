@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -53,44 +54,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         // Setting a click event handler for the map
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//
+//            @Override
+//            public void onMapClick(LatLng latLng) {
+//
+//
+//
+//                // Creating a marker
+//                MarkerOptions markerOptions = new MarkerOptions();
+//
+//                // Setting the position for the marker
+//                markerOptions.position(latLng);
+//
+//
+//
+//                // Clears the previously touched position
+//                // mMap.clear();
+//                //mFacade.getReportManager().addItem("newly added", "Bobs Place", new Location(latLng.latitude, latLng.longitude));
+//
+//                // Setting the title for the marker.
+//                // This will be displayed on taping the marker
+//                markerOptions.title(mFacade.getReportManager().getLastReport().getLocation().getAddressString());
+//                markerOptions.snippet(mFacade.getReportManager().getLastReport().getLocation().getAddress().getLocationType());
+//
+//                // Animating to the touched position
+//                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+//
+//                // Placing a marker on the touched position
+//                mMap.addMarker(markerOptions);
+//            }
+//        });
 
-            @Override
-            public void onMapClick(LatLng latLng) {
-
-
-
-                // Creating a marker
-                MarkerOptions markerOptions = new MarkerOptions();
-
-                // Setting the position for the marker
-                markerOptions.position(latLng);
-
-
-
-                // Clears the previously touched position
-                // mMap.clear();
-                //mFacade.getReportManager().addItem("newly added", "Bobs Place", new Location(latLng.latitude, latLng.longitude));
-
-                // Setting the title for the marker.
-                // This will be displayed on taping the marker
-                markerOptions.title(mFacade.getReportManager().getLastReport().getLocation().getAddressString());
-                markerOptions.snippet(mFacade.getReportManager().getLastReport().getLocation().getAddress().getLocationType());
-
-                // Animating to the touched position
-                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-
-                // Placing a marker on the touched position
-                mMap.addMarker(markerOptions);
-            }
-        });
-
-        List<RatReportItem> reportList = mFacade.getReportManager().getItems();
+        List<RatReportItem> reportList = mFacade.getItemsInRange();
         for (RatReportItem r : reportList) {
             LatLng loc = new LatLng(r.getLocation().getCoordinates().getLatitude(), r.getLocation().getCoordinates().getLongitude());
-            mMap.addMarker(new MarkerOptions().position(loc).title(r.getLocation().getAddressString()).snippet(r.getLocation().getAddress().getLocationType()));
+            mMap.addMarker(new MarkerOptions().position(loc).title(r.getLocation().getAddressString()).snippet(r.getCreatedDate().toString()));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
         }
+
+//        RatReportItem item = mFacade.getReportManager().getLastReport();
+//        LatLng loc = new LatLng(item.getLocation().getCoordinates().getLatitude(), item.getLocation().getCoordinates().getLongitude());
+//        mMap.addMarker(new MarkerOptions().position(loc).title(item.getLocation().getAddressString()).snippet(item.getLocation().getAddress().getLocationType()));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
 
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
     }

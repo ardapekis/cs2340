@@ -14,6 +14,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by jason on 10/25/2017.
@@ -24,6 +27,8 @@ public class Facade {
     public final static String USER_JSON_FILE_NAME = "user.json";
     private RatReportManager reportManager;
     private UserManager userManager;
+    private Date date1;
+    private Date date2;
 
     private static Facade instance = new Facade();
 
@@ -33,6 +38,32 @@ public class Facade {
 
     public UserManager getUserManager() {
         return userManager;
+    }
+
+    public void setDate1(Date date) {
+        this.date1 = date;
+    }
+
+    public void setDate2(Date date) {
+        this.date2 = date;
+    }
+
+    public Date getDate1() {
+        return date1;
+    }
+
+    public Date getDate2() {
+        return date2;
+    }
+
+    public List<RatReportItem> getItemsInRange() {
+        ArrayList<RatReportItem> list = new ArrayList<>();
+        for (RatReportItem r : reportManager.getItems()) {
+            if (r.getCreatedDate().compareTo(date1) >= 0 && r.getCreatedDate().compareTo(date2) <= 0) {
+                list.add(r);
+            }
+        }
+        return list;
     }
 
     private Facade() {
