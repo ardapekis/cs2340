@@ -70,12 +70,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 // Clears the previously touched position
                 // mMap.clear();
-                mFacade.getReportManager().addItem("newly added", "Bobs Place", new Location(latLng.latitude, latLng.longitude));
+                //mFacade.getReportManager().addItem("newly added", "Bobs Place", new Location(latLng.latitude, latLng.longitude));
 
                 // Setting the title for the marker.
                 // This will be displayed on taping the marker
-                markerOptions.title(mFacade.getLastReport().getName());
-                markerOptions.snippet(mFacade.getLastReport().getDescription());
+                markerOptions.title(mFacade.getReportManager().getLastReport().getLocation().getAddressString());
+                markerOptions.snippet(mFacade.getReportManager().getLastReport().getLocation().getAddress().getLocationType());
 
                 // Animating to the touched position
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -87,8 +87,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         List<RatReportItem> reportList = mFacade.getReportManager().getItems();
         for (RatReportItem r : reportList) {
-            LatLng loc = new LatLng(r.getLatitude(), r.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(loc).title(r.getName()).snippet(r.getDescription()));
+            LatLng loc = new LatLng(r.getLocation().getCoordinates().getLatitude(), r.getLocation().getCoordinates().getLongitude());
+            mMap.addMarker(new MarkerOptions().position(loc).title(r.getLocation().getAddressString()).snippet(r.getLocation().getAddress().getLocationType()));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
         }
 

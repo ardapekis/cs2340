@@ -211,4 +211,6 @@ public class RatReportManager {
         Log.d("MYAPP", "Warning - Failed to find id: " + key);
         return null;
     }
+
+    public RatReportItem getLastReport() { return reports.get(reports.size() - 1);}
 }
