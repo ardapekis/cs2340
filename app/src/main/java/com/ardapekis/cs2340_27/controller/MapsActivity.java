@@ -87,12 +87,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        });
 
         List<RatReportItem> reportList = mFacade.getItemsInRange();
+        LatLng loc = new LatLng(0, 0);
         for (RatReportItem r : reportList) {
-            LatLng loc = new LatLng(r.getLocation().getCoordinates().getLatitude(), r.getLocation().getCoordinates().getLongitude());
+            loc = new LatLng(r.getLocation().getCoordinates().getLatitude(), r.getLocation().getCoordinates().getLongitude());
             mMap.addMarker(new MarkerOptions().position(loc).title(r.getLocation().getAddressString()).snippet(r.getCreatedDate().toString()));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
-        }
 
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
 //        RatReportItem item = mFacade.getReportManager().getLastReport();
 //        LatLng loc = new LatLng(item.getLocation().getCoordinates().getLatitude(), item.getLocation().getCoordinates().getLongitude());
 //        mMap.addMarker(new MarkerOptions().position(loc).title(item.getLocation().getAddressString()).snippet(item.getLocation().getAddress().getLocationType()));
