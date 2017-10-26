@@ -17,6 +17,7 @@ public class RatReportItem {
     private int key;
     private Date createdDate;
     private Location location;
+    private String author;
 
     /** Getters */
     public int getKey() {
@@ -35,6 +36,10 @@ public class RatReportItem {
         return location.getAddressString();
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
     /**
      * Creates a new RatReportItem
      *
@@ -43,9 +48,22 @@ public class RatReportItem {
      * @param location      Location as a Location object
      */
     public RatReportItem(int key, Date createdDate, Location location) {
+        this(key, createdDate, location, "Bob Waters");
+    }
+
+    /**
+     * Creates a new RatReportItem with known author
+     *
+     * @param key           Unique int key
+     * @param createdDate   createdDate as a Date object
+     * @param location      Location as a Location object
+     * @param author        The author of the report
+     */
+    public RatReportItem(int key, Date createdDate, Location location, String author) {
         this.key = key;
         this.createdDate = createdDate;
         this.location = location;
+        this.author = author;
     }
 
     public void saveAsText(PrintWriter printWriter) {

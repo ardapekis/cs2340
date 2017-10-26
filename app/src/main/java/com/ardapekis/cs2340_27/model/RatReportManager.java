@@ -212,5 +212,20 @@ public class RatReportManager {
         return null;
     }
 
+    /**
+     * Returns items matching the author name provided.
+     * @param author    The author name to match on.
+     * @return          The list of rat repots matching.
+     */
+    public List<RatReportItem> getItemsByAuthor(String author) {
+        List<RatReportItem> list = new ArrayList<RatReportItem>();
+        for (RatReportItem item : reports) {
+            if (item.getAuthor().equals(author)) {
+                list.add(item);
+            }
+        }
+        return list;
+    }
+
     public RatReportItem getLastReport() { return reports.get(reports.size() - 1);}
 }
