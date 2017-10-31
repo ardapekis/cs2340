@@ -105,7 +105,7 @@ public class AppActivity extends AppCompatActivity {
     /**
      * Creates a dialog to enter a date range for the map
      */
-    private void setDateDialog() {
+    private void setDateDialog(final Class intentClass) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter Date Range");
         LayoutInflater inflater = this.getLayoutInflater();
@@ -168,7 +168,7 @@ public class AppActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     Log.d("fuck", "fuuuuuck");
                 }
-                Intent intent = new Intent(context, MapsActivity.class);
+                Intent intent = new Intent(context, intentClass);
                 facade.setDate1(date1);
                 facade.setDate2(date2);
                 startActivity(intent);
@@ -450,7 +450,10 @@ public class AppActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 return true;
             case R.id.maps:
-                setDateDialog();
+                setDateDialog(MapsActivity.class);
+                return true;
+            case R.id.graph:
+                setDateDialog(GraphActivity.class);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -121,6 +121,10 @@ public class Facade {
         }
     }
 
+    /**
+     * Save users into file as JSON
+     * @param file      The file to write into
+     */
     public void saveUsers(File file) {
         try {
             PrintWriter writer = new PrintWriter(file);
@@ -148,6 +152,12 @@ public class Facade {
 
     }
 
+    /**
+     * Load users from JSON
+     * @param file      The file to load from
+     * @param context   context not yet used
+     * @param adapter   adapter to refresh
+     */
     public void loadReports(File file, Context context, AppActivity.RatReportItemRecyclerViewAdapter adapter) {
         try {
             //make an input object for reading
@@ -160,6 +170,10 @@ public class Facade {
 
     }
 
+    /**
+     * Read users from file
+     * @param file      File to read from
+     */
     public void loadUsers(File file) {
         try {
             BufferedReader input = new BufferedReader(new FileReader(file));

@@ -6,6 +6,8 @@
           android:title="Sort: New" />
     <item android:id="@+id/maps"
           android:title="Open Map" />
+    <item android:id="@+id/graph"
+          android:title="Open Graph" />
     <item android:id="@+id/logout"
           android:title="Logout" />
 </menu>
