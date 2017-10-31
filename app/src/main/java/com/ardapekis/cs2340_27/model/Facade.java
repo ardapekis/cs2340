@@ -1,7 +1,6 @@
 package com.ardapekis.cs2340_27.model;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.ardapekis.cs2340_27.controller.AppActivity;
@@ -20,6 +19,7 @@ import java.util.List;
 
 /**
  * Created by jason on 10/25/2017.
+ * Facade class used to access the managers
  */
 
 public class Facade {
@@ -30,8 +30,14 @@ public class Facade {
     private Date date1;
     private Date date2;
 
+    /**
+     * Singleton
+     */
     private static Facade instance = new Facade();
 
+    /**
+     * Getters and setters
+     */
     public RatReportManager getReportManager() {
         return reportManager;
     }
@@ -56,6 +62,10 @@ public class Facade {
         return date2;
     }
 
+    /**
+     * Gets a list of items within the date range of date1 and date2
+     * @return      list of reports in range
+     */
     public List<RatReportItem> getItemsInRange() {
         ArrayList<RatReportItem> list = new ArrayList<>();
         for (RatReportItem r : reportManager.getItems()) {
@@ -66,6 +76,9 @@ public class Facade {
         return list;
     }
 
+    /**
+     * private constructor for singleton
+     */
     private Facade() {
         reportManager = new RatReportManager();
         userManager = new UserManager();
@@ -75,11 +88,10 @@ public class Facade {
         return instance;
     }
 
-    public void save(File reports, File users) {
-        saveReports(reports);
-        saveUsers(users);
-    }
-
+    /**
+     * Saves reports in a text file, uses the reportManager saveAsText method
+     * @param file      File to write reports into
+     */
     public void saveReports(File file) {
         try {
             PrintWriter pw = new PrintWriter(file);
@@ -91,6 +103,11 @@ public class Facade {
 
     }
 
+    /**
+     * Didn't get it working, but would ideally append new reports instead of rewriting entire file
+     * @param file      file to write into
+     * @param item      item to add to file
+     */
     public void saveNewReport(File file, RatReportItem item) {
         try {
             PrintWriter pw = new PrintWriter(new FileWriter(file, true));
@@ -100,7 +117,7 @@ public class Facade {
             pw2.close();
             pw.close();
         } catch (IOException e) {
-            Log.e("fuck", "this");
+            Log.e("oops", "metoothanks");
         }
     }
 

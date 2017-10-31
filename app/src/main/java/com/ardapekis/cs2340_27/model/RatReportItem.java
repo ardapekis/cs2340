@@ -48,6 +48,10 @@ public class RatReportItem {
         this.location = location;
     }
 
+    /**
+     * Saves this item's data into a file using the passed in PrintWriter
+     * @param printWriter   the PrintWriter used to write the file
+     */
     public void saveAsText(PrintWriter printWriter) {
         String locationType = location.getAddress().getLocationType();
         String zipcode = Integer.toString(location.getAddress().getZipcode());
@@ -60,6 +64,10 @@ public class RatReportItem {
                 + "\t" + city + "\t" + borough + "\t" + latitude + "\t" + longitude);
     }
 
+    /**
+     * Get the text written when saving
+     * @return      the text String to be written
+     */
     public String getSaveText() {
         String locationType = location.getAddress().getLocationType();
         String zipcode = Integer.toString(location.getAddress().getZipcode());
@@ -72,6 +80,11 @@ public class RatReportItem {
                 + "\t" + city + "\t" + borough + "\t" + latitude + "\t" + longitude);
     }
 
+    /**
+     * Static method turning the text data into a new RatReportItem
+     * @param line      The line of the file with each item's data
+     * @return          A new ratreportitem
+     */
     public static RatReportItem parseEntry(String line) {
         assert line != null;
         String[] tokens = line.split("\t");

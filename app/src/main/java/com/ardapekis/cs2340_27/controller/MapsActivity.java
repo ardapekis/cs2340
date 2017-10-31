@@ -53,7 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        // Setting a click event handler for the map
+        // Setting a click event handler for the map, unused currently
 //        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 //
 //            @Override
@@ -86,6 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //            }
 //        });
 
+        // Get the list of items within the date range and show them on the map
         List<RatReportItem> reportList = mFacade.getItemsInRange();
         LatLng loc = new LatLng(0, 0);
         for (RatReportItem r : reportList) {

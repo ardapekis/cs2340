@@ -43,6 +43,10 @@ public class RatReportManager {
         keySeed = 0;
     }
 
+    /**
+     * Goes through each ratreport and calls its saveAsText method and writes it
+     * @param printWriter       the PrintWriter writes to the file
+     */
     public void saveAsText(PrintWriter printWriter) {
         printWriter.println(reports.size());
         for(RatReportItem s : reports) {
@@ -50,6 +54,12 @@ public class RatReportManager {
         }
     }
 
+    /**
+     * Reloads the data from the text file
+     * @param context       would be used to run the asynctask
+     * @param adapter       for the asynctask
+     * @param reader        the reader that is reading the rat data file
+     */
     void loadFromText(Context context, AppActivity.RatReportItemRecyclerViewAdapter adapter, BufferedReader reader) {
 //        Loader loader = new Loader(context, adapter, reader);
 //        loader.execute();
@@ -72,6 +82,9 @@ public class RatReportManager {
 
     }
 
+    /**
+     * Unused AsyncTask, so no fancy loading when loading from persisted data
+     */
     private class Loader extends AsyncTask<Void, Integer, Void> {
         private Context context;
         private AppActivity.RatReportItemRecyclerViewAdapter adapter;
@@ -212,5 +225,9 @@ public class RatReportManager {
         return null;
     }
 
+    /**
+     * Get the last item in the list of ratReports
+     * @return      the last item
+     */
     public RatReportItem getLastReport() { return reports.get(reports.size() - 1);}
 }

@@ -102,6 +102,9 @@ public class AppActivity extends AppCompatActivity {
         setupRecyclerView((RecyclerView) recyclerView);
     }
 
+    /**
+     * Creates a dialog to enter a date range for the map
+     */
     private void setDateDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter Date Range");
