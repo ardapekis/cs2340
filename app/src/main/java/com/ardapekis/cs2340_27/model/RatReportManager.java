@@ -226,11 +226,6 @@ public class RatReportManager {
     }
 
     /**
-<<<<<<< HEAD
-     * Get the last item in the list of ratReports
-     * @return      the last item
-     */
-=======
      * Returns items matching the author name provided.
      * @param author    The author name to match on.
      * @return          The list of rat repots matching.
@@ -245,6 +240,5 @@ public class RatReportManager {
         return list;
     }
 
->>>>>>> 467a1277d219aefae2495411559c97b87ccfb5c8
     public RatReportItem getLastReport() { return reports.get(reports.size() - 1);}
 }
