@@ -60,7 +60,7 @@ public class RatReportManager {
      * @param adapter       for the asynctask
      * @param reader        the reader that is reading the rat data file
      */
-    void loadFromText(Context context, AppActivity.RatReportItemRecyclerViewAdapter adapter, BufferedReader reader) {
+    void loadFromText(BufferedReader reader) {
 //        Loader loader = new Loader(context, adapter, reader);
 //        loader.execute();
         System.out.println("Loading Text File");

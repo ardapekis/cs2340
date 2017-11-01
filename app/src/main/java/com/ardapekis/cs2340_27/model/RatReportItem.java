@@ -107,7 +107,6 @@ public class RatReportItem {
     public static RatReportItem parseEntry(String line) {
         assert line != null;
         String[] tokens = line.split("\t");
-        assert tokens.length == 5;
         DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
         Date date = null;
         try {
