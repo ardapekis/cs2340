@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -74,6 +75,17 @@ public class Facade {
             }
         }
         return list;
+    }
+
+    public int getDateRange() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date1);
+        int month1 = cal.get(Calendar.MONTH);
+        int year1 = cal.get(Calendar.YEAR);
+        cal.setTime(date2);
+        int month2 = cal.get(Calendar.MONTH);
+        int year2 = cal.get(Calendar.YEAR);
+        return (year2 - year1) * 12 + month2 - month1 + 1;
     }
 
     /**

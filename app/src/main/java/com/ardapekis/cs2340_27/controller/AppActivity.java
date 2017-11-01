@@ -165,13 +165,18 @@ public class AppActivity extends AppCompatActivity {
                 try {
                     date1 = format.parse(date1String);
                     date2 = format.parse(date2String);
+                    if (date2.before(date1)) {
+                        Toast toast = Toast.makeText(context, "Date invalid", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } else {
+                        Intent intent = new Intent(context, intentClass);
+                        facade.setDate1(date1);
+                        facade.setDate2(date2);
+                        startActivity(intent);
+                    }
                 } catch (ParseException e) {
                     Log.d("fuck", "fuuuuuck");
                 }
-                Intent intent = new Intent(context, intentClass);
-                facade.setDate1(date1);
-                facade.setDate2(date2);
-                startActivity(intent);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

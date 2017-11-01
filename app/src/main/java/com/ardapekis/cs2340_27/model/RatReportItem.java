@@ -66,6 +66,7 @@ public class RatReportItem {
         this.author = author;
     }
 
+
     /**
      * Saves this item's data into a file using the passed in PrintWriter
      * @param printWriter   the PrintWriter used to write the file
