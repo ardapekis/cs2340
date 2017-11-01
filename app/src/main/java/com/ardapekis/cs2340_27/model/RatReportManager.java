@@ -71,8 +71,8 @@ public class RatReportManager {
             for (int i = 0; i < Integer.valueOf(count); i++) {
                 String line = reader.readLine();
                 RatReportItem s = RatReportItem.parseEntry(line);
-                reports.add(s);
-                reportsQueue.add(0, s);
+                addItem(s);
+                addItemToFront(s);
 
             }
             reader.close();
