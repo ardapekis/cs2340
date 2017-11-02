@@ -174,7 +174,7 @@ public class Facade {
         try {
             //make an input object for reading
             BufferedReader reader = new BufferedReader(new FileReader(file));
-            reportManager.loadFromText(context, adapter, reader);
+            reportManager.loadFromText(reader);
             adapter.notifyDataSetChanged();
         } catch (FileNotFoundException e) {
             Log.e("ModelSingleton", "Failed to open text file for loading!");
