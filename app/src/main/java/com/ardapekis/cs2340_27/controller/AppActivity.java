@@ -213,13 +213,20 @@ public class AppActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                if (locationType.getText().toString().length() == 0 ||
-                    address.getText().toString().length() == 0 ||
-                    zipcode.getText().toString().length() == 0 ||
-                    city.getText().toString().length() == 0 ||
-                    borough.getText().toString().length() == 0 ||
-                    latitude.getText().toString().length() == 0 ||
-                    longitude.getText().toString().length() == 0) {
+                // if (locationType.getText().toString().length() == 0 ||
+                //     address.getText().toString().length() == 0 ||
+                //     zipcode.getText().toString().length() == 0 ||
+                //     city.getText().toString().length() == 0 ||
+                //     borough.getText().toString().length() == 0 ||
+                //     latitude.getText().toString().length() == 0 ||
+                //     longitude.getText().toString().length() == 0) {
+                if (locationType.getText().toString().isEmpty() ||
+                    address.getText().toString().isEmpty() ||
+                    zipcode.getText().toString().isEmpty() ||
+                    city.getText().toString().isEmpty() ||
+                    borough.getText().toString().isEmpty() ||
+                    latitude.getText().toString().isEmpty() ||
+                    longitude.getText().toString().isEmpty()) {
                     dialog.cancel();
                     //File file = new File(filesDir, PersistenceManager.DEFAULT_TEXT_FILE_NAME);
                     //model.saveText(file);
@@ -284,13 +291,15 @@ public class AppActivity extends AppCompatActivity {
                     }
                     // trying to parse data with a couple weird entries
                     if (tokens.length <= 50) {
-                        if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
+                        // if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
+                        if ((tokens[8].isEmpty()) || ("N/A".equals(tokens[8]))) {
                             location = new Location(tokens[7], 0, tokens[9], tokens[16], tokens[23], 0, 0);
                         } else {
                             location = new Location(tokens[7], Integer.valueOf(tokens[8]), tokens[9], tokens[16], tokens[23], 0, 0);
                         }
                     } else {
-                        if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
+                        // if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
+                        if ((tokens[8].isEmpty()) || ("N/A".equals(tokens[8]))) {
                             location = new Location(tokens[7], 0, tokens[9], tokens[16], tokens[23], Double.valueOf(tokens[49]), Double.valueOf(tokens[50]));
                         } else {
                             location = new Location(tokens[7], Integer.valueOf(tokens[8]), tokens[9], tokens[16], tokens[23], Double.valueOf(tokens[49]), Double.valueOf(tokens[50]));

@@ -5,8 +5,10 @@ package com.ardapekis.cs2340_27.model;
  */
 
 public class Location {
-    private Address address;
-    private Coordinates coordinates;
+    // private Address address;
+    private final Address address;
+    // private Coordinates coordinates;
+    private final Coordinates coordinates;
 
     /**
      *
@@ -70,11 +72,16 @@ public class Location {
      * Address holder class
      */
     public class Address {
-        private String locationType;
-        private int zipcode;
-        private String address;
-        private String city;
-        private String borough;
+        // private String locationType;
+        private final String locationType;
+        // private int zipcode;
+        private final int zipcode;
+        // private String address;
+        private final String address;
+        // private String city;
+        private final String city;
+        // private String borough;
+        private final String borough;
 
         /**
          *
@@ -150,8 +157,10 @@ public class Location {
      * Coordinates holder class
      */
     public class Coordinates {
-        private double latitude;
-        private double longitude;
+        // private double latitude;
+        private final double latitude;
+        // private double longitude;
+        private final double longitude;
 
         /**
          *

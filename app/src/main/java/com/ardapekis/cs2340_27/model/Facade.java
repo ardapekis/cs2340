@@ -24,15 +24,20 @@ import java.util.List;
  */
 
 public final class Facade {
-    public final static String REPORT_JSON_FILE_NAME = "data.txt";
-    public final static String USER_JSON_FILE_NAME = "user.json";
-    private RatReportManager reportManager;
+    // public final static String REPORT_JSON_FILE_NAME = "data.txt";
+    public static final String REPORT_JSON_FILE_NAME = "data.txt";
+    // public final static String USER_JSON_FILE_NAME = "user.json";
+    public static final String USER_JSON_FILE_NAME = "user.json";
+    // private RatReportManager reportManager;
+    private final RatReportManager reportManager;
     private UserManager userManager;
     private Date date1;
     private Date date2;
 
     /** Singleton */
-    private static Facade instance = new Facade();
+    // private static Facade instance = new Facade();
+    // private final static Facade instance = new Facade();
+    private static final Facade instance = new Facade();
 
     /**
      *
@@ -101,7 +106,8 @@ public final class Facade {
     public List<RatReportItem> getItemsInRange() {
         ArrayList<RatReportItem> list = new ArrayList<>();
         for (RatReportItem r : reportManager.getItems()) {
-            if (r.getCreatedDate().compareTo(date1) >= 0 && r.getCreatedDate().compareTo(date2) <= 0) {
+            if ((r.getCreatedDate().compareTo(date1) >= 0)
+                    && (r.getCreatedDate().compareTo(date2) <= 0)) {
                 list.add(r);
             }
         }
@@ -122,7 +128,7 @@ public final class Facade {
         cal.setTime(date2);
         int month2 = cal.get(Calendar.MONTH);
         int year2 = cal.get(Calendar.YEAR);
-        return (year2 - year1) * 12 + month2 - month1 + 1;
+        return (year2 - year1) * 12 + (month2 - month1 + 1);
     }
 
     /**

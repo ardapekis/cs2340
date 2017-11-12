@@ -47,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.register || id == EditorInfo.IME_NULL) {
+                if ((id == R.id.register) || (id == EditorInfo.IME_NULL)) {
                     attemptRegister();
                     return true;
                 }
@@ -99,7 +99,8 @@ public class RegisterActivity extends AppCompatActivity {
         // Store values at the time of the login attempt.
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
-        boolean spinnerValue = (mUserType.getSelectedItem()).equals("User");
+        // boolean spinnerValue = (mUserType.getSelectedItem()).equals("User");
+        boolean spinnerValue = ("User".equals(mUserType.getSelectedItem()));
 
         boolean cancel = false;
         View focusView = null;
@@ -161,7 +162,8 @@ public class RegisterActivity extends AppCompatActivity {
      */
     private boolean isUsernameValid(String username) {
         UserManager userManager = Facade.getInstance().getUserManager();
-        return username.length() > 0 && !userManager.containsUser(username);
+        // return username.length() > 0 && !userManager.containsUser(username);
+        return !username.isEmpty() && !userManager.containsUser(username);
     }
 
     /**
@@ -170,7 +172,8 @@ public class RegisterActivity extends AppCompatActivity {
      * @return              True if valid, false if not
      */
     private boolean isPasswordValid(String password) {
-        return password.length() > 0;
+        // return password.length() > 0;
+        return !password.isEmpty();
     }
 }
 

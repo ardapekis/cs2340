@@ -28,10 +28,12 @@ public class RatReportManager {
     private boolean loaded;
 
     /** holds reports in an arraylist, sort by old */
-    private List<RatReportItem> reports;
+    // private List<RatReportItem> reports;
+    private final List<RatReportItem> reports;
 
     /** holds reports in a linkedlist/queue, sort by new */
-    private List<RatReportItem> reportsQueue;
+    // private List<RatReportItem> reportsQueue;
+    private final List<RatReportItem> reportsQueue;
 
     /**
      * Private constructor since singleton design
@@ -86,9 +88,11 @@ public class RatReportManager {
      */
     private class Loader extends AsyncTask<Void, Integer, Void> {
         private Context context;
-        private AppActivity.RatReportItemRecyclerViewAdapter adapter;
+        // private AppActivity.RatReportItemRecyclerViewAdapter adapter;
+        private final AppActivity.RatReportItemRecyclerViewAdapter adapter;
         ProgressDialog progressDialog = new ProgressDialog(context);
-        private BufferedReader reader;
+        // private BufferedReader reader;
+        private final BufferedReader reader;
 
         public Loader(Context cxt, AppActivity.RatReportItemRecyclerViewAdapter adapter, BufferedReader reader) {
             context = cxt;
@@ -118,7 +122,8 @@ public class RatReportManager {
             reportsQueue.clear();
             try {
                 String line = reader.readLine();
-                while (!line.equals("EOF")) {
+                // while (!line.equals("EOF")) {
+                while (!"EOF".equals(line)) {
 
                     RatReportItem s = RatReportItem.parseEntry(line);
                     reports.add(s);
@@ -230,7 +235,10 @@ public class RatReportManager {
                 break;
         }
         for (RatReportItem d : list) {
-            if (d.getKey() == key) return d;
+            // if (d.getKey() == key) return d;
+            if (d.getKey() == key) {
+                return d;
+            }
         }
         Log.d("MYAPP", "Warning - Failed to find id: " + key);
         return null;

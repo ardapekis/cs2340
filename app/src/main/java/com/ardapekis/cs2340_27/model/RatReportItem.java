@@ -14,10 +14,14 @@ import java.util.Locale;
  */
 
 public class RatReportItem {
-    private int key;
-    private Date createdDate;
-    private Location location;
-    private String author;
+    // private int key;
+    private final int key;
+    // private Date createdDate;
+    private final Date createdDate;
+    // private Location location;
+    private final Location location;
+    // private String author;
+    private final String author;
 
     /**
      *

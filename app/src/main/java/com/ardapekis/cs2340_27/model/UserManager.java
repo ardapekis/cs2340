@@ -14,11 +14,13 @@ public class UserManager {
 
     /** Hashmap containing the usernames as keys and passwords as values
      *  Used for checking usernames to passwords */
-    private Map<String, String> _usersPasswords;
+    // private Map<String, String> _usersPasswords;
+    private final Map<String, String> _usersPasswords;
 
     /** Hashmap containing the usernames as keys and User objects as values
      *  Used for checking if a User/Username is already registered */
-    private Map<String, User> _users;
+    // private Map<String, User> _users;
+    private final Map<String, User> _users;
 
     /** The currently logged in user, changes the appActivity text */
     private User loggedInUser;
