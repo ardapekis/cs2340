@@ -59,9 +59,10 @@ public class RatReportManager {
      * @param reader        the reader that is reading the rat data file
      */
     void loadFromText(BufferedReader reader) {
-//        Loader loader = new Loader(context, adapter, reader);
-//        loader.execute();
-        System.out.println("Loading Text File");
+        // Loader loader = new Loader(context, adapter, reader);
+        // loader.execute();
+        // System.out.println("Loading Text File");
+        Log.d("Loading Text File", "Loading Text File");
         reports.clear();
         reportsQueue.clear();
         try {
@@ -111,7 +112,8 @@ public class RatReportManager {
 
         @Override
         protected Void doInBackground(Void... unused) {
-            System.out.println("Loading Text File");
+            // System.out.println("Loading Text File");
+            Log.d("Loading Text File", "Loading Text File");
             reports.clear();
             reportsQueue.clear();
             try {
