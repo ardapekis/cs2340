@@ -405,10 +405,14 @@ public class AppActivity extends AppCompatActivity {
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            public final View mView;
-            public final TextView mDateView;
-            public final TextView mAddressView;
-            public RatReportItem mItem;
+            // public final View mView;
+            // public final TextView mDateView;
+            // public final TextView mAddressView;
+            // public RatReportItem mItem;
+            final View mView;
+            final TextView mDateView;
+            final TextView mAddressView;
+            RatReportItem mItem;
 
             /**
              *
