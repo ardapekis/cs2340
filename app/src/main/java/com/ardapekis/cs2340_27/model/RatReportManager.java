@@ -240,7 +240,8 @@ public class RatReportManager {
      * @return          The list of rat repots matching.
      */
     public List<RatReportItem> getItemsByAuthor(String author) {
-        List<RatReportItem> list = new ArrayList<RatReportItem>();
+        // List<RatReportItem> list = new ArrayList<RatReportItem>();
+        List<RatReportItem> list = new ArrayList<>();
         for (RatReportItem item : reports) {
             if (item.getAuthor().equals(author)) {
                 list.add(item);
