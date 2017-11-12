@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.ardapekis.cs2340_27.R;
 import com.ardapekis.cs2340_27.model.Facade;
-import com.ardapekis.cs2340_27.model.Location;
+//import com.ardapekis.cs2340_27.model.Location;
 import com.ardapekis.cs2340_27.model.RatReportItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,7 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.Date;
+//import java.util.Date;
 import java.util.List;
 
 

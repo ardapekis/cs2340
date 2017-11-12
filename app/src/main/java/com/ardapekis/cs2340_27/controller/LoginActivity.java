@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.ardapekis.cs2340_27.R;
 import com.ardapekis.cs2340_27.model.Facade;
-import com.ardapekis.cs2340_27.model.User;
+//import com.ardapekis.cs2340_27.model.User;
 import com.ardapekis.cs2340_27.model.UserManager;
 
 /**

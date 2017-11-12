@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.ardapekis.cs2340_27.R;
 import com.ardapekis.cs2340_27.model.Facade;
 import com.ardapekis.cs2340_27.model.RatReportItem;
-import com.ardapekis.cs2340_27.model.RatReportManager;
+//import com.ardapekis.cs2340_27.model.RatReportManager;
 
 /**
  * Shown when user clicks on a rat report
