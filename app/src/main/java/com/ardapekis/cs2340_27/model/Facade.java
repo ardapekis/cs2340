@@ -23,7 +23,7 @@ import java.util.List;
  * Facade class used to access the managers
  */
 
-public class Facade {
+public final class Facade {
     public final static String REPORT_JSON_FILE_NAME = "data.txt";
     public final static String USER_JSON_FILE_NAME = "user.json";
     private RatReportManager reportManager;
