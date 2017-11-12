@@ -99,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
         // Store values at the time of the login attempt.
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
-        boolean spinnerValue = ((String) mUserType.getSelectedItem()).equals("User");
+        boolean spinnerValue = (mUserType.getSelectedItem()).equals("User");
 
         boolean cancel = false;
         View focusView = null;
