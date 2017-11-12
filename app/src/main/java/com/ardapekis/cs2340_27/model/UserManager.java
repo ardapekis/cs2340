@@ -30,11 +30,22 @@ public class UserManager {
         loggedInUser = null;
     }
 
-    /** Getter and setter */
+    /**
+     *
+     * Setter
+     *
+     * @param user the user object to be set
+     */
     public void setLoggedInUser(User user) {
         loggedInUser = user;
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return the currently logged in user
+     */
     public User getLoggedInUser() {
         return loggedInUser;
     }

@@ -25,6 +25,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+ *
+ * GraphActivity class
+ *
+ */
 public class GraphActivity extends AppCompatActivity {
 
     @Override

@@ -56,8 +56,6 @@ public class RatReportManager {
 
     /**
      * Reloads the data from the text file
-     * @param context       would be used to run the asynctask
-     * @param adapter       for the asynctask
      * @param reader        the reader that is reading the rat data file
      */
     void loadFromText(BufferedReader reader) {
@@ -146,11 +144,22 @@ public class RatReportManager {
         }
     }
 
-    /** Getters and setters */
+    /**
+     *
+     * Setter
+     *
+     * @param b the boolean b
+     */
     public void setLoaded(Boolean b) {
         loaded = b;
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return the loaded boolean
+     */
     public boolean getLoaded() {
         return loaded;
     }
@@ -240,5 +249,11 @@ public class RatReportManager {
         return list;
     }
 
+    /**
+     *
+     * Returns the last RatReportItem in reports
+     *
+     * @return the last RatReportItem
+     */
     public RatReportItem getLastReport() { return reports.get(reports.size() - 1);}
 }

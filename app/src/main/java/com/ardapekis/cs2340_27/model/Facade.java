@@ -31,34 +31,65 @@ public class Facade {
     private Date date1;
     private Date date2;
 
-    /**
-     * Singleton
-     */
+    /** Singleton */
     private static Facade instance = new Facade();
 
     /**
-     * Getters and setters
+     *
+     * Getter
+     *
+     * @return RatReportManager
      */
     public RatReportManager getReportManager() {
         return reportManager;
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return UserManager
+     */
     public UserManager getUserManager() {
         return userManager;
     }
 
+    /**
+     *
+     * Setter
+     *
+     * @param date the date1 to be set
+     */
     public void setDate1(Date date) {
         this.date1 = date;
     }
 
+    /**
+     *
+     * Setter
+     *
+     * @param date the date2 to be set
+     */
     public void setDate2(Date date) {
         this.date2 = date;
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return date1
+     */
     public Date getDate1() {
         return date1;
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return date2
+     */
     public Date getDate2() {
         return date2;
     }
@@ -77,6 +108,12 @@ public class Facade {
         return list;
     }
 
+    /**
+     *
+     * Gets range of dates
+     *
+     * @return integer representing range of dates
+     */
     public int getDateRange() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date1);
@@ -96,6 +133,12 @@ public class Facade {
         userManager = new UserManager();
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return Facade instance
+     */
     public static Facade getInstance() {
         return instance;
     }

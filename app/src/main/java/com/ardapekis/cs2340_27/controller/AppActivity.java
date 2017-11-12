@@ -364,6 +364,12 @@ public class AppActivity extends AppCompatActivity {
 
         private final List<RatReportItem> mValues;
 
+        /**
+         *
+         * Sets value of mValues to items
+         *
+         * @param items list of RatReportItems
+         */
         public RatReportItemRecyclerViewAdapter(List<RatReportItem> items) {
             mValues = items;
         }
@@ -404,6 +410,12 @@ public class AppActivity extends AppCompatActivity {
             public final TextView mAddressView;
             public RatReportItem mItem;
 
+            /**
+             *
+             * Sets values of mView, mDateView, and mAddressView
+             *
+             * @param view the view
+             */
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
