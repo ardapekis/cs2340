@@ -102,10 +102,14 @@ public class UserManager {
      *                      not registered or invalid password
      */
     public boolean checkUserCredentials(String username, String password) {
-        if (!containsUser(username)) {
-            return false;
-        }
-        return password.equals(_usersPasswords.get(username.toLowerCase()));
+        // if (!containsUser(username)) {
+        //     return false;
+        // }
+        // return password.equals(_usersPasswords.get(username.toLowerCase()));
+
+        return containsUser(username)
+                && password.equals(_usersPasswords.get(username.toLowerCase()));
+
     }
 
     /**
