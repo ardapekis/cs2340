@@ -14,28 +14,61 @@ import java.util.Locale;
  */
 
 public class RatReportItem {
-    private int key;
-    private Date createdDate;
-    private Location location;
-    private String author;
+    // private int key;
+    private final int key;
+    // private Date createdDate;
+    private final Date createdDate;
+    // private Location location;
+    private final Location location;
+    // private String author;
+    private final String author;
 
-    /** Getters */
+    /**
+     *
+     * Getter
+     *
+     * @return the key of the RatReportItem
+     */
     public int getKey() {
         return key;
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return the createdDate of the RatReportItem
+     */
     public Date getCreatedDate() {
         return createdDate;
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return the location of the RatReportItem
+     */
     public Location getLocation() {
         return location;
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return the AddressString of the RatReportItem
+     */
     public String getAddressString() {
         return location.getAddressString();
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return the author of the RatReportItem
+     */
     public String getAuthor() {
         return author;
     }

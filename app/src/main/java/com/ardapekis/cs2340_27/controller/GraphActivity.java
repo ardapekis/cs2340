@@ -8,15 +8,15 @@ import com.ardapekis.cs2340_27.R;
 import com.ardapekis.cs2340_27.model.Facade;
 import com.ardapekis.cs2340_27.model.RatReportItem;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
+//import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
+//import com.github.mikephil.charting.data.Entry;
+//import com.github.mikephil.charting.data.LineData;
+//import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
@@ -25,6 +25,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+ *
+ * GraphActivity class
+ *
+ */
 public class GraphActivity extends AppCompatActivity {
 
     @Override
@@ -78,7 +83,7 @@ public class GraphActivity extends AppCompatActivity {
         int year = cal.get(Calendar.YEAR);
         for (int i = 0; i < Facade.getInstance().getDateRange(); i++) {
             labels[i] = (((month + i) % 12) + 1) + "/" + year;
-            if (((month + i) % 12) + 1 == 12) {
+            if (((month + i) % 12) + 1 == (12)) {
                 year++;
             }
         }
@@ -106,7 +111,7 @@ public class GraphActivity extends AppCompatActivity {
             cal.setTime(d.getCreatedDate());
             int month = cal.get(Calendar.MONTH);
             int year = cal.get(Calendar.YEAR);
-            int index = (year - year1) * 12 + month - month1;
+            int index = (year - year1) * 12 + (month - month1);
             BarEntry old = entries.get(index);
             float oldY = old.getY();
             old.setY(oldY + 1);

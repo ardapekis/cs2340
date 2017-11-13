@@ -11,7 +11,7 @@ import com.ardapekis.cs2340_27.controller.AppActivity;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.Buffer;
+//import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,10 +28,12 @@ public class RatReportManager {
     private boolean loaded;
 
     /** holds reports in an arraylist, sort by old */
-    private List<RatReportItem> reports;
+    // private List<RatReportItem> reports;
+    private final List<RatReportItem> reports;
 
     /** holds reports in a linkedlist/queue, sort by new */
-    private List<RatReportItem> reportsQueue;
+    // private List<RatReportItem> reportsQueue;
+    private final List<RatReportItem> reportsQueue;
 
     /**
      * Private constructor since singleton design
@@ -56,14 +58,13 @@ public class RatReportManager {
 
     /**
      * Reloads the data from the text file
-     * @param context       would be used to run the asynctask
-     * @param adapter       for the asynctask
      * @param reader        the reader that is reading the rat data file
      */
     void loadFromText(BufferedReader reader) {
-//        Loader loader = new Loader(context, adapter, reader);
-//        loader.execute();
-        System.out.println("Loading Text File");
+        // Loader loader = new Loader(context, adapter, reader);
+        // loader.execute();
+        // System.out.println("Loading Text File");
+        Log.d("Loading Text File", "Loading Text File");
         reports.clear();
         reportsQueue.clear();
         try {
@@ -87,9 +88,11 @@ public class RatReportManager {
      */
     private class Loader extends AsyncTask<Void, Integer, Void> {
         private Context context;
-        private AppActivity.RatReportItemRecyclerViewAdapter adapter;
+        // private AppActivity.RatReportItemRecyclerViewAdapter adapter;
+        private final AppActivity.RatReportItemRecyclerViewAdapter adapter;
         ProgressDialog progressDialog = new ProgressDialog(context);
-        private BufferedReader reader;
+        // private BufferedReader reader;
+        private final BufferedReader reader;
 
         public Loader(Context cxt, AppActivity.RatReportItemRecyclerViewAdapter adapter, BufferedReader reader) {
             context = cxt;
@@ -113,12 +116,14 @@ public class RatReportManager {
 
         @Override
         protected Void doInBackground(Void... unused) {
-            System.out.println("Loading Text File");
+            // System.out.println("Loading Text File");
+            Log.d("Loading Text File", "Loading Text File");
             reports.clear();
             reportsQueue.clear();
             try {
                 String line = reader.readLine();
-                while (!line.equals("EOF")) {
+                // while (!line.equals("EOF")) {
+                while (!"EOF".equals(line)) {
 
                     RatReportItem s = RatReportItem.parseEntry(line);
                     reports.add(s);
@@ -146,11 +151,22 @@ public class RatReportManager {
         }
     }
 
-    /** Getters and setters */
+    /**
+     *
+     * Setter
+     *
+     * @param b the boolean b
+     */
     public void setLoaded(Boolean b) {
         loaded = b;
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return the loaded boolean
+     */
     public boolean getLoaded() {
         return loaded;
     }
@@ -219,7 +235,10 @@ public class RatReportManager {
                 break;
         }
         for (RatReportItem d : list) {
-            if (d.getKey() == key) return d;
+            // if (d.getKey() == key) return d;
+            if (d.getKey() == key) {
+                return d;
+            }
         }
         Log.d("MYAPP", "Warning - Failed to find id: " + key);
         return null;
@@ -231,7 +250,8 @@ public class RatReportManager {
      * @return          The list of rat repots matching.
      */
     public List<RatReportItem> getItemsByAuthor(String author) {
-        List<RatReportItem> list = new ArrayList<RatReportItem>();
+        // List<RatReportItem> list = new ArrayList<RatReportItem>();
+        List<RatReportItem> list = new ArrayList<>();
         for (RatReportItem item : reports) {
             if (item.getAuthor().equals(author)) {
                 list.add(item);
@@ -240,5 +260,11 @@ public class RatReportManager {
         return list;
     }
 
+    /**
+     *
+     * Returns the last RatReportItem in reports
+     *
+     * @return the last RatReportItem
+     */
     public RatReportItem getLastReport() { return reports.get(reports.size() - 1);}
 }

@@ -28,11 +28,22 @@ public class User {
         this.password = password;
     }
 
-    /** Getters */
+    /**
+     *
+     * Getter
+     *
+     * @return the username of the user
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return the password of the user
+     */
     public String getPassword() {
         return password;
     }

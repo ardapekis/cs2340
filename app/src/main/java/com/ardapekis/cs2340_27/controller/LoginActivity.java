@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.ardapekis.cs2340_27.R;
 import com.ardapekis.cs2340_27.model.Facade;
-import com.ardapekis.cs2340_27.model.User;
+//import com.ardapekis.cs2340_27.model.User;
 import com.ardapekis.cs2340_27.model.UserManager;
 
 /**
@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                if ((id == R.id.login) || (id == EditorInfo.IME_NULL)) {
                     attemptLogin();
                     return true;
                 }

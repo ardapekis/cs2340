@@ -23,42 +23,78 @@ import java.util.List;
  * Facade class used to access the managers
  */
 
-public class Facade {
-    public final static String REPORT_JSON_FILE_NAME = "data.txt";
-    public final static String USER_JSON_FILE_NAME = "user.json";
-    private RatReportManager reportManager;
+public final class Facade {
+    // public final static String REPORT_JSON_FILE_NAME = "data.txt";
+    public static final String REPORT_JSON_FILE_NAME = "data.txt";
+    // public final static String USER_JSON_FILE_NAME = "user.json";
+    public static final String USER_JSON_FILE_NAME = "user.json";
+    // private RatReportManager reportManager;
+    private final RatReportManager reportManager;
     private UserManager userManager;
     private Date date1;
     private Date date2;
 
-    /**
-     * Singleton
-     */
-    private static Facade instance = new Facade();
+    /** Singleton */
+    // private static Facade instance = new Facade();
+    // private final static Facade instance = new Facade();
+    private static final Facade instance = new Facade();
 
     /**
-     * Getters and setters
+     *
+     * Getter
+     *
+     * @return RatReportManager
      */
     public RatReportManager getReportManager() {
         return reportManager;
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return UserManager
+     */
     public UserManager getUserManager() {
         return userManager;
     }
 
+    /**
+     *
+     * Setter
+     *
+     * @param date the date1 to be set
+     */
     public void setDate1(Date date) {
         this.date1 = date;
     }
 
+    /**
+     *
+     * Setter
+     *
+     * @param date the date2 to be set
+     */
     public void setDate2(Date date) {
         this.date2 = date;
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return date1
+     */
     public Date getDate1() {
         return date1;
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return date2
+     */
     public Date getDate2() {
         return date2;
     }
@@ -70,13 +106,20 @@ public class Facade {
     public List<RatReportItem> getItemsInRange() {
         ArrayList<RatReportItem> list = new ArrayList<>();
         for (RatReportItem r : reportManager.getItems()) {
-            if (r.getCreatedDate().compareTo(date1) >= 0 && r.getCreatedDate().compareTo(date2) <= 0) {
+            if ((r.getCreatedDate().compareTo(date1) >= 0)
+                    && (r.getCreatedDate().compareTo(date2) <= 0)) {
                 list.add(r);
             }
         }
         return list;
     }
 
+    /**
+     *
+     * Gets range of dates
+     *
+     * @return integer representing range of dates
+     */
     public int getDateRange() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date1);
@@ -85,7 +128,7 @@ public class Facade {
         cal.setTime(date2);
         int month2 = cal.get(Calendar.MONTH);
         int year2 = cal.get(Calendar.YEAR);
-        return (year2 - year1) * 12 + month2 - month1 + 1;
+        return (year2 - year1) * 12 + (month2 - month1 + 1);
     }
 
     /**
@@ -96,6 +139,12 @@ public class Facade {
         userManager = new UserManager();
     }
 
+    /**
+     *
+     * Getter
+     *
+     * @return Facade instance
+     */
     public static Facade getInstance() {
         return instance;
     }
