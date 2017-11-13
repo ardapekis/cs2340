@@ -16,7 +16,7 @@ import java.io.File;
  * login an existing user or register a new user
  */
 public class WelcomeActivity extends AppCompatActivity {
-    File filesDir;
+    private File filesDir;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

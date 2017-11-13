@@ -52,16 +52,16 @@ import java.util.Locale;
  */
 public class AppActivity extends AppCompatActivity {
 
-    Context context;
-    Facade facade;
+    private Context context;
+    private Facade facade;
     /** Singleton instance of RatReportManager */
-    RatReportManager manager;
+    private RatReportManager manager;
 
     /** references to recyclerview elements for updating */
-    RecyclerView recyclerView;
-    RatReportItemRecyclerViewAdapter adapter;
+    private RecyclerView recyclerView;
+    private RatReportItemRecyclerViewAdapter adapter;
 
-    File filesDir;
+    private File filesDir;
 
     /** flag for type of sort */
     private String sort;

@@ -53,7 +53,7 @@ public class User {
      * @param username      Username to check
      * @return              True if the usernames match, false if not
      */
-    public boolean checkUsername(String username) {
+    private boolean checkUsername(String username) {
         return this.username.equalsIgnoreCase(username);
     }
 
