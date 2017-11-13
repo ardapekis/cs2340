@@ -45,8 +45,18 @@ public class JasonTest {
     }
 
     @Test
-    public void testAddXLabels() throws Exception {
-        String[] test = GraphActivity.;
-        assertEquals(4, 2 + 2);
+    public void testAddXLabelsSize() throws Exception {
+        String[] test = GraphActivity.getXLabels();
+        assertEquals(16, test.length);
+    }
+
+    @Test
+    public void testAddXLabelsContents() throws Exception {
+        String[] test = GraphActivity.getXLabels();
+        String[] expected = {"10/2016", "11/2016", "12/2016", "1/2017",
+                            "2/2017", "3/2017", "4/2017", "5/2017", "6/2017",
+                            "7/2017", "8/2017", "9/2017", "10/2017", "11/2017",
+                            "12/2017", "1/2018"};
+        assertArrayEquals(expected, test);
     }
 }

@@ -75,7 +75,7 @@ public class GraphActivity extends AppCompatActivity {
      *
      * @return      array of strings with month/year labels
      */
-    private String[] getXLabels() {
+    public static String[] getXLabels() {
         String[] labels = new String[Facade.getInstance().getDateRange()];
         Calendar cal = Calendar.getInstance();
         cal.setTime(Facade.getInstance().getDate1());
