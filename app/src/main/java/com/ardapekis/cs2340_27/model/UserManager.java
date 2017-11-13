@@ -48,9 +48,9 @@ public class UserManager {
      *
      * @return the currently logged in user
      */
-    public User getLoggedInUser() {
-        return loggedInUser;
-    }
+//    public User getLoggedInUser() {
+//        return loggedInUser;
+//    }
 
     /**
      * Adds a new user to the system, checks if the username is already
@@ -77,14 +77,14 @@ public class UserManager {
         return _users.get(username.toLowerCase());
     }
 
-    /**
-     * Check if this user is already registered with a User object
-     * @param user      The user object to check
-     * @return          True if the user is already registered, false if not
-     */
-    public boolean containsUser(User user) {
-        return _users.containsValue(user);
-    }
+//    /**
+//     * Check if this user is already registered with a User object
+//     * @param user      The user object to check
+//     * @return          True if the user is already registered, false if not
+//     */
+//    public boolean containsUser(User user) {
+//        return _users.containsValue(user);
+//    }
 
     /**
      * Check if this user is already registered using their username as a String

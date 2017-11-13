@@ -53,18 +53,18 @@ public class User {
      * @param username      Username to check
      * @return              True if the usernames match, false if not
      */
-    public boolean checkUsername(String username) {
+    private boolean checkUsername(String username) {
         return this.username.equalsIgnoreCase(username);
     }
 
-    /**
-     * Checks that the user's password matches a provided one, case sensitive
-     * @param password      The password to check
-     * @return              True if the passwords match, false if not
-     */
-    public boolean checkPassword(String password) {
-        return this.password.equals(password);
-    }
+//    /**
+//     * Checks that the user's password matches a provided one, case sensitive
+//     * @param password      The password to check
+//     * @return              True if the passwords match, false if not
+//     */
+//    public boolean checkPassword(String password) {
+//        return this.password.equals(password);
+//    }
 
     /**
      * Equals method, checks that usernames match, case insensitive

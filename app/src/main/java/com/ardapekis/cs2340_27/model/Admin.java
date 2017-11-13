@@ -6,12 +6,12 @@ package com.ardapekis.cs2340_27.model;
 
 public class Admin extends User {
 
-    /**
-     * Default constructor
-     */
-    public Admin() {
-        super("user", "pass");
-    }
+//    /**
+//     * Default constructor
+//     */
+//    public Admin() {
+//        super("user", "pass");
+//    }
 
     /**
      * Makes a new Admin

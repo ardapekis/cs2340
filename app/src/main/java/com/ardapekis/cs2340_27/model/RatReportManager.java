@@ -167,9 +167,9 @@ public class RatReportManager {
      *
      * @return the loaded boolean
      */
-    public boolean getLoaded() {
-        return loaded;
-    }
+//    public boolean getLoaded() {
+//        return loaded;
+//    }
 
     /**
      * Add a new item to the list of rat reports, also updates keySeed
@@ -244,21 +244,21 @@ public class RatReportManager {
         return null;
     }
 
-    /**
-     * Returns items matching the author name provided.
-     * @param author    The author name to match on.
-     * @return          The list of rat repots matching.
-     */
-    public List<RatReportItem> getItemsByAuthor(String author) {
-        // List<RatReportItem> list = new ArrayList<RatReportItem>();
-        List<RatReportItem> list = new ArrayList<>();
-        for (RatReportItem item : reports) {
-            if (item.getAuthor().equals(author)) {
-                list.add(item);
-            }
-        }
-        return list;
-    }
+//    /**
+//     * Returns items matching the author name provided.
+//     * @param author    The author name to match on.
+//     * @return          The list of rat repots matching.
+//     */
+//    public List<RatReportItem> getItemsByAuthor(String author) {
+//        // List<RatReportItem> list = new ArrayList<RatReportItem>();
+//        List<RatReportItem> list = new ArrayList<>();
+//        for (RatReportItem item : reports) {
+//            if (item.getAuthor().equals(author)) {
+//                list.add(item);
+//            }
+//        }
+//        return list;
+//    }
 
     /**
      *
@@ -266,5 +266,5 @@ public class RatReportManager {
      *
      * @return the last RatReportItem
      */
-    public RatReportItem getLastReport() { return reports.get(reports.size() - 1);}
+//    public RatReportItem getLastReport() { return reports.get(reports.size() - 1);}
 }

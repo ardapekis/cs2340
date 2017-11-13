@@ -45,11 +45,11 @@ public class Location {
      * @param address           The address of the location
      * @param coordinates       The coordinates of the location
      */
-    public Location(Address address,
-                    Coordinates coordinates) {
-        this.address = address;
-        this.coordinates = coordinates;
-    }
+//    public Location(Address address,
+//                    Coordinates coordinates) {
+//        this.address = address;
+//        this.coordinates = coordinates;
+//    }
 
     /**
      * Constructor that takes in individual elements

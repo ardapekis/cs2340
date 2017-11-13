@@ -92,7 +92,7 @@ public class RatReportItem {
      * @param location      Location as a Location object
      * @param author        The author of the report
      */
-    public RatReportItem(int key, Date createdDate, Location location, String author) {
+    private RatReportItem(int key, Date createdDate, Location location, String author) {
         this.key = key;
         this.createdDate = createdDate;
         this.location = location;
