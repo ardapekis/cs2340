@@ -20,5 +20,9 @@ public class RahulTest {
     public void addUser_isCorrect() throws Exception {
         Assert.assertTrue(Facade.getInstance().getUserManager().addUser(new User()));
         Assert.assertFalse(Facade.getInstance().getUserManager().addUser(new User()));
+        Assert.assertTrue(Facade.getInstance().getUserManager().addUser(new User("hello", "itsme")));
+        Assert.assertTrue(Facade.getInstance().getUserManager().addUser(new User("xf", "itsme")));
+        Assert.assertTrue(Facade.getInstance().getUserManager().addUser(new User("xfd", "edfas")));
+        Assert.assertFalse(Facade.getInstance().getUserManager().addUser(new User("hello", "itsme")));
     }
 }
