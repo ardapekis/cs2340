@@ -46,7 +46,7 @@ public class GraphActivity extends AppCompatActivity {
         barChart.setData(data);
         barChart.animateY(1000);
 
-        // TODO: write getXLabels based on dates in facade, 01/2017 etc
+        // get array of String labels based on date range
         final String[] xLabels = getXLabels();
 
         IAxisValueFormatter formatter = new IAxisValueFormatter() {
@@ -65,6 +65,11 @@ public class GraphActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Fills an array with month and year strings based on the date range specified in facade
+     *
+     * @return      array of strings with month/year labels
+     */
     private String[] getXLabels() {
         String[] labels = new String[Facade.getInstance().getDateRange()];
         Calendar cal = Calendar.getInstance();
@@ -80,6 +85,11 @@ public class GraphActivity extends AppCompatActivity {
         return labels;
     }
 
+    /**
+     * Converts the list of ratReportItems into a list of BarEntry
+     * @param data      List of RatReportItem
+     * @return          List of BarEntry
+     */
     private List<BarEntry> convertDataSetToEntry(List<RatReportItem> data) {
         List<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < Facade.getInstance().getDateRange(); i++) {
@@ -90,7 +100,7 @@ public class GraphActivity extends AppCompatActivity {
         cal.setTime(date1);
         int month1 = cal.get(Calendar.MONTH);
         int year1 = cal.get(Calendar.YEAR);
-        // TODO: collect each item into each month/year and add that entry
+
         // if not in entries, add new, else set
         for (RatReportItem d : data) {
             cal.setTime(d.getCreatedDate());
