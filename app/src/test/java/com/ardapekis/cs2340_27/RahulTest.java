@@ -2,13 +2,10 @@ package com.ardapekis.cs2340_27;
 
 import com.ardapekis.cs2340_27.model.Facade;
 import com.ardapekis.cs2340_27.model.User;
-import com.ardapekis.cs2340_27.model.UserManager;
 
 import junit.framework.Assert;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
