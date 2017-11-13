@@ -43,18 +43,6 @@ public class RegisterActivity extends AppCompatActivity {
         mUsernameView = (EditText) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
 
-        // sets up password edit action listener
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if ((id == R.id.register) || (id == EditorInfo.IME_NULL)) {
-                    attemptRegister();
-                    return true;
-                }
-                return false;
-            }
-        });
-
         // Spinner setup
         mUserType = (Spinner) findViewById(R.id.user_type_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Facade.getInstance().getUserManager().getUserTypes());

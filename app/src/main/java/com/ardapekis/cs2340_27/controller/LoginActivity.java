@@ -37,18 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         mUsernameView = (EditText) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
 
-        // sets up password edit action listener
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if ((id == R.id.login) || (id == EditorInfo.IME_NULL)) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
-
         // setup login button listener
         Button mLogInButton = (Button) findViewById(R.id.login_button);
         mLogInButton.setOnClickListener(new OnClickListener() {

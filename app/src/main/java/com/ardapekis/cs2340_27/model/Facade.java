@@ -104,7 +104,7 @@ public final class Facade {
      * @return      list of reports in range
      */
     public List<RatReportItem> getItemsInRange() {
-        ArrayList<RatReportItem> list = new ArrayList<>();
+        List<RatReportItem> list = new ArrayList<>();
         for (RatReportItem r : reportManager.getItems()) {
             if ((r.getCreatedDate().compareTo(date1) >= 0)
                     && (r.getCreatedDate().compareTo(date2) <= 0)) {
