@@ -225,6 +225,10 @@ public class RatReportManager {
      * @return          The rat report corresponding to the key
      */
     public RatReportItem findItemByKey(int key, String sort) {
+        // check for invalid key value
+        if (key < 0) {
+            return null;
+        }
         List<RatReportItem> list =  reportsQueue;
         switch (sort) {
             case "new":
@@ -240,7 +244,7 @@ public class RatReportManager {
                 return d;
             }
         }
-        Log.d("MYAPP", "Warning - Failed to find id: " + key);
+        // Log.d("MYAPP", "Warning - Failed to find id: " + key);
         return null;
     }
 
