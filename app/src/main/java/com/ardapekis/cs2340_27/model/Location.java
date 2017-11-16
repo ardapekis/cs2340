@@ -11,7 +11,6 @@ public class Location {
     private final Coordinates coordinates;
 
     /**
-     *
      * Getter
      *
      * @return the address of the Location
@@ -21,7 +20,6 @@ public class Location {
     }
 
     /**
-     *
      * Getter
      *
      * @return the AddressString of the Location
@@ -31,7 +29,6 @@ public class Location {
     }
 
     /**
-     *
      * Getter
      *
      * @return the coordinates of the Location
@@ -40,31 +37,22 @@ public class Location {
         return coordinates;
     }
 
-    /** Normal constructor
-     *
-     * @param address           The address of the location
-     * @param coordinates       The coordinates of the location
-     */
-//    public Location(Address address,
-//                    Coordinates coordinates) {
-//        this.address = address;
-//        this.coordinates = coordinates;
-//    }
-
     /**
      * Constructor that takes in individual elements
      *
-     * @param locationType              LocationType string
-     * @param zipcode                   Zipcode for location
-     * @param address                   Address string
-     * @param city                      City string
-     * @param borough                   Borough string
-     * @param latitude                  Latitude as a double
-     * @param longitude                 Longitude as a double
+     * @param locationType LocationType string
+     * @param zipcode      Zipcode for location
+     * @param address      Address string
+     * @param city         City string
+     * @param borough      Borough string
+     * @param latitude     Latitude as a double
+     * @param longitude    Longitude as a double
      */
     public Location(String locationType, int zipcode, String address,
-                    String city, String borough, double latitude, double longitude) {
-        this.address = new Address(locationType, zipcode, address, city, borough);
+                    String city, String borough, double latitude, double
+                            longitude) {
+        this.address = new Address(locationType, zipcode, address, city,
+                borough);
         this.coordinates = new Coordinates(latitude, longitude);
     }
 
@@ -84,7 +72,6 @@ public class Location {
         private final String borough;
 
         /**
-         *
          * Getter
          *
          * @return the zipcode of the Address
@@ -94,7 +81,6 @@ public class Location {
         }
 
         /**
-         *
          * Getter
          *
          * @return the address of the Address
@@ -104,7 +90,6 @@ public class Location {
         }
 
         /**
-         *
          * Getter
          *
          * @return the locationType of the Address
@@ -114,7 +99,6 @@ public class Location {
         }
 
         /**
-         *
          * Getter
          *
          * @return the city of the Address
@@ -124,7 +108,6 @@ public class Location {
         }
 
         /**
-         *
          * Getter
          *
          * @return the borough of the Address
@@ -134,14 +117,13 @@ public class Location {
         }
 
         /**
-         *
-         * Class initializer
+         * Constructor
          *
          * @param locationType the location type
-         * @param zipcode the zipcode
-         * @param address the address
-         * @param city the city
-         * @param borough the borough
+         * @param zipcode      the zipcode
+         * @param address      the address
+         * @param city         the city
+         * @param borough      the borough
          */
         public Address(String locationType, int zipcode, String address,
                        String city, String borough) {
@@ -163,7 +145,6 @@ public class Location {
         private final double longitude;
 
         /**
-         *
          * Getter
          *
          * @return the latitude of the Coordinates
@@ -173,7 +154,6 @@ public class Location {
         }
 
         /**
-         *
          * Getter
          *
          * @return the longitude of the Coordinates
@@ -183,10 +163,9 @@ public class Location {
         }
 
         /**
+         * Constructor
          *
-         * Class initializer
-         *
-         * @param latitude the latitude
+         * @param latitude  the latitude
          * @param longitude the longitude
          */
         public Coordinates(double latitude, double longitude) {

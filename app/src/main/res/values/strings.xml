@@ -4,14 +4,26 @@
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_username_taken">This username is taken</string>
-    <string name="error_invalid_username">This username is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="title_activity_app">Humongous Rat List</string>
     <string name="title_activity_maps">Map</string>
     <string name="rat_splash_description">Rat Splash Image</string>
+    <string name="cancel">Cancel</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="register">Register</string>
+    <string name="sort_old">Sort: Old</string>
+    <string name="sort_new">Sort: New</string>
+    <string name="open_map">Open Map</string>
+    <string name="open_graph">Open Graph</string>
+    <string name="location_type">Location Type</string>
+    <string name="address">Address</string>
+    <string name="zipcode">Zipcode</string>
+    <string name="city">City</string>
+    <string name="borough">Borough</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
 </resources>

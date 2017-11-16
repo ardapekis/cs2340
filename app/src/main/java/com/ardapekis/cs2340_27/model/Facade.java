@@ -1,6 +1,5 @@
 package com.ardapekis.cs2340_27.model;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.ardapekis.cs2340_27.controller.AppActivity;
@@ -10,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -34,13 +32,14 @@ public final class Facade {
     private Date date1;
     private Date date2;
 
-    /** Singleton */
+    /**
+     * Singleton
+     */
     // private static Facade instance = new Facade();
     // private final static Facade instance = new Facade();
     private static final Facade instance = new Facade();
 
     /**
-     *
      * Getter
      *
      * @return RatReportManager
@@ -50,7 +49,6 @@ public final class Facade {
     }
 
     /**
-     *
      * Getter
      *
      * @return UserManager
@@ -60,7 +58,6 @@ public final class Facade {
     }
 
     /**
-     *
      * Setter
      *
      * @param date the date1 to be set
@@ -70,7 +67,6 @@ public final class Facade {
     }
 
     /**
-     *
      * Setter
      *
      * @param date the date2 to be set
@@ -80,7 +76,6 @@ public final class Facade {
     }
 
     /**
-     *
      * Getter
      *
      * @return date1
@@ -90,18 +85,9 @@ public final class Facade {
     }
 
     /**
-     *
-     * Getter
-     *
-     * @return date2
-     */
-//    public Date getDate2() {
-//        return date2;
-//    }
-
-    /**
      * Gets a list of items within the date range of date1 and date2
-     * @return      list of reports in range
+     *
+     * @return list of reports in range
      */
     public List<RatReportItem> getItemsInRange() {
         List<RatReportItem> list = new ArrayList<>();
@@ -115,12 +101,12 @@ public final class Facade {
     }
 
     /**
-     *
      * Gets range of dates
      *
      * @return integer representing range of dates
      */
     public int getDateRange() {
+        final int MONTHS = 12;
         Calendar cal = Calendar.getInstance();
         cal.setTime(date1);
         int month1 = cal.get(Calendar.MONTH);
@@ -128,7 +114,7 @@ public final class Facade {
         cal.setTime(date2);
         int month2 = cal.get(Calendar.MONTH);
         int year2 = cal.get(Calendar.YEAR);
-        return (year2 - year1) * 12 + (month2 - month1 + 1);
+        return ((year2 - year1) * MONTHS) + ((month2 - month1) + 1);
     }
 
     /**
@@ -140,7 +126,6 @@ public final class Facade {
     }
 
     /**
-     *
      * Getter
      *
      * @return Facade instance
@@ -151,7 +136,8 @@ public final class Facade {
 
     /**
      * Saves reports in a text file, uses the reportManager saveAsText method
-     * @param file      File to write reports into
+     *
+     * @param file File to write reports into
      */
     public void saveReports(File file) {
         try {
@@ -159,43 +145,31 @@ public final class Facade {
             reportManager.saveAsText(pw);
             pw.close();
         } catch (FileNotFoundException e) {
-            Log.e("UserManagementFacade", "Failed to open json file for output");
+            Log.e("UserManagementFacade", "Failed to open json file for " +
+                    "output");
         }
 
     }
 
     /**
-     * Didn't get it working, but would ideally append new reports instead of rewriting entire file
-     * @param file      file to write into
-     * @param item      item to add to file
-     */
-//    public void saveNewReport(File file, RatReportItem item) {
-//        try {
-//            PrintWriter pw = new PrintWriter(new FileWriter(file, true));
-//            PrintWriter pw2 = new PrintWriter(new FileWriter(file, true));
-//            pw.append(item.getSaveText());
-//            pw2.println(Facade.getInstance().getReportManager().getItems().size());
-//            pw2.close();
-//            pw.close();
-//        } catch (IOException e) {
-//            Log.e("oops", "metoothanks");
-//        }
-//    }
-
-    /**
      * Save users into file as JSON
-     * @param file      The file to write into
+     *
+     * @param file The file to write into
      */
     public void saveUsers(File file) {
         try {
             PrintWriter writer = new PrintWriter(file);
             /*
-                We are using the Google Gson library to make things easy.  You will need to add the
-                following line to your gradle file so the proper dependencies are set up:
+                We are using the Google Gson library to make things easy.
+                You will need to add the
+                following line to your gradle file so the proper dependencies
+                 are set up:
                 compile 'com.google.code.gson:gson:2.3'
 
-                Gson, like object serialization will take a single object and save all the objects
-                it refers to.  You can save everything by one reference, as long as it is the
+                Gson, like object serialization will take a single object and
+                 save all the objects
+                it refers to.  You can save everything by one reference, as
+                long as it is the
                 top-level reference.
 
 
@@ -208,18 +182,20 @@ public final class Facade {
             writer.println(outString);
             writer.close();
         } catch (FileNotFoundException e) {
-            Log.e("UserManagementFacade", "Failed to open json file for output");
+            Log.e("UserManagementFacade", "Failed to open json file for " +
+                    "output");
         }
 
     }
 
     /**
      * Load users from JSON
-     * @param file      The file to load from
-     * @param context   context not yet used
-     * @param adapter   adapter to refresh
+     *
+     * @param file    The file to load from
+     * @param adapter adapter to refresh
      */
-    public void loadReports(File file, Context context, AppActivity.RatReportItemRecyclerViewAdapter adapter) {
+    public void loadReports(File file, AppActivity
+            .RatReportItemRecyclerViewAdapter adapter) {
         try {
             //make an input object for reading
             BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -233,22 +209,26 @@ public final class Facade {
 
     /**
      * Read users from file
-     * @param file      File to read from
+     *
+     * @param file File to read from
      */
     public void loadUsers(File file) {
         try {
             BufferedReader input = new BufferedReader(new FileReader(file));
-            //Since we saved the json as a string, we just read in the string normally
+            //Since we saved the json as a string, we just read in the string
+            // normally
             String inString = input.readLine();
             Log.d("DEBUG", "JSON: " + inString);
-            //Then we use the Gson library to recreate the object references and links automagically
+            //Then we use the Gson library to recreate the object references
+            // and links automagically
             Gson gson = new Gson();
 
             userManager = gson.fromJson(inString, UserManager.class);
 
             input.close();
         } catch (IOException e) {
-            Log.e("UserManagementFacade", "Failed to open/read the buffered reader for json");
+            Log.e("UserManagementFacade", "Failed to open/read the buffered " +
+                    "reader for json");
         }
 
     }

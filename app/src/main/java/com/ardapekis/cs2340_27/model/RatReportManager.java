@@ -1,17 +1,10 @@
 package com.ardapekis.cs2340_27.model;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.os.AsyncTask;
 import android.util.Log;
-
-import com.ardapekis.cs2340_27.controller.AppActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-//import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -84,74 +77,6 @@ public class RatReportManager {
     }
 
     /**
-     * Unused AsyncTask, so no fancy loading when loading from persisted data
-     */
-    private class Loader extends AsyncTask<Void, Integer, Void> {
-        private Context context;
-        // private AppActivity.RatReportItemRecyclerViewAdapter adapter;
-        private final AppActivity.RatReportItemRecyclerViewAdapter adapter;
-        ProgressDialog progressDialog = new ProgressDialog(context);
-        // private BufferedReader reader;
-        private final BufferedReader reader;
-
-        public Loader(Context cxt, AppActivity.RatReportItemRecyclerViewAdapter adapter, BufferedReader reader) {
-            context = cxt;
-            this.adapter = adapter;
-            this.reader = reader;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            progressDialog.setMessage("Loaded:");
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialogInterface) {
-                    cancel(true);
-                    Log.d("Cancel", "tried to cancel");
-                }
-            });
-            progressDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... unused) {
-            // System.out.println("Loading Text File");
-            Log.d("Loading Text File", "Loading Text File");
-            reports.clear();
-            reportsQueue.clear();
-            try {
-                String line = reader.readLine();
-                // while (!line.equals("EOF")) {
-                while (!"EOF".equals(line)) {
-
-                    RatReportItem s = RatReportItem.parseEntry(line);
-                    reports.add(s);
-                    reportsQueue.add(0, s);
-                    line = reader.readLine();
-
-                    publishProgress(reports.size());
-                }
-                reader.close();
-            } catch(IOException e){
-                e.printStackTrace();
-            }
-            return (null);
-        }
-
-        @Override
-        protected void onPostExecute(Void unused) {
-            progressDialog.dismiss();
-            adapter.notifyDataSetChanged();
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... loaded) {
-            progressDialog.setMessage("Loaded: " + loaded[0]);
-        }
-    }
-
-    /**
      *
      * Setter
      *
@@ -161,15 +86,6 @@ public class RatReportManager {
         loaded = b;
     }
 
-    /**
-     *
-     * Getter
-     *
-     * @return the loaded boolean
-     */
-//    public boolean getLoaded() {
-//        return loaded;
-//    }
 
     /**
      * Add a new item to the list of rat reports, also updates keySeed
@@ -225,6 +141,10 @@ public class RatReportManager {
      * @return          The rat report corresponding to the key
      */
     public RatReportItem findItemByKey(int key, String sort) {
+        // check for invalid key value
+        if (key < 0) {
+            return null;
+        }
         List<RatReportItem> list =  reportsQueue;
         switch (sort) {
             case "new":
@@ -240,7 +160,7 @@ public class RatReportManager {
                 return d;
             }
         }
-        Log.d("MYAPP", "Warning - Failed to find id: " + key);
+        // Log.d("MYAPP", "Warning - Failed to find id: " + key);
         return null;
     }
 
@@ -259,12 +179,4 @@ public class RatReportManager {
 //        }
 //        return list;
 //    }
-
-    /**
-     *
-     * Returns the last RatReportItem in reports
-     *
-     * @return the last RatReportItem
-     */
-//    public RatReportItem getLastReport() { return reports.get(reports.size() - 1);}
 }

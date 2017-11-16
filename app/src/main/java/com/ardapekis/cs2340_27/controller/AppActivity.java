@@ -43,6 +43,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -53,17 +54,23 @@ import java.util.Locale;
 public class AppActivity extends AppCompatActivity {
 
     private Context context;
-    private Facade facade;
-    /** Singleton instance of RatReportManager */
-    private RatReportManager manager;
+    private final Facade facade = Facade.getInstance();
+    /**
+     * Singleton instance of RatReportManager
+     */
+    private final RatReportManager manager = facade.getReportManager();
 
-    /** references to recyclerview elements for updating */
+    /**
+     * references to recyclerView elements for updating
+     */
     private RecyclerView recyclerView;
     private RatReportItemRecyclerViewAdapter adapter;
 
     private File filesDir;
 
-    /** flag for type of sort */
+    /**
+     * flag for type of sort
+     */
     private String sort;
 
     @Override
@@ -76,15 +83,15 @@ public class AppActivity extends AppCompatActivity {
         context = this;
         filesDir = this.getFilesDir();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id
+                .fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addRatReportItemDialog();
             }
         });
-        facade = Facade.getInstance();
-        manager = facade.getReportManager();
+
         adapter = new RatReportItemRecyclerViewAdapter(manager.getItemsQueue());
         sort = "new";
         // only load if not already loaded
@@ -93,7 +100,7 @@ public class AppActivity extends AppCompatActivity {
             FileReader reader = new FileReader();
             reader.execute();
         } else {
-            facade.loadReports(file, this, adapter);
+            facade.loadReports(file, adapter);
         }
 
 
@@ -106,6 +113,9 @@ public class AppActivity extends AppCompatActivity {
      * Creates a dialog to enter a date range for the map
      */
     private void setDateDialog(final Class intentClass) {
+        final int DAYS_IN_MONTH = 31;
+        final int FIRST_YEAR = 1900;
+        final int CURRENT_YEAR = 2017;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter Date Range");
         LayoutInflater inflater = this.getLayoutInflater();
@@ -116,10 +126,11 @@ public class AppActivity extends AppCompatActivity {
         final Spinner month2 = (Spinner) viewInflated.findViewById(R.id.month2);
         final Spinner day2 = (Spinner) viewInflated.findViewById(R.id.day2);
         final Spinner year2 = (Spinner) viewInflated.findViewById(R.id.year2);
-        String[] monthsArray = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+        String[] monthsArray = {"01", "02", "03", "04", "05", "06", "07",
+                "08", "09", "10", "11", "12"};
         ArrayList<String> months = new ArrayList<>(Arrays.asList(monthsArray));
-        String[] daysArray = new String[31];
-        for (int i = 1; i < 32; i++) {
+        String[] daysArray = new String[DAYS_IN_MONTH];
+        for (int i = 1; i < DAYS_IN_MONTH + 1; i++) {
             if (i < 10) {
                 daysArray[i - 1] = "0" + Integer.toString(i);
             } else {
@@ -127,21 +138,28 @@ public class AppActivity extends AppCompatActivity {
             }
         }
         ArrayList<String> days = new ArrayList<>(Arrays.asList(daysArray));
-        String[] yearsArray = new String[118];
-        for (int i = 117; i >= 0; i--) {
-            yearsArray[117 - i] = Integer.toString(i + 1900);
+        String[] yearsArray = new String[CURRENT_YEAR - FIRST_YEAR + 1];
+        for (int i = CURRENT_YEAR - FIRST_YEAR; i >= 0; i--) {
+            yearsArray[CURRENT_YEAR - FIRST_YEAR - i] = Integer.toString(i +
+                    FIRST_YEAR);
         }
         ArrayList<String> years = new ArrayList<>(Arrays.asList(yearsArray));
-        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, months);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R
+                .layout.simple_spinner_item, months);
+        adapter.setDropDownViewResource(android.R.layout
+                .simple_spinner_dropdown_item);
         month1.setAdapter(adapter);
         month2.setAdapter(adapter);
-        adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, days);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter = new ArrayAdapter<>(this, android.R.layout
+                .simple_spinner_item, days);
+        adapter.setDropDownViewResource(android.R.layout
+                .simple_spinner_dropdown_item);
         day1.setAdapter(adapter);
         day2.setAdapter(adapter);
-        adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, years);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter = new ArrayAdapter<>(this, android.R.layout
+                .simple_spinner_item, years);
+        adapter.setDropDownViewResource(android.R.layout
+                .simple_spinner_dropdown_item);
         year1.setAdapter(adapter);
         year2.setAdapter(adapter);
 
@@ -160,13 +178,12 @@ public class AppActivity extends AppCompatActivity {
                 DateFormat format = new SimpleDateFormat("MMddyyyy", Locale.US);
                 String date1String = m1 + d1 + y1;
                 String date2String = m2 + d2 + y2;
-                Date date1 = new Date();
-                Date date2 = new Date();
                 try {
-                    date1 = format.parse(date1String);
-                    date2 = format.parse(date2String);
+                    Date date1 = format.parse(date1String);
+                    Date date2 = format.parse(date2String);
                     if (date2.before(date1)) {
-                        Toast toast = Toast.makeText(context, "Date invalid", Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(context, "Date invalid",
+                                Toast.LENGTH_SHORT);
                         toast.show();
                     } else {
                         Intent intent = new Intent(context, intentClass);
@@ -175,11 +192,12 @@ public class AppActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 } catch (ParseException e) {
-                    Log.d("fuck", "fuuuuuck");
+                    Log.d("Parse", "parseException");
                 }
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface
+                .OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
@@ -200,13 +218,19 @@ public class AppActivity extends AppCompatActivity {
 
         LayoutInflater inflater = this.getLayoutInflater();
         View viewInflated = inflater.inflate(R.layout.dialog_add_item, null);
-        final EditText locationType = (EditText) viewInflated.findViewById(R.id.location_type);
-        final EditText address = (EditText) viewInflated.findViewById(R.id.address);
+        final EditText locationType = (EditText) viewInflated.findViewById(R
+                .id.location_type);
+        final EditText address = (EditText) viewInflated.findViewById(R.id
+                .address);
         final EditText city = (EditText) viewInflated.findViewById(R.id.city);
-        final EditText zipcode = (EditText) viewInflated.findViewById(R.id.zipcode);
-        final EditText borough = (EditText) viewInflated.findViewById(R.id.borough);
-        final EditText latitude = (EditText) viewInflated.findViewById(R.id.latitude);
-        final EditText longitude = (EditText) viewInflated.findViewById(R.id.longitude);
+        final EditText zipcode = (EditText) viewInflated.findViewById(R.id
+                .zipcode);
+        final EditText borough = (EditText) viewInflated.findViewById(R.id
+                .borough);
+        final EditText latitude = (EditText) viewInflated.findViewById(R.id
+                .latitude);
+        final EditText longitude = (EditText) viewInflated.findViewById(R.id
+                .longitude);
         builder.setView(viewInflated);
 
         // Set up the buttons
@@ -221,31 +245,39 @@ public class AppActivity extends AppCompatActivity {
                 //     latitude.getText().toString().length() == 0 ||
                 //     longitude.getText().toString().length() == 0) {
                 if (locationType.getText().toString().isEmpty() ||
-                    address.getText().toString().isEmpty() ||
-                    zipcode.getText().toString().isEmpty() ||
-                    city.getText().toString().isEmpty() ||
-                    borough.getText().toString().isEmpty() ||
-                    latitude.getText().toString().isEmpty() ||
-                    longitude.getText().toString().isEmpty()) {
+                        address.getText().toString().isEmpty() ||
+                        zipcode.getText().toString().isEmpty() ||
+                        city.getText().toString().isEmpty() ||
+                        borough.getText().toString().isEmpty() ||
+                        latitude.getText().toString().isEmpty() ||
+                        longitude.getText().toString().isEmpty()) {
                     dialog.cancel();
-                    //File file = new File(filesDir, PersistenceManager.DEFAULT_TEXT_FILE_NAME);
+                    //File file = new File(filesDir, PersistenceManager
+                    // .DEFAULT_TEXT_FILE_NAME);
                     //model.saveText(file);
                 } else {
                     RatReportItem item;
                     Date date = new Date();
-                    Location location = new Location(locationType.getText().toString(),
-                            Integer.valueOf(zipcode.getText().toString()), address.getText().toString(),
-                            city.getText().toString(), borough.getText().toString(),
-                            Double.valueOf(latitude.getText().toString()), Double.valueOf(longitude.getText().toString()));
-                    item = new RatReportItem(manager.getNewKey(), date, location);
+                    Location location = new Location(locationType.getText()
+                            .toString(),
+                            Integer.valueOf(zipcode.getText().toString()),
+                            address.getText().toString(),
+                            city.getText().toString(), borough.getText()
+                            .toString(),
+                            Double.valueOf(latitude.getText().toString()),
+                            Double.valueOf(longitude.getText().toString()));
+                    item = new RatReportItem(manager.getNewKey(), date,
+                            location);
                     manager.addItem(item);
                     manager.addItemToFront(item);
-                    facade.saveReports(new File(filesDir, Facade.REPORT_JSON_FILE_NAME));
+                    facade.saveReports(new File(filesDir, Facade
+                            .REPORT_JSON_FILE_NAME));
                     adapter.notifyDataSetChanged();
                 }
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface
+                .OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
@@ -267,15 +299,27 @@ public class AppActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             int numLoaded = 0;
+            final int LOCATION_TYPE = 7;
+            final int ZIPCODE = 8;
+            final int ADDRESS = 9;
+            final int CITY = 16;
+            final int BOROUGH = 23;
+            final int LATITUDE = 49;
+            final int LONGITUDE = 50;
             try {
-                InputStream is = getResources().openRawResource(R.raw.rat_sightings);
-                BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-                PrintWriter pw = new PrintWriter(new File(filesDir, Facade.REPORT_JSON_FILE_NAME));
-                PrintWriter pw2 = new PrintWriter(new File(filesDir, Facade.REPORT_JSON_FILE_NAME));
+                InputStream is = getResources().openRawResource(R.raw
+                        .rat_sightings);
+                BufferedReader br = new BufferedReader(new InputStreamReader
+                        (is, StandardCharsets.UTF_8));
+                PrintWriter pw = new PrintWriter(new File(filesDir, Facade
+                        .REPORT_JSON_FILE_NAME));
+                PrintWriter pw2 = new PrintWriter(new File(filesDir, Facade
+                        .REPORT_JSON_FILE_NAME));
                 pw.println();
                 String line;
                 br.readLine(); //get rid of header line
-                DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.US);
+                DateFormat format = new SimpleDateFormat("MM/dd/yyyy " +
+                        "hh:mm:ss", Locale.US);
                 Date createdDate = null;
                 Location location;
                 while ((line = br.readLine()) != null) {
@@ -290,22 +334,37 @@ public class AppActivity extends AppCompatActivity {
                         Log.d("AppActivity", "parseException");
                     }
                     // trying to parse data with a couple weird entries
-                    if (tokens.length <= 50) {
-                        // if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
-                        if ((tokens[8].isEmpty()) || ("N/A".equals(tokens[8]))) {
-                            location = new Location(tokens[7], 0, tokens[9], tokens[16], tokens[23], 0, 0);
+                    if (tokens.length <= LONGITUDE) {
+                        if ((tokens[ZIPCODE].isEmpty()) || ("N/A".equals
+                                (tokens[ZIPCODE]))) {
+                            location = new Location(tokens[LOCATION_TYPE], 0,
+                                    tokens[ADDRESS], tokens[CITY],
+                                    tokens[BOROUGH], 0, 0);
                         } else {
-                            location = new Location(tokens[7], Integer.valueOf(tokens[8]), tokens[9], tokens[16], tokens[23], 0, 0);
+                            location = new Location(tokens[LOCATION_TYPE],
+                                    Integer.valueOf(tokens[ZIPCODE]),
+                                    tokens[ADDRESS], tokens[CITY],
+                                    tokens[BOROUGH], 0, 0);
                         }
                     } else {
-                        // if (tokens[8].length() == 0 || tokens[8].equals("N/A")) {
-                        if ((tokens[8].isEmpty()) || ("N/A".equals(tokens[8]))) {
-                            location = new Location(tokens[7], 0, tokens[9], tokens[16], tokens[23], Double.valueOf(tokens[49]), Double.valueOf(tokens[50]));
+                        if ((tokens[ZIPCODE].isEmpty()) || ("N/A".equals
+                                (tokens[ZIPCODE]))) {
+                            location = new Location(tokens[LOCATION_TYPE], 0,
+                                    tokens[ADDRESS], tokens[CITY],
+                                    tokens[BOROUGH], Double.valueOf
+                                    (tokens[LATITUDE]), Double.valueOf
+                                    (tokens[LONGITUDE]));
                         } else {
-                            location = new Location(tokens[7], Integer.valueOf(tokens[8]), tokens[9], tokens[16], tokens[23], Double.valueOf(tokens[49]), Double.valueOf(tokens[50]));
+                            location = new Location(tokens[LOCATION_TYPE],
+                                    Integer.valueOf(tokens[ZIPCODE]),
+                                    tokens[ADDRESS], tokens[CITY],
+                                    tokens[BOROUGH], Double.valueOf
+                                    (tokens[LATITUDE]), Double.valueOf
+                                    (tokens[LONGITUDE]));
                         }
                     }
-                    RatReportItem item = new RatReportItem(key, createdDate, location);
+                    RatReportItem item = new RatReportItem(key, createdDate,
+                            location);
                     manager.addItemToFront(item);
                     manager.addItem(item);
                     item.saveAsText(pw);
@@ -338,7 +397,8 @@ public class AppActivity extends AppCompatActivity {
             progressDialog = new ProgressDialog(AppActivity.this);
             progressDialog.setMessage("Loaded:");
             progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            progressDialog.setOnCancelListener(new DialogInterface
+                    .OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialogInterface) {
                     cancel(true);
@@ -356,31 +416,38 @@ public class AppActivity extends AppCompatActivity {
 
         @Override
         protected void onCancelled() {
-            Toast.makeText(AppActivity.this, "Load Cancelled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AppActivity.this, "Load Cancelled", Toast
+                    .LENGTH_SHORT).show();
         }
     }
 
     /**
      * Set up an adapter and hook it to the provided view
-     * @param recyclerView  the view that needs this adapter
+     *
+     * @param recyclerView the view that needs this adapter
      */
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * Class for recyclerView adapter
+     */
     public class RatReportItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<RatReportItemRecyclerViewAdapter.ViewHolder> {
+            extends RecyclerView.Adapter<RatReportItemRecyclerViewAdapter
+            .ViewHolder> {
 
         private final List<RatReportItem> mValues;
 
         /**
-         *
          * Sets value of mValues to items
          *
          * @param items list of RatReportItems
          */
-        public RatReportItemRecyclerViewAdapter(List<RatReportItem> items) {
-            mValues = items;
+        public RatReportItemRecyclerViewAdapter(Collection<RatReportItem>
+                                                        items) {
+            mValues = new ArrayList<>();
+            mValues.addAll(items);
         }
 
         @Override
@@ -393,21 +460,27 @@ public class AppActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            holder.mDateView.setText(mValues.get(position).getCreatedDate().toString());
-            holder.mAddressView.setText(mValues.get(position).getAddressString());
+            holder.mDateView.setText(mValues.get(position).getCreatedDate()
+                    .toString());
+            holder.mAddressView.setText(mValues.get(position)
+                    .getAddressString());
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
-                    Intent intent = new Intent(context, RatReportDetailActivity.class);
-                    Log.d("MYAPP", "Switch to detailed view for item: " + holder.mItem.getKey());
-                    intent.putExtra(RatReportDetailActivity.ARG_ITEM_ID, holder.mItem.getKey());
+                    Intent intent = new Intent(context,
+                            RatReportDetailActivity.class);
+                    Log.d("MY_APP", "Switch to detailed view for item: " +
+                            holder.mItem.getKey());
+                    intent.putExtra(RatReportDetailActivity.ARG_ITEM_ID,
+                            holder.mItem.getKey());
                     intent.putExtra(RatReportDetailActivity.ARG_SORT, sort);
                     context.startActivity(intent);
                 }
             });
         }
+
         @Override
         public int getItemCount() {
             return mValues.size();
@@ -424,7 +497,6 @@ public class AppActivity extends AppCompatActivity {
             RatReportItem mItem;
 
             /**
-             *
              * Sets values of mView, mDateView, and mAddressView
              *
              * @param view the view
@@ -445,8 +517,9 @@ public class AppActivity extends AppCompatActivity {
 
     /**
      * Adds the logout button in the menu
-     * @param menu      The menu, provided by Android
-     * @return          Success of action
+     *
+     * @param menu The menu, provided by Android
+     * @return Success of action
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -457,8 +530,9 @@ public class AppActivity extends AppCompatActivity {
 
     /**
      * Handles the menu items' actions
-     * @param item      The item selected
-     * @return          Success of action
+     *
+     * @param item The item selected
+     * @return Success of action
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -469,13 +543,15 @@ public class AppActivity extends AppCompatActivity {
                 return true;
             case R.id.sort_old:
                 sort = "old";
-                adapter = new RatReportItemRecyclerViewAdapter(manager.getItems());
+                adapter = new RatReportItemRecyclerViewAdapter(manager
+                        .getItems());
                 recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 return true;
             case R.id.sort_new:
                 sort = "new";
-                adapter = new RatReportItemRecyclerViewAdapter(manager.getItemsQueue());
+                adapter = new RatReportItemRecyclerViewAdapter(manager
+                        .getItemsQueue());
                 recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 return true;
@@ -495,10 +571,12 @@ public class AppActivity extends AppCompatActivity {
      * the activity stack, and returning to the welcome screen
      */
     private void logout() {
-        UserManager userManager = Facade.getInstance().getUserManager();
+        Facade facade = Facade.getInstance();
+        UserManager userManager = facade.getUserManager();
         userManager.setLoggedInUser(null);
         Intent intent = new Intent(this, WelcomeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent
+                .FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 }
