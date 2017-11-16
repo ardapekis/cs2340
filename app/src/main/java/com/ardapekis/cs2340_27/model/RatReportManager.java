@@ -60,11 +60,11 @@ public class RatReportManager {
      * Reloads the data from the text file
      * @param reader        the reader that is reading the rat data file
      */
-    void loadFromText(BufferedReader reader) {
+    public void loadFromText(BufferedReader reader) {
         // Loader loader = new Loader(context, adapter, reader);
         // loader.execute();
         // System.out.println("Loading Text File");
-        Log.d("Loading Text File", "Loading Text File");
+        //Log.d("Loading Text File", "Loading Text File");
         reports.clear();
         reportsQueue.clear();
         try {
