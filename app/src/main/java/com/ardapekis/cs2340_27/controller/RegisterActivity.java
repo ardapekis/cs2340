@@ -25,7 +25,9 @@ import java.io.File;
  */
 public class RegisterActivity extends AppCompatActivity {
 
-    /** UI references */
+    /**
+     * UI references
+     */
     private EditText mUsernameView;
     private EditText mPasswordView;
     private Spinner mUserType;
@@ -40,8 +42,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Spinner setup
         mUserType = (Spinner) findViewById(R.id.user_type_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Facade.getInstance().getUserManager().getUserTypes());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R
+                .layout.simple_spinner_item, Facade.getInstance()
+                .getUserManager().getUserTypes());
+        adapter.setDropDownViewResource(android.R.layout
+                .simple_spinner_dropdown_item);
         mUserType.setAdapter(adapter);
 
         // setup register button listener
@@ -63,7 +68,9 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    /** when cancel is pressed, closes activity */
+    /**
+     * when cancel is pressed, closes activity
+     */
     private void cancel() {
         finish();
     }
@@ -123,11 +130,13 @@ public class RegisterActivity extends AppCompatActivity {
                 userManager.setLoggedInUser(admin);
             }
 
-            Facade.getInstance().saveUsers(new File(this.getFilesDir(), Facade.USER_JSON_FILE_NAME));
+            Facade.getInstance().saveUsers(new File(this.getFilesDir(),
+                    Facade.USER_JSON_FILE_NAME));
 
             // Starts AppActivity and clears the activity stack
             Intent intent = new Intent(this, AppActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent
+                    .FLAG_ACTIVITY_CLEAR_TASK);
 
             startActivity(intent);
         }
@@ -136,8 +145,9 @@ public class RegisterActivity extends AppCompatActivity {
     /**
      * Checks if a username is valid - must not be empty and must not already
      * be registered
-     * @param username      The username to check
-     * @return              True if username is valid, false if not
+     *
+     * @param username The username to check
+     * @return True if username is valid, false if not
      */
     private boolean isUsernameValid(String username) {
         UserManager userManager = Facade.getInstance().getUserManager();
@@ -147,8 +157,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * Checks if a password is valid, if it is not empty
-     * @param password      The password to check
-     * @return              True if valid, false if not
+     *
+     * @param password The password to check
+     * @return True if valid, false if not
      */
     private boolean isPasswordValid(String password) {
         // return password.length() > 0;

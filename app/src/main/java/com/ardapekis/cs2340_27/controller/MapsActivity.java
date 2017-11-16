@@ -22,19 +22,20 @@ import java.util.List;
 
 
 /**
- *
  * MapActivity class
- *
  */
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements
+        OnMapReadyCallback {
     private Facade mFacade = Facade.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        // Obtain the SupportMapFragment and get notified when the map is
+        // ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment)
+                getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -46,10 +47,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * This is where we can add markers or lines, add listeners or move the
+     * camera. In this case,
      * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * If Google Play services is not installed on the device, the user will
+     * be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered
+     * once the user has
      * installed Google Play services and returned to the app.
      */
     @Override
@@ -73,12 +77,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //
 //                // Clears the previously touched position
 //                // mMap.clear();
-//                //mFacade.getReportManager().addItem("newly added", "Bobs Place", new Location(latLng.latitude, latLng.longitude));
+//                //mFacade.getReportManager().addItem("newly added", "Bobs
+// Place", new Location(latLng.latitude, latLng.longitude));
 //
 //                // Setting the title for the marker.
 //                // This will be displayed on taping the marker
-//                markerOptions.title(mFacade.getReportManager().getLastReport().getLocation().getAddressString());
-//                markerOptions.snippet(mFacade.getReportManager().getLastReport().getLocation().getAddress().getLocationType());
+//                markerOptions.title(mFacade.getReportManager()
+// .getLastReport().getLocation().getAddressString());
+//                markerOptions.snippet(mFacade.getReportManager()
+// .getLastReport().getLocation().getAddress().getLocationType());
 //
 //                // Animating to the touched position
 //                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -92,14 +99,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         List<RatReportItem> reportList = mFacade.getItemsInRange();
         LatLng loc = new LatLng(0, 0);
         for (RatReportItem r : reportList) {
-            loc = new LatLng(r.getLocation().getCoordinates().getLatitude(), r.getLocation().getCoordinates().getLongitude());
-            mMap.addMarker(new MarkerOptions().position(loc).title(r.getLocation().getAddressString()).snippet(r.getCreatedDate().toString()));
+            loc = new LatLng(r.getLocation().getCoordinates().getLatitude(),
+                    r.getLocation().getCoordinates().getLongitude());
+            mMap.addMarker(new MarkerOptions().position(loc).title(r
+                    .getLocation().getAddressString()).snippet(r
+                    .getCreatedDate().toString()));
 
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
 //        RatReportItem item = mFacade.getReportManager().getLastReport();
-//        LatLng loc = new LatLng(item.getLocation().getCoordinates().getLatitude(), item.getLocation().getCoordinates().getLongitude());
-//        mMap.addMarker(new MarkerOptions().position(loc).title(item.getLocation().getAddressString()).snippet(item.getLocation().getAddress().getLocationType()));
+//        LatLng loc = new LatLng(item.getLocation().getCoordinates()
+// .getLatitude(), item.getLocation().getCoordinates().getLongitude());
+//        mMap.addMarker(new MarkerOptions().position(loc).title(item
+// .getLocation().getAddressString()).snippet(item.getLocation().getAddress()
+// .getLocationType()));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
 
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
@@ -109,16 +122,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         private final View myContentsView;
 
-        CustomInfoWindowAdapter(){
-            myContentsView = getLayoutInflater().inflate(R.layout.custom_info_contents, null);
+        CustomInfoWindowAdapter() {
+            myContentsView = getLayoutInflater().inflate(R.layout
+                    .custom_info_contents, null);
         }
 
         @Override
         public View getInfoContents(Marker marker) {
 
-            TextView tvTitle = ((TextView)myContentsView.findViewById(R.id.title));
+            TextView tvTitle = ((TextView) myContentsView.findViewById(R.id
+                    .title));
             tvTitle.setText(marker.getTitle());
-            TextView tvSnippet = ((TextView)myContentsView.findViewById(R.id.snippet));
+            TextView tvSnippet = ((TextView) myContentsView.findViewById(R.id
+                    .snippet));
             tvSnippet.setText(marker.getSnippet());
 
             return myContentsView;

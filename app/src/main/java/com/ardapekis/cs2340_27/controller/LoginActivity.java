@@ -19,7 +19,9 @@ import com.ardapekis.cs2340_27.model.UserManager;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    /** UI references */
+    /**
+     * UI references
+     */
     private EditText mUsernameView;
     private EditText mPasswordView;
 
@@ -50,7 +52,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    /** when cancel is pressed, closes activity */
+    /**
+     * when cancel is pressed, closes activity
+     */
     private void cancel() {
         finish();
     }
@@ -74,8 +78,10 @@ public class LoginActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(username, password)) {
-            mPasswordView.setError(getString(R.string.error_incorrect_password));
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(username,
+                password)) {
+            mPasswordView.setError(getString(R.string
+                    .error_incorrect_password));
             focusView = mPasswordView;
             cancel = true;
         }
@@ -96,7 +102,8 @@ public class LoginActivity extends AppCompatActivity {
             UserManager userManager = Facade.getInstance().getUserManager();
             userManager.setLoggedInUser(userManager.getUser(username));
             Intent intent = new Intent(this, AppActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent
+                    .FLAG_ACTIVITY_CLEAR_TASK);
 
             startActivity(intent);
         }
@@ -104,9 +111,10 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Checks that the username and password are a valid combination
-     * @param username      The username to check
-     * @param password      The password to check
-     * @return              True if valid, false if not
+     *
+     * @param username The username to check
+     * @param password The password to check
+     * @return True if valid, false if not
      */
     private boolean isPasswordValid(String username, String password) {
         UserManager userManager = Facade.getInstance().getUserManager();

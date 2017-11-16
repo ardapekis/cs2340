@@ -26,9 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
  * GraphActivity class
- *
  */
 public class GraphActivity extends AppCompatActivity {
 
@@ -39,7 +37,8 @@ public class GraphActivity extends AppCompatActivity {
 
         BarChart barChart = (BarChart) findViewById(R.id.graph);
         Facade facade = Facade.getInstance();
-        List<BarEntry> entries = convertDataSetToEntry(facade.getItemsInRange());
+        List<BarEntry> entries = convertDataSetToEntry(facade.getItemsInRange
+                ());
 
         BarDataSet dataset = new BarDataSet(entries, "# of Rat Sightings");
 
@@ -71,11 +70,13 @@ public class GraphActivity extends AppCompatActivity {
     }
 
     /**
-     * Fills an array with month and year strings based on the date range specified in facade
+     * Fills an array with month and year strings based on the date range
+     * specified in facade
      *
-     * @return      array of strings with month/year labels
+     * @return array of strings with month/year labels
      */
     public static String[] getXLabels() {
+        final int MONTHS = 12;
         Facade facade = Facade.getInstance();
         String[] labels = new String[facade.getDateRange()];
         Calendar cal = Calendar.getInstance();
@@ -83,8 +84,8 @@ public class GraphActivity extends AppCompatActivity {
         int month = cal.get(Calendar.MONTH);
         int year = cal.get(Calendar.YEAR);
         for (int i = 0; i < facade.getDateRange(); i++) {
-            labels[i] = (((month + i) % 12) + 1) + "/" + year;
-            if ((((month + i) % 12) + 1) == (12)) {
+            labels[i] = (((month + i) % MONTHS) + 1) + "/" + year;
+            if ((((month + i) % MONTHS) + 1) == (MONTHS)) {
                 year++;
             }
         }
@@ -93,10 +94,12 @@ public class GraphActivity extends AppCompatActivity {
 
     /**
      * Converts the list of ratReportItems into a list of BarEntry
-     * @param data      List of RatReportItem
-     * @return          List of BarEntry
+     *
+     * @param data List of RatReportItem
+     * @return List of BarEntry
      */
     private List<BarEntry> convertDataSetToEntry(Iterable<RatReportItem> data) {
+        final int MONTHS = 12;
         List<BarEntry> entries = new ArrayList<>();
         Facade facade = Facade.getInstance();
         for (int i = 0; i < facade.getDateRange(); i++) {
@@ -113,7 +116,7 @@ public class GraphActivity extends AppCompatActivity {
             cal.setTime(d.getCreatedDate());
             int month = cal.get(Calendar.MONTH);
             int year = cal.get(Calendar.YEAR);
-            int index = ((year - year1) * 12) + (month - month1);
+            int index = ((year - year1) * MONTHS) + (month - month1);
             BarEntry old = entries.get(index);
             float oldY = old.getY();
             old.setY(oldY + 1);
