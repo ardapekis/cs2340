@@ -10,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -90,16 +89,6 @@ public final class Facade {
     }
 
     /**
-     *
-     * Getter
-     *
-     * @return date2
-     */
-//    public Date getDate2() {
-//        return date2;
-//    }
-
-    /**
      * Gets a list of items within the date range of date1 and date2
      * @return      list of reports in range
      */
@@ -163,24 +152,6 @@ public final class Facade {
         }
 
     }
-
-    /**
-     * Didn't get it working, but would ideally append new reports instead of rewriting entire file
-     * @param file      file to write into
-     * @param item      item to add to file
-     */
-//    public void saveNewReport(File file, RatReportItem item) {
-//        try {
-//            PrintWriter pw = new PrintWriter(new FileWriter(file, true));
-//            PrintWriter pw2 = new PrintWriter(new FileWriter(file, true));
-//            pw.append(item.getSaveText());
-//            pw2.println(Facade.getInstance().getReportManager().getItems().size());
-//            pw2.close();
-//            pw.close();
-//        } catch (IOException e) {
-//            Log.e("oops", "metoothanks");
-//        }
-//    }
 
     /**
      * Save users into file as JSON

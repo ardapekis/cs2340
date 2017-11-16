@@ -160,11 +160,9 @@ public class AppActivity extends AppCompatActivity {
                 DateFormat format = new SimpleDateFormat("MMddyyyy", Locale.US);
                 String date1String = m1 + d1 + y1;
                 String date2String = m2 + d2 + y2;
-                Date date1 = new Date();
-                Date date2 = new Date();
                 try {
-                    date1 = format.parse(date1String);
-                    date2 = format.parse(date2String);
+                    Date date1 = format.parse(date1String);
+                    Date date2 = format.parse(date2String);
                     if (date2.before(date1)) {
                         Toast toast = Toast.makeText(context, "Date invalid", Toast.LENGTH_SHORT);
                         toast.show();
@@ -495,7 +493,8 @@ public class AppActivity extends AppCompatActivity {
      * the activity stack, and returning to the welcome screen
      */
     private void logout() {
-        UserManager userManager = Facade.getInstance().getUserManager();
+        Facade facade = Facade.getInstance();
+        UserManager userManager = facade.getUserManager();
         userManager.setLoggedInUser(null);
         Intent intent = new Intent(this, WelcomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

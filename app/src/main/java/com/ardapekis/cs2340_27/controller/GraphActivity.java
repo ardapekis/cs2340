@@ -38,8 +38,8 @@ public class GraphActivity extends AppCompatActivity {
         setContentView(R.layout.activity_graph);
 
         BarChart barChart = (BarChart) findViewById(R.id.graph);
-
-        List<BarEntry> entries = convertDataSetToEntry(Facade.getInstance().getItemsInRange());
+        Facade facade = Facade.getInstance();
+        List<BarEntry> entries = convertDataSetToEntry(facade.getItemsInRange());
 
         BarDataSet dataset = new BarDataSet(entries, "# of Rat Sightings");
 
@@ -76,12 +76,13 @@ public class GraphActivity extends AppCompatActivity {
      * @return      array of strings with month/year labels
      */
     public static String[] getXLabels() {
-        String[] labels = new String[Facade.getInstance().getDateRange()];
+        Facade facade = Facade.getInstance();
+        String[] labels = new String[facade.getDateRange()];
         Calendar cal = Calendar.getInstance();
-        cal.setTime(Facade.getInstance().getDate1());
+        cal.setTime(facade.getDate1());
         int month = cal.get(Calendar.MONTH);
         int year = cal.get(Calendar.YEAR);
-        for (int i = 0; i < Facade.getInstance().getDateRange(); i++) {
+        for (int i = 0; i < facade.getDateRange(); i++) {
             labels[i] = (((month + i) % 12) + 1) + "/" + year;
             if (((month + i) % 12) + 1 == (12)) {
                 year++;
@@ -95,12 +96,13 @@ public class GraphActivity extends AppCompatActivity {
      * @param data      List of RatReportItem
      * @return          List of BarEntry
      */
-    private List<BarEntry> convertDataSetToEntry(List<RatReportItem> data) {
+    private List<BarEntry> convertDataSetToEntry(Iterable<RatReportItem> data) {
         List<BarEntry> entries = new ArrayList<>();
-        for (int i = 0; i < Facade.getInstance().getDateRange(); i++) {
+        Facade facade = Facade.getInstance();
+        for (int i = 0; i < facade.getDateRange(); i++) {
             entries.add(i, new BarEntry(i, 0f));
         }
-        Date date1 = Facade.getInstance().getDate1();
+        Date date1 = facade.getDate1();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date1);
         int month1 = cal.get(Calendar.MONTH);

@@ -29,7 +29,7 @@ public class UserManager {
     public UserManager() {
         _usersPasswords = new HashMap<>();
         _users = new HashMap<>();
-        loggedInUser = null;
+        loggedInUser = new User();
     }
 
     /**
@@ -42,15 +42,7 @@ public class UserManager {
         loggedInUser = user;
     }
 
-    /**
-     *
-     * Getter
-     *
-     * @return the currently logged in user
-     */
-//    public User getLoggedInUser() {
-//        return loggedInUser;
-//    }
+
 
     /**
      * Adds a new user to the system, checks if the username is already
