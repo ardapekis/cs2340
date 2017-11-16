@@ -43,6 +43,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -53,9 +54,9 @@ import java.util.Locale;
 public class AppActivity extends AppCompatActivity {
 
     private Context context;
-    private Facade facade;
+    private final Facade facade = Facade.getInstance();
     /** Singleton instance of RatReportManager */
-    private RatReportManager manager;
+    private final RatReportManager manager = facade.getReportManager();
 
     /** references to recyclerview elements for updating */
     private RecyclerView recyclerView;
@@ -83,8 +84,7 @@ public class AppActivity extends AppCompatActivity {
                 addRatReportItemDialog();
             }
         });
-        facade = Facade.getInstance();
-        manager = facade.getReportManager();
+
         adapter = new RatReportItemRecyclerViewAdapter(manager.getItemsQueue());
         sort = "new";
         // only load if not already loaded
@@ -93,7 +93,7 @@ public class AppActivity extends AppCompatActivity {
             FileReader reader = new FileReader();
             reader.execute();
         } else {
-            facade.loadReports(file, this, adapter);
+            facade.loadReports(file, adapter);
         }
 
 
@@ -366,6 +366,9 @@ public class AppActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * Class for recyclerView adapter
+     */
     public class RatReportItemRecyclerViewAdapter
             extends RecyclerView.Adapter<RatReportItemRecyclerViewAdapter.ViewHolder> {
 
@@ -377,8 +380,9 @@ public class AppActivity extends AppCompatActivity {
          *
          * @param items list of RatReportItems
          */
-        public RatReportItemRecyclerViewAdapter(List<RatReportItem> items) {
-            mValues = items;
+        public RatReportItemRecyclerViewAdapter(Collection<RatReportItem> items) {
+            mValues = new ArrayList<>();
+            mValues.addAll(items);
         }
 
         @Override

@@ -1,6 +1,5 @@
 package com.ardapekis.cs2340_27.model;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.ardapekis.cs2340_27.controller.AppActivity;
@@ -117,7 +116,7 @@ public final class Facade {
         cal.setTime(date2);
         int month2 = cal.get(Calendar.MONTH);
         int year2 = cal.get(Calendar.YEAR);
-        return (year2 - year1) * 12 + (month2 - month1 + 1);
+        return ((year2 - year1) * 12) + ((month2 - month1) + 1);
     }
 
     /**
@@ -187,10 +186,9 @@ public final class Facade {
     /**
      * Load users from JSON
      * @param file      The file to load from
-     * @param context   context not yet used
      * @param adapter   adapter to refresh
      */
-    public void loadReports(File file, Context context, AppActivity.RatReportItemRecyclerViewAdapter adapter) {
+    public void loadReports(File file, AppActivity.RatReportItemRecyclerViewAdapter adapter) {
         try {
             //make an input object for reading
             BufferedReader reader = new BufferedReader(new FileReader(file));

@@ -84,7 +84,7 @@ public class GraphActivity extends AppCompatActivity {
         int year = cal.get(Calendar.YEAR);
         for (int i = 0; i < facade.getDateRange(); i++) {
             labels[i] = (((month + i) % 12) + 1) + "/" + year;
-            if (((month + i) % 12) + 1 == (12)) {
+            if ((((month + i) % 12) + 1) == (12)) {
                 year++;
             }
         }
@@ -113,7 +113,7 @@ public class GraphActivity extends AppCompatActivity {
             cal.setTime(d.getCreatedDate());
             int month = cal.get(Calendar.MONTH);
             int year = cal.get(Calendar.YEAR);
-            int index = (year - year1) * 12 + (month - month1);
+            int index = ((year - year1) * 12) + (month - month1);
             BarEntry old = entries.get(index);
             float oldY = old.getY();
             old.setY(oldY + 1);

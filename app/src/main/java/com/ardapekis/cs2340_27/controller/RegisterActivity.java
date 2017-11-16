@@ -1,6 +1,5 @@
 package com.ardapekis.cs2340_27.controller;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
@@ -8,7 +7,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -130,10 +128,6 @@ public class RegisterActivity extends AppCompatActivity {
             // Starts AppActivity and clears the activity stack
             Intent intent = new Intent(this, AppActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-            // hide the keyboard after register
-            InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
             startActivity(intent);
         }

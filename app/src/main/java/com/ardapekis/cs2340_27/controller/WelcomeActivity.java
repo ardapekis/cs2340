@@ -16,13 +16,13 @@ import java.io.File;
  * login an existing user or register a new user
  */
 public class WelcomeActivity extends AppCompatActivity {
-    private File filesDir;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         Facade facade = Facade.getInstance();
-        filesDir = this.getFilesDir();
+        File filesDir = this.getFilesDir();
         facade.loadUsers(new File(filesDir, Facade.USER_JSON_FILE_NAME));
     }
 

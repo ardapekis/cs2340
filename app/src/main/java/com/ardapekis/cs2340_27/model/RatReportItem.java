@@ -148,8 +148,7 @@ public class RatReportItem {
             Log.d("AppActivity", "parseException");
         }
         Location location = new Location(tokens[2], Integer.valueOf(tokens[3]), tokens[4], tokens[5], tokens[6], Double.valueOf(tokens[7]), Double.valueOf(tokens[8]));
-        RatReportItem s = new RatReportItem(Integer.valueOf(tokens[0]), date, location);
 
-        return s;
+        return new RatReportItem(Integer.valueOf(tokens[0]), date, location);
     }
 }

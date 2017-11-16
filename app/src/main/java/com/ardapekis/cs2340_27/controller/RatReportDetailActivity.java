@@ -18,13 +18,12 @@ public class RatReportDetailActivity extends AppCompatActivity {
     /** keys for the intent */
     public static final String ARG_ITEM_ID = "key";
     public static final String ARG_SORT = "sort";
-    private RatReportItem mItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        mItem = Facade.getInstance().getReportManager().findItemByKey(getIntent().getIntExtra(ARG_ITEM_ID, 0), getIntent().getStringExtra(ARG_SORT));
+        RatReportItem mItem = Facade.getInstance().getReportManager().findItemByKey(getIntent().getIntExtra(ARG_ITEM_ID, 0), getIntent().getStringExtra(ARG_SORT));
         if (mItem != null) {
             Log.d("MYAPP", "Getting ready to set id");
             ((TextView) findViewById(R.id.key)).setText("Key: " + mItem.getKey());

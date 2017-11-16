@@ -124,7 +124,7 @@ public class Location {
 
         /**
          *
-         * Class initializer
+         * Constructor
          *
          * @param locationType the location type
          * @param zipcode the zipcode
@@ -173,8 +173,7 @@ public class Location {
 
         /**
          *
-         * Class initializer
-         *
+         * Constructor
          * @param latitude the latitude
          * @param longitude the longitude
          */

@@ -27,8 +27,6 @@ import java.util.List;
  *
  */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
-    private GoogleMap mMap;
     private Facade mFacade = Facade.getInstance();
 
     @Override
@@ -56,7 +54,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        GoogleMap mMap = googleMap;
         // Setting a click event handler for the map, unused currently
 //        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 //
