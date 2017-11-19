@@ -11,30 +11,42 @@ public class Location {
     private final Coordinates coordinates;
 
     /**
-     * Getter
-     *
-     * @return the address of the Location
+     * Getters
      */
     public Address getAddress() {
         return address;
     }
 
-    /**
-     * Getter
-     *
-     * @return the AddressString of the Location
-     */
     public String getAddressString() {
         return address.getAddress();
     }
 
-    /**
-     * Getter
-     *
-     * @return the coordinates of the Location
-     */
     public Coordinates getCoordinates() {
         return coordinates;
+    }
+
+    public double getLatitude() {
+        return coordinates.latitude;
+    }
+
+    public double getLongitude() {
+        return coordinates.longitude;
+    }
+
+    public String getLocationType() {
+        return address.locationType;
+    }
+
+    public int getZipcode() {
+        return address.zipcode;
+    }
+
+    public String getCity() {
+        return address.city;
+    }
+
+    public String getBorough() {
+        return address.borough;
     }
 
     /**

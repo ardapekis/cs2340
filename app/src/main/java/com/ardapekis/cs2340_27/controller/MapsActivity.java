@@ -58,9 +58,8 @@ public class MapsActivity extends FragmentActivity implements
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        GoogleMap mMap = googleMap;
         // Setting a click event handler for the map, unused currently
-//        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 //
 //            @Override
 //            public void onMapClick(LatLng latLng) {
@@ -76,7 +75,7 @@ public class MapsActivity extends FragmentActivity implements
 //
 //
 //                // Clears the previously touched position
-//                // mMap.clear();
+//                // googleMap.clear();
 //                //mFacade.getReportManager().addItem("newly added", "Bobs
 // Place", new Location(latLng.latitude, latLng.longitude));
 //
@@ -88,10 +87,10 @@ public class MapsActivity extends FragmentActivity implements
 // .getLastReport().getLocation().getAddress().getLocationType());
 //
 //                // Animating to the touched position
-//                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+//                googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 //
 //                // Placing a marker on the touched position
-//                mMap.addMarker(markerOptions);
+//                googleMap.addMarker(markerOptions);
 //            }
 //        });
 
@@ -99,23 +98,23 @@ public class MapsActivity extends FragmentActivity implements
         List<RatReportItem> reportList = mFacade.getItemsInRange();
         LatLng loc = new LatLng(0, 0);
         for (RatReportItem r : reportList) {
-            loc = new LatLng(r.getLocation().getCoordinates().getLatitude(),
-                    r.getLocation().getCoordinates().getLongitude());
-            mMap.addMarker(new MarkerOptions().position(loc).title(r
-                    .getLocation().getAddressString()).snippet(r
+            loc = new LatLng(r.getLatitude(),
+                    r.getLongitude());
+            googleMap.addMarker(new MarkerOptions().position(loc).title(r
+                    .getAddressString()).snippet(r
                     .getCreatedDate().toString()));
 
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
 //        RatReportItem item = mFacade.getReportManager().getLastReport();
 //        LatLng loc = new LatLng(item.getLocation().getCoordinates()
 // .getLatitude(), item.getLocation().getCoordinates().getLongitude());
-//        mMap.addMarker(new MarkerOptions().position(loc).title(item
+//        googleMap.addMarker(new MarkerOptions().position(loc).title(item
 // .getLocation().getAddressString()).snippet(item.getLocation().getAddress()
 // .getLocationType()));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
 
-        mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+        googleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
     }
 
     class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {

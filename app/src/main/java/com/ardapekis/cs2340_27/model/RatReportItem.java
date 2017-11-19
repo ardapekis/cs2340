@@ -24,48 +24,49 @@ public class RatReportItem {
     private final String author;
 
     /**
-     * Getter
-     *
-     * @return the key of the RatReportItem
+     * Getters
      */
     public int getKey() {
         return key;
     }
 
-    /**
-     * Getter
-     *
-     * @return the createdDate of the RatReportItem
-     */
     public Date getCreatedDate() {
         return createdDate;
     }
 
-    /**
-     * Getter
-     *
-     * @return the location of the RatReportItem
-     */
     public Location getLocation() {
         return location;
     }
 
-    /**
-     * Getter
-     *
-     * @return the AddressString of the RatReportItem
-     */
     public String getAddressString() {
         return location.getAddressString();
     }
 
-    /**
-     * Getter
-     *
-     * @return the author of the RatReportItem
-     */
     public String getAuthor() {
         return author;
+    }
+
+    public double getLatitude() {
+        return location.getLatitude();
+    }
+
+    public double getLongitude() {
+        return location.getLongitude();
+    }
+
+    public String getLocationType() {
+        return location.getLocationType();
+    }
+    public int getZipcode() {
+        return location.getZipcode();
+    }
+
+    public String getCity() {
+        return location.getCity();
+    }
+
+    public String getBorough() {
+        return location.getBorough();
     }
 
     /**
@@ -102,14 +103,14 @@ public class RatReportItem {
      * @param printWriter the PrintWriter used to write the file
      */
     public void saveAsText(PrintWriter printWriter) {
-        String locationType = location.getAddress().getLocationType();
-        String zipcode = Integer.toString(location.getAddress().getZipcode());
-        String address = location.getAddress().getAddress();
-        String city = location.getAddress().getCity();
-        String borough = location.getAddress().getBorough();
-        String latitude = Double.toString(location.getCoordinates()
+        String locationType = location.getLocationType();
+        String zipcode = Integer.toString(location.getZipcode());
+        String address = location.getAddressString();
+        String city = location.getCity();
+        String borough = location.getBorough();
+        String latitude = Double.toString(location
                 .getLatitude());
-        String longitude = Double.toString(location.getCoordinates()
+        String longitude = Double.toString(location
                 .getLongitude());
         printWriter.println(key + "\t" + createdDate.toString() + "\t" +
                 locationType + "\t" + zipcode + "\t" + address
@@ -123,14 +124,14 @@ public class RatReportItem {
      * @return the text String to be written
      */
     public String getSaveText() {
-        String locationType = location.getAddress().getLocationType();
-        String zipcode = Integer.toString(location.getAddress().getZipcode());
-        String address = location.getAddress().getAddress();
-        String city = location.getAddress().getCity();
-        String borough = location.getAddress().getBorough();
-        String latitude = Double.toString(location.getCoordinates()
+        String locationType = location.getLocationType();
+        String zipcode = Integer.toString(location.getZipcode());
+        String address = location.getAddressString();
+        String city = location.getCity();
+        String borough = location.getBorough();
+        String latitude = Double.toString(location
                 .getLatitude());
-        String longitude = Double.toString(location.getCoordinates()
+        String longitude = Double.toString(location
                 .getLongitude());
         return (key + "\t" + createdDate.toString() + "\t" + locationType +
                 "\t" + zipcode + "\t" + address

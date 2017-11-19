@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.ardapekis.cs2340_27.R;
 import com.ardapekis.cs2340_27.model.Facade;
 import com.ardapekis.cs2340_27.model.RatReportItem;
+import com.ardapekis.cs2340_27.model.RatReportManager;
 //import com.ardapekis.cs2340_27.model.RatReportManager;
 
 /**
@@ -25,7 +26,8 @@ public class RatReportDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        RatReportItem mItem = Facade.getInstance().getReportManager()
+        RatReportManager manager = Facade.getInstance().getReportManager();
+        RatReportItem mItem = manager
                 .findItemByKey(getIntent().getIntExtra(ARG_ITEM_ID, 0),
                         getIntent().getStringExtra(ARG_SORT));
         if (mItem != null) {
@@ -36,20 +38,19 @@ public class RatReportDetailActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.date)).setText("Created Date: " +
                     mItem.getCreatedDate().toString());
             ((TextView) findViewById(R.id.location_type)).setText("Location " +
-                    "Type: " + mItem.getLocation().getAddress()
+                    "Type: " + mItem
                     .getLocationType());
             ((TextView) findViewById(R.id.address)).setText("Address: " +
                     mItem.getAddressString());
             ((TextView) findViewById(R.id.zipcode)).setText("Zipcode: " +
-                    mItem.getLocation().getAddress().getZipcode());
+                    mItem.getZipcode());
             ((TextView) findViewById(R.id.city)).setText("City: " + mItem
-                    .getLocation().getAddress().getCity());
+                   .getCity());
             ((TextView) findViewById(R.id.borough)).setText("Borough: " +
-                    mItem.getLocation().getAddress().getBorough());
+                    mItem.getBorough());
             ((TextView) findViewById(R.id.coordinates)).setText
-                    ("Coordinates:\n" + mItem.getLocation().getCoordinates()
-                            .getLatitude() + ", " + mItem.getLocation()
-                            .getCoordinates().getLongitude());
+                    ("Coordinates:\n" + mItem
+                            .getLatitude() + ", " + mItem.getLongitude());
         }
     }
 

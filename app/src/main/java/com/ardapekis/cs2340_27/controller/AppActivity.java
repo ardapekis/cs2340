@@ -130,7 +130,7 @@ public class AppActivity extends AppCompatActivity {
                 "08", "09", "10", "11", "12"};
         ArrayList<String> months = new ArrayList<>(Arrays.asList(monthsArray));
         String[] daysArray = new String[DAYS_IN_MONTH];
-        for (int i = 1; i < DAYS_IN_MONTH + 1; i++) {
+        for (int i = 1; i < (DAYS_IN_MONTH + 1); i++) {
             if (i < 10) {
                 daysArray[i - 1] = "0" + Integer.toString(i);
             } else {
@@ -138,7 +138,7 @@ public class AppActivity extends AppCompatActivity {
             }
         }
         ArrayList<String> days = new ArrayList<>(Arrays.asList(daysArray));
-        String[] yearsArray = new String[CURRENT_YEAR - FIRST_YEAR + 1];
+        String[] yearsArray = new String[(CURRENT_YEAR - FIRST_YEAR) + 1];
         for (int i = CURRENT_YEAR - FIRST_YEAR; i >= 0; i--) {
             yearsArray[CURRENT_YEAR - FIRST_YEAR - i] = Integer.toString(i +
                     FIRST_YEAR);
