@@ -6,7 +6,6 @@ import com.ardapekis.cs2340_27.model.RatReportManager;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Date;
@@ -60,7 +59,7 @@ public class DavidHerszenhautTest {
 
         Date createdDate = new Date();
         String locationType = "locationType";
-        int zipcode = 00000;
+        int zipcode = 0;
         String address = "address";
         String city = "city";
         String borough = "borough";

@@ -10,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Date;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
