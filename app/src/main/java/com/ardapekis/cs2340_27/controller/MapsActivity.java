@@ -87,7 +87,8 @@ public class MapsActivity extends FragmentActivity implements
 // .getLastReport().getLocation().getAddress().getLocationType());
 //
 //                // Animating to the touched position
-//                googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+//                googleMap.animateCamera(
+//                      CameraUpdateFactory.newLatLng(latLng));
 //
 //                // Placing a marker on the touched position
 //                googleMap.addMarker(markerOptions);

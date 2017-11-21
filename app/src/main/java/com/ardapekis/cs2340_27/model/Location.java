@@ -11,7 +11,8 @@ public class Location {
     private final Coordinates coordinates;
 
     /**
-     * Getters
+     * Getter
+     * @return The specified field
      */
     public Address getAddress() {
         return address;

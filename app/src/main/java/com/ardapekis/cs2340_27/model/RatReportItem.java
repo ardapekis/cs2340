@@ -25,6 +25,7 @@ public class RatReportItem {
 
     /**
      * Getters
+     * @return the specified field
      */
     public int getKey() {
         return key;
