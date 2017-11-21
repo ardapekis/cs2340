@@ -2,7 +2,7 @@ package com.ardapekis.cs2340_27;
 
 import org.junit.Test;
 
-import com.ardapekis.cs2340_27.model.RatReportItem;
+//import com.ardapekis.cs2340_27.model.RatReportItem;
 import com.ardapekis.cs2340_27.model.User;
 
 import static org.junit.Assert.*;
